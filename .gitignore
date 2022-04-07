@@ -25,6 +25,10 @@ application.yml
 application.properties
 *.properties
 
+### .json ###
+serviceAccountKey.json
+*.json
+
 ### .txt ###
 devLog.txt
 *.txt

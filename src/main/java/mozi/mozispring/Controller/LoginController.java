@@ -2,19 +2,23 @@ package mozi.mozispring.Controller;
 
 import mozi.mozispring.Domain.Dto.LogInDto;
 import mozi.mozispring.Domain.Dto.SignInDto;
+import mozi.mozispring.Domain.Dto.WithdrawDto;
 import mozi.mozispring.Domain.User;
 import mozi.mozispring.Jwt.JwtTokenProvider;
+import mozi.mozispring.Repository.CommentRepository;
+import mozi.mozispring.Repository.MomentRepository;
+import mozi.mozispring.Repository.ScheduleRepository;
 import mozi.mozispring.Repository.UserRepository;
 import mozi.mozispring.Util.BasicResponse;
 import mozi.mozispring.Util.CommonResponse;
 import mozi.mozispring.Util.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -24,12 +28,18 @@ public class LoginController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+    private final MomentRepository momentRepository;
+    private final CommentRepository commentRepository;
+    private final ScheduleRepository scheduleRepository;
 
     @Autowired
-    public LoginController(PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserRepository userRepository) {
+    public LoginController(PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserRepository userRepository, MomentRepository momentRepository, CommentRepository commentRepository, ScheduleRepository scheduleRepository) {
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userRepository = userRepository;
+        this.momentRepository = momentRepository;
+        this.commentRepository = commentRepository;
+        this.scheduleRepository = scheduleRepository;
     }
 
     /**
@@ -37,7 +47,7 @@ public class LoginController {
      */
     @PostMapping("/join")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> join(@RequestBody SignInDto signInDto) {
+    public ResponseEntity<? extends BasicResponse> joinController(@RequestBody SignInDto signInDto) {
         System.out.println("회원가입 요청입니다.");
         Optional<User> result = userRepository.findByEmail(signInDto.getEmail());
         if(result.isPresent()){
@@ -56,7 +66,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> login(@RequestBody LogInDto logInDto) {
+    public ResponseEntity<? extends BasicResponse> loginController(@RequestBody LogInDto logInDto) {
         System.out.println("로그인 요청입니다.");
         Optional<User> findUser = userRepository.findByEmail(logInDto.getEmail());
         if(!findUser.isPresent()){
@@ -74,7 +84,7 @@ public class LoginController {
      */
     @PostMapping("/withdraw")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> withdraw(@RequestBody LogInDto logInDto){
+    public ResponseEntity<? extends BasicResponse> withdrawController(@RequestBody LogInDto logInDto){
         System.out.println("회원탈퇴 요청입니다. ");
         Optional<User> findUser = userRepository.findByEmail(logInDto.getEmail());
         if(!findUser.isPresent()){
@@ -86,5 +96,24 @@ public class LoginController {
         }else{
             return ResponseEntity.ok().body(new ErrorResponse("비밀번호가 맞지 않습니다."));
         }
+    }
+
+    /**
+     * 탈퇴 회원 콘텐츠 수량 고지 api
+     */
+    @GetMapping("/withdraw/content")
+    @ResponseBody
+    public ResponseEntity<? extends BasicResponse> countUserContentController(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String userEmail = ((UserDetails) principal).getUsername();
+
+        Optional<User> findUser = userRepository.findByEmail(userEmail);
+        Long userId = findUser.get().getId();
+        return ResponseEntity.ok().body(new CommonResponse<>(WithdrawDto.builder()
+                .comment(commentRepository.countByUserId(userId))
+                .moment(momentRepository.countByUserId(userId))
+                .schedule(scheduleRepository.countByUserId(userId))
+                .build()));
     }
 }

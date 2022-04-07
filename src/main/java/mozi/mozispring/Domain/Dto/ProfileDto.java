@@ -14,9 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfileDto {
-    private MultipartFile file;
+    private MultipartFile multipartFile;
     private String name;
     private String introduce;
-    private List<String> tagList = new ArrayList();
+    private List<String> tagList = new ArrayList<>();
     private String mbti;
 }

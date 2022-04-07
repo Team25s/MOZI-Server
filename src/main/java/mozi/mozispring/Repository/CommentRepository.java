@@ -1,6 +1,7 @@
 package mozi.mozispring.Repository;
 
 import mozi.mozispring.Domain.Comment;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -14,4 +15,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long>{
 
     @Override
     Optional<Comment> findById(Long commentId);
+
+    Long countByUserId(Long userId);
 }
+

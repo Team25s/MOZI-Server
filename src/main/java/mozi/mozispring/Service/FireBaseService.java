@@ -20,7 +20,7 @@ public class FireBaseService {
     /**
      *  파이어베이스에 이미지 업로드하기
      */
-    public String uploadFiles(MultipartFile file, String nameFile) throws IOException, FirebaseAuthException {
+    public String uploadFiles(MultipartFile file, String nameFile) throws IOException {
         Bucket bucket = StorageClient.getInstance().bucket(firebaseBucket);
         InputStream content = new ByteArrayInputStream(file.getBytes());
         Blob blob = bucket.create(nameFile.toString(), content, file.getContentType());

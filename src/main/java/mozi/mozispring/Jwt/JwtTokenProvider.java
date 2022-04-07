@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,8 +21,10 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-    private String secretKey = "llshlllshlllshlllshl"; // 토큰 유효시간 30분
-    private long tokenValidTime = 30 * 60 * 1000L;
+    @Value("${key.JwtTokenProvider.secretKey}")
+    private String secretKey;
+
+    private long tokenValidTime = 30 * 60 * 1000L; // 토큰 유효시간 30분
     private final UserDetailsService userDetailsService;
 
     @Autowired
