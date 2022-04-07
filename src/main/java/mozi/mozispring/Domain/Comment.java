@@ -20,7 +20,6 @@ public class Comment {       // 댓글 도메인 객체
     @GeneratedValue
     private Long id;         // 디비 pk
 
-    private Long writerId;   // 작성자 id
-    private Long opponentId; // 상대방 id
+    private Long userId;     // 댓글이 달린 유저의 id
     private String content;  // 댓글 내용
 }
