@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user")
-public class User {
+public class User {           // 유저 도메인 객체
     @Id
     @GeneratedValue
     @Column(name = "user_id")

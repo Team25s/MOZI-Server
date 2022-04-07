@@ -1,5 +1,6 @@
 package mozi.mozispring.Domain;
 
+
 import lombok.*;
 
 import javax.persistence.GeneratedValue;
@@ -11,12 +12,13 @@ import javax.persistence.Table;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "favorites")
-public class Favorites { // 즐겨찾기 도메인 객체
+@Table(name = "moment")
+public class Moment {
     @Id
     @GeneratedValue
     private Long id; // 디비 pk
 
-    private Long userId;      // 유저 id
-    private Long opponentId;  // 상대 id
+    private Long userId; // 작성자 유저 id
+    private String content; // 내용
+    private String fireBaseUrl; // 파이어베이스 이미지 url
 }
