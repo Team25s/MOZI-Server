@@ -13,11 +13,11 @@ import javax.xml.bind.annotation.XmlIDREF;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "comment")
-public class Comment {    // 댓글 도메인 객체
+public class Comment {       // 댓글 도메인 객체
     @Id
     @GeneratedValue
-    private Long id;  // 디비 pk
+    private Long id;         // 디비 pk
 
-    private Long writerId;  // 작성자 id
+    private Long writerId;   // 작성자 id
     private Long opponentId; // 상대방 id
 }

@@ -11,12 +11,12 @@ import javax.persistence.Table;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "favorites")
-public class Favorites {      // 즐겨찾기 도메인 객체
+@Table(name = "tag")
+public class Tag {   // 태그 도메인 객체
     @Id
     @GeneratedValue
-    private Long id;          // 디비 pk
+    private Long id; // 디비 pk
 
-    private Long userId;      // 유저 id
-    private Long opponentId;  // 상대 id
+    private Long momentId;  // 모먼트 id
+    private String content; // 태그명
 }
