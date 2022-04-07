@@ -3,10 +3,12 @@ package mozi.mozispring.Domain;
 
 import lombok.*;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Entity
 @Setter
 @Getter
 @Builder

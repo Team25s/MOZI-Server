@@ -2,11 +2,13 @@ package mozi.mozispring.Domain;
 
 import lombok.*;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlIDREF;
 
+@Entity
 @Setter
 @Getter
 @Builder

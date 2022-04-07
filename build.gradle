@@ -35,6 +35,20 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	// jwt 의존성 추가
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	// firebase admin sdk 의존성 추가
+	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
+
+	// swagger 의존성 추가
+	implementation (group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'){
+		exclude module: 'swagger-annotations' exclude module: 'swagger-models'
+	}
+	implementation "io.swagger:swagger-annotations:1.5.21"
+	implementation "io.swagger:swagger-models:1.5.21"
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 }
 
 tasks.named('test') {
