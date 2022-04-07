@@ -33,6 +33,7 @@ public class LoginController {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userRepository = userRepository;
     }
+
     /**
      * 회원가입 api
      */
@@ -57,14 +58,17 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public String login(@RequestBody LogInDto logInDto) {
+    public ResponseEntity<? extends BasicResponse> login(@RequestBody LogInDto logInDto) {
         System.out.println("로그인 요청입니다.");
-        User member = userRepository.findByEmail(logInDto.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 아이디 입니다."));
-        if (!passwordEncoder.matches(logInDto.getPassword(), member.getPassword())) {
-            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+        Optional<User> findUser = userRepository.findByEmail(logInDto.getEmail());
+        if(!findUser.isPresent()){
+            return ResponseEntity.ok().body(new ErrorResponse("가입되지 않은 아이디입니다."));
         }
-        return jwtTokenProvider.createToken(member.getEmail());
+        User member = findUser.get();
+        if (!passwordEncoder.matches(logInDto.getPassword(), member.getPassword())) {
+            return ResponseEntity.ok().body(new ErrorResponse("잘못된 비밀번호입니다."));
+        }
+        return ResponseEntity.ok().body(new CommonResponse<>(jwtTokenProvider.createToken(member.getEmail())));
     }
 
     /**
