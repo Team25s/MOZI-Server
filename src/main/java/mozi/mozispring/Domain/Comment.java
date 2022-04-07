@@ -20,4 +20,5 @@ public class Comment {       // 댓글 도메인 객체
 
     private Long writerId;   // 작성자 id
     private Long opponentId; // 상대방 id
+    private String content;  // 댓글 내용
 }

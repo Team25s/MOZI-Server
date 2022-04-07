@@ -23,6 +23,4 @@ public class Schedule {    // 일정 도메인 객체
 
     private String startDate; // 시작 날짜
     private String endDate;   // 종료 날짜
-
-
 }
