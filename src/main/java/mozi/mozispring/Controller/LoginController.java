@@ -10,8 +10,6 @@ import mozi.mozispring.Util.CommonResponse;
 import mozi.mozispring.Util.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -76,22 +74,17 @@ public class LoginController {
      */
     @PostMapping("/withdraw")
     @ResponseBody
-    public boolean withdraw(@RequestBody LogInDto logInDto){
+    public ResponseEntity<? extends BasicResponse> withdraw(@RequestBody LogInDto logInDto){
         System.out.println("회원탈퇴 요청입니다. ");
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = (UserDetails) principal;
-        String userEmail = ((UserDetails) principal).getUsername();
-        String password = ((UserDetails) principal).getPassword();
-
-        Optional<User> findUser = userRepository.findByEmail(userEmail);
-        if(findUser.isPresent()) {
-            if(findUser.get().getPassword().equals(password)) {
-                userRepository.deleteById(findUser.get().getId());
-                return true;
-            }
-            return false;
+        Optional<User> findUser = userRepository.findByEmail(logInDto.getEmail());
+        if(!findUser.isPresent()){
+            return ResponseEntity.ok().body(new ErrorResponse("탈퇴하려는 계정이 존재하지 않습니다."));
+        }
+        if(findUser.get().getPassword().equals(logInDto.getPassword())) {
+            userRepository.deleteById(findUser.get().getId());   // 회원 디비에서 삭제
+            return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 탈퇴되었습니다"));
         }else{
-            return false;
+            return ResponseEntity.ok().body(new ErrorResponse("비밀번호가 맞지 않습니다."));
         }
     }
 }
