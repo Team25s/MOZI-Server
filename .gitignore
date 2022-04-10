@@ -30,8 +30,11 @@ serviceAccountKey.json
 *.json
 
 ### .txt ###
-devLog.txt
-*.txt
+#devLog.txt
+#*.txt
+
+### .pem ###
+*.pem
 
 ### IntelliJ IDEA ###
 .idea
