@@ -23,7 +23,6 @@ application.yml
 
 ### .properties ###
 application.properties
-*.properties
 
 ### .json ###
 serviceAccountKey.json
