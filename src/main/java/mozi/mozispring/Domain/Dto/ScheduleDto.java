@@ -19,5 +19,5 @@ public class ScheduleDto {
     private String startDate;   // 시작 날짜
     private String endDate;     // 종료 날짜
 
-    private List<String> friends = new ArrayList<>();    // 함께하는 친구들 id
+    private List<Long> friends = new ArrayList<>();    // 함께하는 친구들 id
 }
