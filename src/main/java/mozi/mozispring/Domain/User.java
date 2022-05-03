@@ -25,7 +25,7 @@ public class User implements UserDetails {           // 유저 도메인 객체
 
     private String name;      // 유저 이름
     private String introduce; // 유저 한줄 소개
-    private String hashTag;   // 해시태그
+    private String strTag;   // 해시태그
     private String mbti;      // 유저 mbti
 
     private String profileFilename;  // 프로필 파일명

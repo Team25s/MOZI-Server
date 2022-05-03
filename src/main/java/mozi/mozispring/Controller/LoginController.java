@@ -9,6 +9,7 @@ import mozi.mozispring.Repository.CommentRepository;
 import mozi.mozispring.Repository.MomentRepository;
 import mozi.mozispring.Repository.ScheduleRepository;
 import mozi.mozispring.Repository.UserRepository;
+import mozi.mozispring.Service.FireBaseService;
 import mozi.mozispring.Util.BasicResponse;
 import mozi.mozispring.Util.CommonResponse;
 import mozi.mozispring.Util.ErrorResponse;
@@ -31,15 +32,17 @@ public class LoginController {
     private final MomentRepository momentRepository;
     private final CommentRepository commentRepository;
     private final ScheduleRepository scheduleRepository;
+    private final FireBaseService fireBaseService;
 
     @Autowired
-    public LoginController(PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserRepository userRepository, MomentRepository momentRepository, CommentRepository commentRepository, ScheduleRepository scheduleRepository) {
+    public LoginController(PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserRepository userRepository, MomentRepository momentRepository, CommentRepository commentRepository, ScheduleRepository scheduleRepository, FireBaseService fireBaseService) {
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userRepository = userRepository;
         this.momentRepository = momentRepository;
         this.commentRepository = commentRepository;
         this.scheduleRepository = scheduleRepository;
+        this.fireBaseService = fireBaseService;
     }
 
     /**
@@ -100,7 +103,7 @@ public class LoginController {
     }
 
     /**
-     * 탈퇴 회원 콘텐츠 수량 고지 api
+     * 탈퇴 회원 보유 콘텐츠 수량 고지 api
      */
     @GetMapping("/content-count")
     @ResponseBody

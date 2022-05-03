@@ -13,8 +13,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfileDto {
-    private String profileFileName;
+public class ProfileFixDto {
+    private MultipartFile multipartFile;
     private String name;
     private String mbti;
     private String introduce;
