@@ -29,7 +29,7 @@ public class ProfileController {
     }
 
     /**
-     *  프로필 반환
+     *  프로필 불러오기
      */
     @GetMapping("/profile")
     @ResponseBody
