@@ -34,7 +34,7 @@ public class CommentController {
     }
 
     /**
-     * 댓글달기 api
+     * 댓글 작성
      */
     @PostMapping("/comment")
     @ResponseBody
@@ -47,7 +47,7 @@ public class CommentController {
     }
 
     /**
-     * 댓글삭제 api
+     * 댓글 삭제
      */
     @DeleteMapping("/comment")
     @ResponseBody

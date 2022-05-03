@@ -91,7 +91,8 @@ public class LoginController {
             return ResponseEntity.ok().body(new ErrorResponse("탈퇴하려는 계정이 존재하지 않습니다."));
         }
         if(findUser.get().getPassword().equals(logInDto.getPassword())) {
-            userRepository.deleteById(findUser.get().getId());   // 회원 디비에서 삭제
+            fireBaseService.deleteFiles(findUser.get().getProfileFilename()); // 파이어베이스에서 프로필 이미지 삭제
+            userRepository.deleteById(findUser.get().getId());                // 회원 정보 rds 디비에서 삭제
             return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 탈퇴되었습니다"));
         }else{
             return ResponseEntity.ok().body(new ErrorResponse("비밀번호가 맞지 않습니다."));
@@ -101,7 +102,7 @@ public class LoginController {
     /**
      * 탈퇴 회원 콘텐츠 수량 고지 api
      */
-    @GetMapping("/withdraw/content")
+    @GetMapping("/content-count")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> countUserContentController(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

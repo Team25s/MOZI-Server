@@ -12,11 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -64,9 +62,25 @@ public class FriendController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
+
         Optional<User> findUser = userRepository.findByEmail(userEmail);
         friendRepository.deleteByUserIdAndFriendId(findUser.get().getId(), friendDto.getFriendId());
         friendRepository.deleteByUserIdAndFriendId(friendDto.getFriendId(), findUser.get().getId());
         return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 삭제하였습니다."));
+    }
+
+    /**
+     *  친구 목록 가져오기
+     */
+    @GetMapping("/friend-list")
+    @ResponseBody
+    public ResponseEntity<? extends BasicResponse> getFriendListController(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String userEmail = ((UserDetails) principal).getUsername();
+
+        Optional<User> findUser = userRepository.findByEmail(userEmail);
+        List<Friend> friends = friendRepository.findAllById(findUser.get().getId());
+
     }
 }
