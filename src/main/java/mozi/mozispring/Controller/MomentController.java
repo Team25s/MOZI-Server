@@ -12,9 +12,7 @@ import mozi.mozispring.Util.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -32,6 +30,15 @@ public class MomentController {
         this.fireBaseService = fireBaseService;
         this.momentRepository = momentRepository;
         this.momentPhotoRepository = momentPhotoRepository;
+    }
+
+    /**
+     * 유저의 모먼트 불러오기
+     */
+    @GetMapping("/moment")
+    @ResponseBody
+    public void getAllMomentController(){
+
     }
 
     /**
@@ -67,8 +74,18 @@ public class MomentController {
     /**
      * 모먼트 삭제하기
      */
+    @DeleteMapping("/moment")
+    @ResponseBody
+    public void deleteMomentController(){
+
+    }
 
     /**
      * 해시태그로 검색하기
      */
+    @GetMapping("/moment/tag")
+    @ResponseBody
+    public void getMomentByHashTag(){
+
+    }
 }
