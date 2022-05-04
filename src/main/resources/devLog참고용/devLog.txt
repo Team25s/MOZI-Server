@@ -26,3 +26,9 @@ jpaRepository 사용법 관련 블로그 : https://jobc.tistory.com/120
 3. api 스펙에 구체적인 사항들 제대로 명시 안됨. swagger 디테일 설정해주기
 4. jpa 를 너무 활용못함. 지금 쓰는거 단방향 one to many 하나뿐임. 나머지는 디비에 쿼리 더날려서 쓰는중. -> 바꿔봅시다.큐큐
 5. controller 에 비즈니스 로직이 다 들어가있음 -> service 쪽으로 찢어놓기
+6. 지금 game controller 에 switch case 문은 다르게 구현 가능?
+
+
+
+
+

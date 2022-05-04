@@ -64,8 +64,8 @@ public class CommentController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();
-
         Optional<User> findUser = userRepository.findByEmail(userEmail);
+
         Optional<Comment> findComment = commentRepository.findById(delComment.getCommentId());
 
         if(findUser.get().getId().equals(findComment.get().getUserId())){
