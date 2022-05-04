@@ -40,17 +40,19 @@ public class FriendController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
-
         Optional<User> findUser = userRepository.findByEmail(userEmail);
+
         friendRepository.save(Friend.builder()
                 .userId(findUser.get().getId())
                 .friendId(friendDto.getFriendId())
                 .mbti(friendDto.getMbti())
+                .knock(0)
                 .build());
         friendRepository.save(Friend.builder()
                 .userId(friendDto.getFriendId())
                 .friendId(findUser.get().getId())
                 .mbti(findUser.get().getMbti())
+                .knock(0)
                 .build());
         return ResponseEntity.ok().body(new CommonResponse<>("친구 추가에 성공하였습니다."));
     }
@@ -64,8 +66,8 @@ public class FriendController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
-
         Optional<User> findUser = userRepository.findByEmail(userEmail);
+
         friendRepository.deleteByUserIdAndFriendId(findUser.get().getId(), friendDto.getFriendId());
         friendRepository.deleteByUserIdAndFriendId(friendDto.getFriendId(), findUser.get().getId());
         return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 삭제하였습니다."));
@@ -80,8 +82,8 @@ public class FriendController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
-
         Optional<User> findUser = userRepository.findByEmail(userEmail);
+
         List<Friend> friends = friendRepository.findAllById(findUser.get().getId());
         List<FriendRetDto> friendRetDtos = new ArrayList<>();
 

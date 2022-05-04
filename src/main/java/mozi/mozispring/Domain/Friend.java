@@ -22,4 +22,6 @@ public class Friend {
     private Long userId;   // 유저 id
     private Long friendId; // 친구 id
     private String mbti;   // 친구 mbti
+
+    private int knock;     // 노크 횟수
 }

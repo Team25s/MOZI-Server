@@ -1,8 +1,7 @@
 package mozi.mozispring.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import mozi.mozispring.Domain.VO.TestDto;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/test/api")
@@ -11,6 +10,11 @@ public class TestController {
     @GetMapping("/hello")
     public String Hello(){
         return "hello";
+    }
+
+    @PostMapping("/test1")
+    public String test1(@RequestBody TestDto testDto){
+        return testDto.getData();
     }
 
     // swagger 3.0 링크

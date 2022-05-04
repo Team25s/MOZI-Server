@@ -3,8 +3,8 @@ package mozi.mozispring.Controller;
 import mozi.mozispring.Domain.Comment;
 import mozi.mozispring.Domain.Dto.CommentDto;
 import mozi.mozispring.Domain.Dto.DelComment;
+import mozi.mozispring.Domain.Dto.UserIdDto;
 import mozi.mozispring.Domain.User;
-import mozi.mozispring.Domain.VO.UserIdVO;
 import mozi.mozispring.Repository.CommentRepository;
 import mozi.mozispring.Repository.UserRepository;
 import mozi.mozispring.Util.BasicResponse;
@@ -37,8 +37,8 @@ public class CommentController {
      */
     @GetMapping("/comment")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> getCommentController(@RequestBody UserIdVO userIdVO){
-        List<Comment> commentList = commentRepository.findAllById(userIdVO.getId());
+    public ResponseEntity<? extends BasicResponse> getCommentController(@RequestBody UserIdDto userIdDto){
+        List<Comment> commentList = commentRepository.findAllById(userIdDto.getId());
         return ResponseEntity.ok().body(new CommonResponse<>(commentList));
     }
 
