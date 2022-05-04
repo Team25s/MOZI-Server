@@ -11,6 +11,7 @@ import mozi.mozispring.Repository.UserRepository;
 import mozi.mozispring.Util.BasicResponse;
 import mozi.mozispring.Util.CommonResponse;
 import mozi.mozispring.Util.ErrorResponse;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,6 +56,7 @@ public class ScheduleController {
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         User findUser = userRepository.findByEmail(userEmail).get();
+        SimplUser simplUser = simplUserRepository.findById(findUser.getId()).get();
 
         Schedule schedule = new Schedule();
         schedule.setTitle(schedule.getTitle());
@@ -65,9 +67,10 @@ public class ScheduleController {
         List<Long> participants = scheduleDto.getFriends();
         List<SimplUser> simplUserList = new ArrayList<>();
         for(Long id: participants){
-            SimplUser simplUser = simplUserRepository.findById(id).get();
-            simplUserList.add(simplUser);
+            SimplUser findSimplUser = simplUserRepository.findById(id).get();
+            simplUserList.add(findSimplUser);
         }
+        simplUserList.add(simplUser);
         schedule.setFriendList(simplUserList);
         participants.add(findUser.getId());  // 본인 추가
 
@@ -94,8 +97,33 @@ public class ScheduleController {
         String userEmail = ((UserDetails) principal).getUsername();
         User findUser = userRepository.findByEmail(userEmail).get();
 
-        if()
+        Schedule findSchedule = scheduleRepository.findByTitle(scheduleDto.getTitle()).get();
+        List<SimplUser> simplUserList = findSchedule.getFriendList();
+        boolean flag = false;
+        for(SimplUser simplUser: simplUserList){
+            if(findUser.getId() == simplUser.getId()){
+                flag = true;
+                break;
+            }
+        }
+        if (flag){
+            findSchedule.setTitle(scheduleDto.getTitle());
+            findSchedule.setLocation(scheduleDto.getLocation());
+            findSchedule.setStartDate(scheduleDto.getStartDate());
+            findSchedule.setEndDate(scheduleDto.getEndDate());
 
+            List<Long> participants = scheduleDto.getFriends();
+            List<SimplUser> simplUserList2 = new ArrayList<>();
+            for(Long id: participants){
+                SimplUser findSimplUser = simplUserRepository.findById(id).get();
+                simplUserList2.add(findSimplUser);
+            }
+            findSchedule.setFriendList(simplUserList2);
+            scheduleRepository.save(findSchedule);
+            return ResponseEntity.ok().body(new CommonResponse<>(findSchedule));
+        }else{
+            return ResponseEntity.ok().body(new ErrorResponse("자신의 일정만 수정할 수 있습니다."));
+        }
     }
 
 
