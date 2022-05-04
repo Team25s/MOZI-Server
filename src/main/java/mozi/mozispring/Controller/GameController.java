@@ -67,7 +67,7 @@ public class GameController {
     /**
      * 밸런스 게임 플레이
      */
-    @PostMapping("/game")
+    @PostMapping("/game-play")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> answerGameController(@RequestBody AnswerDto answerDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

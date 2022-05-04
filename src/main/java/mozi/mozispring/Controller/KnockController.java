@@ -13,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,7 +66,7 @@ public class KnockController {
     /**
      * 노크 삭제
      */
-    @GetMapping("/knock")
+    @DeleteMapping("/knock")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> deleteKnockController(@RequestBody KnockDelDto knockDelDto){
         Friend friend = friendRepository.findById(knockDelDto.getKnockId()).get();
