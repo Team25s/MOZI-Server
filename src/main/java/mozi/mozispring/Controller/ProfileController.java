@@ -29,7 +29,7 @@ public class ProfileController {
     }
 
     /**
-     *  프로필 불러오기
+     *  유저 프로필 불러오기
      */
     @GetMapping("/profile")
     @ResponseBody
@@ -46,7 +46,7 @@ public class ProfileController {
     }
 
     /**
-     * 프로필 수정
+     * 유저 프로필 수정
      */
     @PutMapping("/profile")
     @ResponseBody

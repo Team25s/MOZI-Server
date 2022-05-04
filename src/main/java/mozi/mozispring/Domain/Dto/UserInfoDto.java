@@ -1,21 +1,12 @@
-package mozi.mozispring.Domain;
+package mozi.mozispring.Domain.Dto;
 
 import lombok.*;
 
-import javax.persistence.*;
-
-@Entity
 @Setter
 @Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "userInfo")
-public class UserInfoSimpl {
-    @Id
-    @GeneratedValue
-    private Long id;          // 디비 pk
-
+public class UserInfoDto {
     private Long   userId;    // 유저 테이블 pk
     private String email;     // 유저 이메일
     private String name;      // 유저 이름

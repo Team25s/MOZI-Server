@@ -1,12 +1,9 @@
 package mozi.mozispring.Controller;
 
-import com.google.firebase.auth.UserInfo;
 import mozi.mozispring.Domain.Dto.ScheduleDelDto;
 import mozi.mozispring.Domain.Dto.ScheduleDto;
-import mozi.mozispring.Domain.Friend;
 import mozi.mozispring.Domain.Schedule;
 import mozi.mozispring.Domain.User;
-import mozi.mozispring.Domain.UserInfoSimpl;
 import mozi.mozispring.Repository.ScheduleRepository;
 import mozi.mozispring.Repository.UserRepository;
 import mozi.mozispring.Util.BasicResponse;
@@ -19,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Basic;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +38,9 @@ public class ScheduleController {
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> getScheduleController(Long id){
         List<Schedule> schedules = scheduleRepository.findAllById(id);
+        List<User> userList = schedules.get
+
+        for()
         return ResponseEntity.ok().body(new CommonResponse(schedules));
     }
 
