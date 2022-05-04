@@ -1,9 +1,12 @@
 package mozi.mozispring.Controller;
 
+import com.google.firebase.auth.UserInfo;
 import mozi.mozispring.Domain.Dto.ScheduleDelDto;
 import mozi.mozispring.Domain.Dto.ScheduleDto;
+import mozi.mozispring.Domain.Friend;
 import mozi.mozispring.Domain.Schedule;
 import mozi.mozispring.Domain.User;
+import mozi.mozispring.Domain.UserInfoSimpl;
 import mozi.mozispring.Repository.ScheduleRepository;
 import mozi.mozispring.Repository.UserRepository;
 import mozi.mozispring.Util.BasicResponse;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Basic;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -44,7 +48,7 @@ public class ScheduleController {
     /**
      * 일정 등록하기
      */
-    @PutMapping("/schedule")
+    @PostMapping("/schedule")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> makeScheduleController(@RequestBody ScheduleDto scheduleDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -59,9 +63,14 @@ public class ScheduleController {
         schedule.setEndDate(scheduleDto.getEndDate());
 
         List<Long> participants = scheduleDto.getFriends();
-        participants.add(findUser.getId());                // 본인 추가
+        List<User> userList = new ArrayList<>();
+        for(Long id: participants){
+            User user = userRepository.findById(id).get();
+            userList.add(user);
+        }
+        schedule.setFriendList(userList);
+        participants.add(findUser.getId());  // 본인 추가
         int memberCount = 0;
-
         for(Long id : participants){
             schedule.setUserId(id);
             scheduleRepository.save(schedule);
@@ -76,6 +85,17 @@ public class ScheduleController {
     /**
      * 일정 수정하기 
      */
+    @PutMapping("/schedule")
+    @ResponseBody
+    public ResponseEntity<? extends BasicResponse> updateScheduleController(@RequestBody ScheduleDto scheduleDto){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String userEmail = ((UserDetails) principal).getUsername();
+        User findUser = userRepository.findByEmail(userEmail).get();
+
+        if()
+
+    }
 
 
     /**

@@ -2,10 +2,9 @@ package mozi.mozispring.Domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -25,4 +24,8 @@ public class Schedule {    // 일정 도메인 객체
     private String location;  // 장소
     private String startDate; // 시작 날짜
     private String endDate;   // 종료 날짜
+
+    @OneToMany
+    @JoinColumn(name = "friends")
+    private List<User> friendList = new ArrayList<>();
 }

@@ -2,10 +2,6 @@ package mozi.mozispring.Domain.Dto;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,5 +15,5 @@ public class ScheduleDto {
     private String startDate;   // 시작 날짜
     private String endDate;     // 종료 날짜
 
-    private List<Long> friends = new ArrayList<>();    // 함께하는 친구들 id
+    private List<Long> friends = new ArrayList<>();    // 참여하는 친구들 id
 }
