@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestionDto {
-    private String question; // 문항 제목
+public class AnswerDto {
+    private Long questionId;
+    private boolean positive_answer;
+    private boolean negative_answer;
 }
