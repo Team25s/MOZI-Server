@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Basic;
 import java.util.List;
 
 @Controller
@@ -44,7 +45,8 @@ public class ScheduleController {
      * 일정 등록하기
      */
     @PutMapping("/schedule")
-    public void makeScheduleController(@RequestBody ScheduleDto scheduleDto){
+    @ResponseBody
+    public ResponseEntity<? extends BasicResponse> makeScheduleController(@RequestBody ScheduleDto scheduleDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -57,17 +59,30 @@ public class ScheduleController {
         schedule.setEndDate(scheduleDto.getEndDate());
 
         List<Long> participants = scheduleDto.getFriends();
-        participants.add(findUser.getId());
+        participants.add(findUser.getId());                // 본인 추가
+        int memberCount = 0;
+
         for(Long id : participants){
             schedule.setUserId(id);
             scheduleRepository.save(schedule);
+            memberCount += 1;
         }
+        if (memberCount == participants.size()){
+            return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 추가되었습니다."));
+        }
+        return ResponseEntity.ok().body(new ErrorResponse("일정을 추가할 수 없습니다."));
     }
+
+    /**
+     * 일정 수정하기 
+     */
+
 
     /**
      * 일정 삭제하기
      */
     @DeleteMapping("/schedule")
+    @ResponseBody
     public ResponseEntity<? extends BasicResponse> deleteScheduleController(@RequestBody ScheduleDelDto scheduleDelDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;

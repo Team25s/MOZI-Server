@@ -51,3 +51,8 @@ jpaRepository 사용법 관련 블로그 : https://jobc.tistory.com/120
 노크하기 api 미구현
 노크 정보 반환 api 미구현
 
+2022-05-04
+1. 노트 api 마저 구현하기
+2. 일정 수정 api 구현하기
+3. 모먼트 api 구현하기
+4. 안드랑 주고받는거 테스트해보기

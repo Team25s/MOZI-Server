@@ -72,7 +72,7 @@ public class FriendController {
     }
 
     /**
-     *  친구 목록
+     *  내 친구 목록
      */
     @GetMapping("/friend-list")
     @ResponseBody

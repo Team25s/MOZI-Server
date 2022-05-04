@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class KnockController {
 
-    @PutMapping("/knock")
-    @ResponseBody
-    public int knockController(){
-
-    }
-
-    @GetMapping("/knock")
-    @ResponseBody
-    public int getKnockController(){
-
-    }
+//    @PutMapping("/knock")
+//    @ResponseBody
+//    public int knockController(){
+//
+//    }
+//
+//    @GetMapping("/knock")
+//    @ResponseBody
+//    public int getKnockController(){
+//
+//    }
 }

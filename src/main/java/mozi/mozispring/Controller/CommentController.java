@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/comment")
+@Controller
 public class CommentController {
 
     private final CommentRepository commentRepository;
