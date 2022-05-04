@@ -3,12 +3,10 @@ package mozi.mozispring.Controller;
 import mozi.mozispring.Domain.Dto.LogInDto;
 import mozi.mozispring.Domain.Dto.SignInDto;
 import mozi.mozispring.Domain.Dto.WithdrawDto;
+import mozi.mozispring.Domain.SimplUser;
 import mozi.mozispring.Domain.User;
 import mozi.mozispring.Jwt.JwtTokenProvider;
-import mozi.mozispring.Repository.CommentRepository;
-import mozi.mozispring.Repository.MomentRepository;
-import mozi.mozispring.Repository.ScheduleRepository;
-import mozi.mozispring.Repository.UserRepository;
+import mozi.mozispring.Repository.*;
 import mozi.mozispring.Service.FireBaseService;
 import mozi.mozispring.Util.BasicResponse;
 import mozi.mozispring.Util.CommonResponse;
@@ -33,9 +31,10 @@ public class LoginController {
     private final CommentRepository commentRepository;
     private final ScheduleRepository scheduleRepository;
     private final FireBaseService fireBaseService;
+    private final SimplUserRepository simplUserRepository;
 
     @Autowired
-    public LoginController(PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserRepository userRepository, MomentRepository momentRepository, CommentRepository commentRepository, ScheduleRepository scheduleRepository, FireBaseService fireBaseService) {
+    public LoginController(PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserRepository userRepository, MomentRepository momentRepository, CommentRepository commentRepository, ScheduleRepository scheduleRepository, FireBaseService fireBaseService, SimplUserRepository simplUserRepository) {
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userRepository = userRepository;
@@ -43,6 +42,7 @@ public class LoginController {
         this.commentRepository = commentRepository;
         this.scheduleRepository = scheduleRepository;
         this.fireBaseService = fireBaseService;
+        this.simplUserRepository = simplUserRepository;
     }
 
     /**
@@ -56,11 +56,21 @@ public class LoginController {
         if(result.isPresent()){
             return ResponseEntity.ok().body(new ErrorResponse("이미 존재하는 아이디입니다."));
         }else {
-            return ResponseEntity.ok().body(new CommonResponse<>(userRepository.save(User.builder()
+            User user = User.builder()
                     .email(signInDto.getEmail())
                     .password(passwordEncoder.encode(signInDto.getPassword()))
                     .name(signInDto.getName())
-                    .build()).getId()));
+                    .build();
+
+            userRepository.save(user);
+            SimplUser simplUser = SimplUser.builder()
+                    .email(user.getEmail())
+                    .name(user.getName())
+                    .mbti(user.getMbti())
+                    .profileFilename(null)
+                    .build();
+            simplUserRepository.save(simplUser);
+            return ResponseEntity.ok().body(new CommonResponse<>(user.getId()));
         }
     }
 
