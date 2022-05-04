@@ -29,6 +29,15 @@ jpaRepository 사용법 관련 블로그 : https://jobc.tistory.com/120
 6. 지금 game controller 에 switch case 문은 다르게 구현 가능?
 
 
+오늘고민했던것들 적어놓기
+1. 이미지 여러개 저장하는건 어떻게 해결할건지?
+문제
+해결
+판단한 이유
 
+2. 일정 다른사람한테도 보이게 해야하는지?
+어떻게 할까?
+
+3.
 
 

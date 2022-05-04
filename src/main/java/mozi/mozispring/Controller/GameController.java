@@ -10,7 +10,6 @@ import mozi.mozispring.Repository.GameRepository;
 import mozi.mozispring.Repository.UserRepository;
 import mozi.mozispring.Util.BasicResponse;
 import mozi.mozispring.Util.CommonResponse;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
