@@ -3,8 +3,10 @@ package mozi.mozispring.Controller;
 import mozi.mozispring.Domain.Dto.ScheduleDelDto;
 import mozi.mozispring.Domain.Dto.ScheduleDto;
 import mozi.mozispring.Domain.Schedule;
+import mozi.mozispring.Domain.SimplUser;
 import mozi.mozispring.Domain.User;
 import mozi.mozispring.Repository.ScheduleRepository;
+import mozi.mozispring.Repository.SimplUserRepository;
 import mozi.mozispring.Repository.UserRepository;
 import mozi.mozispring.Util.BasicResponse;
 import mozi.mozispring.Util.CommonResponse;
@@ -24,11 +26,13 @@ public class ScheduleController {
 
     private ScheduleRepository scheduleRepository;
     private UserRepository userRepository;
+    private SimplUserRepository simplUserRepository;
 
     @Autowired
-    public ScheduleController(ScheduleRepository scheduleRepository, UserRepository userRepository) {
+    public ScheduleController(ScheduleRepository scheduleRepository, UserRepository userRepository, SimplUserRepository simplUserRepository) {
         this.scheduleRepository = scheduleRepository;
         this.userRepository = userRepository;
+        this.simplUserRepository = simplUserRepository;
     }
 
     /**
@@ -38,9 +42,6 @@ public class ScheduleController {
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> getScheduleController(Long id){
         List<Schedule> schedules = scheduleRepository.findAllById(id);
-        List<User> userList = schedules.get
-
-        for()
         return ResponseEntity.ok().body(new CommonResponse(schedules));
     }
 
@@ -62,13 +63,14 @@ public class ScheduleController {
         schedule.setEndDate(scheduleDto.getEndDate());
 
         List<Long> participants = scheduleDto.getFriends();
-        List<User> userList = new ArrayList<>();
+        List<SimplUser> simplUserList = new ArrayList<>();
         for(Long id: participants){
-            User user = userRepository.findById(id).get();
-            userList.add(user);
+            SimplUser simplUser = simplUserRepository.findById(id).get();
+            simplUserList.add(simplUser);
         }
-        schedule.setFriendList(userList);
+        schedule.setFriendList(simplUserList);
         participants.add(findUser.getId());  // 본인 추가
+
         int memberCount = 0;
         for(Long id : participants){
             schedule.setUserId(id);

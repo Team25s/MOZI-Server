@@ -2,6 +2,7 @@ package mozi.mozispring.Service;
 
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.StorageException;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.cloud.StorageClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +31,7 @@ public class FireBaseService {
     /**
      * 파이어베이스에서 이미지 삭제하기
      */
-    public boolean deleteFiles(String filename){
+    public boolean deleteFiles(String filename) throws StorageException {
         Bucket bucket = StorageClient.getInstance().bucket(firebaseBucket);
         return  bucket.get(filename).delete();
     }

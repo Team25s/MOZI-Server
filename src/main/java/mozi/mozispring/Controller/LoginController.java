@@ -1,5 +1,6 @@
 package mozi.mozispring.Controller;
 
+import com.google.cloud.storage.StorageException;
 import mozi.mozispring.Domain.Dto.LogInDto;
 import mozi.mozispring.Domain.Dto.SignInDto;
 import mozi.mozispring.Domain.Dto.WithdrawDto;
@@ -61,7 +62,6 @@ public class LoginController {
                     .password(passwordEncoder.encode(signInDto.getPassword()))
                     .name(signInDto.getName())
                     .build();
-
             userRepository.save(user);
             SimplUser simplUser = SimplUser.builder()
                     .email(user.getEmail())
@@ -104,8 +104,13 @@ public class LoginController {
             return ResponseEntity.ok().body(new ErrorResponse("탈퇴하려는 계정이 존재하지 않습니다."));
         }
         if(findUser.get().getPassword().equals(logInDto.getPassword())) {
-            fireBaseService.deleteFiles(findUser.get().getProfileFilename()); // 파이어베이스에서 프로필 이미지 삭제
-            userRepository.deleteById(findUser.get().getId());                // 회원 정보 rds 디비에서 삭제
+            try {
+                fireBaseService.deleteFiles(findUser.get().getProfileFilename()); // 파이어베이스에서 프로필 이미지 삭제
+            }catch(StorageException e){
+                System.out.println(e.getMessage());
+            }
+            userRepository.deleteById(findUser.get().getId());                // 회원 정보 디비에서 삭제
+            simplUserRepository.deleteById(findUser.get().getId());           // 회원 요약 정보 디비에서 삭제
             return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 탈퇴되었습니다"));
         }else{
             return ResponseEntity.ok().body(new ErrorResponse("비밀번호가 맞지 않습니다."));

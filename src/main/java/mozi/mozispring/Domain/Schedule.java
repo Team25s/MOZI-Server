@@ -27,5 +27,5 @@ public class Schedule {    // 일정 도메인 객체
 
     @OneToMany
     @JoinColumn(name = "friends")
-    private List<User> friendList = new ArrayList<>();
+    private List<SimplUser> friendList = new ArrayList<>();
 }
