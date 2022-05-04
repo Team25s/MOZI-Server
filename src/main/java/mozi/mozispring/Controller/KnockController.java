@@ -1,5 +1,6 @@
 package mozi.mozispring.Controller;
 
+import mozi.mozispring.Domain.Dto.KnockDelDto;
 import mozi.mozispring.Domain.Dto.KnockDto;
 import mozi.mozispring.Domain.Friend;
 import mozi.mozispring.Domain.User;
@@ -61,7 +62,7 @@ public class KnockController {
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
 
-        List<Friend> friendList = friendRepository.findAllById(findUser.get().getId());
+        List<Friend> friendList = friendRepository.findAllByUserId(findUser.get().getId());
         return ResponseEntity.ok().body(new CommonResponse<>(friendList));
     }
 
@@ -70,11 +71,10 @@ public class KnockController {
      */
     @GetMapping("/knock")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> deleteKnockController(@RequestBody Long id){
-        Friend friend = friendRepository.findById(id).get();
+    public ResponseEntity<? extends BasicResponse> deleteKnockController(@RequestBody KnockDelDto knockDelDto){
+        Friend friend = friendRepository.findById(knockDelDto.getKnockId()).get();
         friend.setKnock(0);
-        friendRepository.save(friend);
+        friendRepository.save(friend); // 초기화
         return ResponseEntity.ok().body(new CommonResponse<>("노크가 초기화되었습니다."));
-        // 예외 처리 필요함.
     }
 }
