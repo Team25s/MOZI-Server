@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +40,11 @@ public class GameController {
     /**
      * 모든 밸런스 게임 불러오기 
      */
+    @GetMapping("/game-list")
+    @ResponseBody
+    public ResponseEntity<? extends BasicResponse> getGameListController(){
+        return ResponseEntity.ok().body(new CommonResponse<>(gameRepository.findAll()));
+    }
 
     /**
      * 새로운 밸런스 게임 등록
@@ -59,7 +65,7 @@ public class GameController {
     }
 
     /**
-     * 밸런스 게임에 응답하기
+     * 밸런스 게임 플레이
      */
     @PostMapping("/game")
     @ResponseBody
@@ -90,117 +96,123 @@ public class GameController {
                 break;
             case "enfj":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setEnfj_positive(gameLog.getEnfj_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setEnfj_negative(gameLog.getEnfj_negative() + 1);
                 }
                 break;
             case "enfp":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setEnfp_positive(gameLog.getEnfp_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setEnfp_negative(gameLog.getEnfp_negative() + 1);
                 }
                 break;
             case "esfj":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setEsfj_positive(gameLog.getEsfj_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setEsfj_negative(gameLog.getEsfj_negative() + 1);
                 }
                 break;
             case "entj":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setEntj_positive(gameLog.getEntj_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setEntj_negative(gameLog.getEntj_negative() + 1);
                 }
                 break;
             case "estj":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setEstj_positive(gameLog.getEstj_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setEstj_negative(gameLog.getEstj_negative() + 1);
                 }
                 break;
             case "estp":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setEstp_positive(gameLog.getEstp_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setEstp_negative(gameLog.getEstp_negative() + 1);
                 }
                 break;
             case "infp":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setInfp_positive(gameLog.getInfp_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setInfp_negative(gameLog.getInfp_negative() + 1);
                 }
                 break;
             case "infj":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setInfj_positive(gameLog.getInfj_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setInfj_negative(gameLog.getInfj_negative() + 1);
                 }
                 break;
             case "isfp":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setIsfp_positive(gameLog.getIsfp_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setIsfp_negative(gameLog.getIsfp_negative() + 1);
                 }
                 break;
             case "isfj":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setIsfj_positive(gameLog.getIsfj_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setIsfj_negative(gameLog.getIsfj_negative() + 1);
                 }
                 break;
             case "intj":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setIntj_positive(gameLog.getIntj_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setIntj_negative(gameLog.getIntj_negative() + 1);
                 }
                 break;
             case "istp":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setIstp_positive(gameLog.getIstp_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setIstp_negative(gameLog.getIstp_negative() + 1);
                 }
                 break;
             case "istj":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setIstj_positive(gameLog.getIstj_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setIstj_negative(gameLog.getIstj_negative() + 1);
                 }
                 break;
             case "intp":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setIntp_positive(gameLog.getIntp_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setIntp_negative(gameLog.getIntp_negative() + 1);
                 }
                 break;
             case "xxxx":
                 if(answerDto.isPositive_answer()){
-                    gameLog.setEsfp_positive(gameLog.getEsfp_positive() + 1);
+                    gameLog.setXxxx_positive(gameLog.getXxxx_positive() + 1);
                 }else{
-                    gameLog.setEsfp_negative(gameLog.getEsfp_negative() + 1);
+                    gameLog.setXxxx_negative(gameLog.getXxxx_negative() + 1);
                 }
                 break;
             default:
                 return ResponseEntity.ok().body(new CommonResponse<>(gameQA));
         }
-        return ResponseEntity.ok().body(new CommonResponse<>(gameLogRepository.save(gameLog)));
+        return ResponseEntity.ok().body(new CommonResponse<>(gameLogRepository.save(gameLog).getQuestionId()));
     }
 
     /**
      * 밸런스 게임 통계 보기
      */
-
+    @GetMapping("/game-chart")
+    @ResponseBody
+    public ResponseEntity<? extends BasicResponse> getGameChartController(@RequestBody QuestionDto questionDto){
+        GameQA gameQA = gameRepository.findByQuestion(questionDto.getQuestion());
+        GameLog gameLog = gameLogRepository.findByQuestionId(gameQA.getId());
+        return ResponseEntity.ok().body(new CommonResponse<>(gameLog));
+    }
 }
