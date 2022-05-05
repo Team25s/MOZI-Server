@@ -1,5 +1,7 @@
 package mozi.mozispring.Controller;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Comment;
 import mozi.mozispring.Domain.Dto.CommentDto;
@@ -33,14 +35,27 @@ public class CommentController {
         this.userRepository = userRepository;
     }
 
+//    /**
+//     * 유저 모든 댓글 불러오기
+//     */
+//    @ApiOperation(value="유저 모든 댓글 불러오기", notes="유저 모든 댓글 불러오기")
+//    @GetMapping("/comment")
+//    @ResponseBody
+//    public List<Comment> getCommentController(@RequestBody UserIdDto userIdDto){
+//        List<Comment> commentList = commentRepository.findAllById(userIdDto.getId());
+//        return commentList;
+//    }
     /**
      * 유저 모든 댓글 불러오기
      */
     @ApiOperation(value="유저 모든 댓글 불러오기", notes="유저 모든 댓글 불러오기")
-    @GetMapping("/comment")
+    @ApiImplicitParams(
+            @ApiImplicitParam(name="id", value="유저 id", required = true, dataType="Long", paramType = "path", defaultValue = "")
+    )
+    @GetMapping("/comment/{id}")
     @ResponseBody
-    public List<Comment> getCommentController(@RequestBody UserIdDto userIdDto){
-        List<Comment> commentList = commentRepository.findAllById(userIdDto.getId());
+    public List<Comment> getCommentController(@PathVariable("id") Long id){
+        List<Comment> commentList = commentRepository.findAllById(id);
         return commentList;
     }
 
