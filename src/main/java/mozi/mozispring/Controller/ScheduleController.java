@@ -1,5 +1,6 @@
 package mozi.mozispring.Controller;
 
+import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Dto.ScheduleDelDto;
 import mozi.mozispring.Domain.Dto.ScheduleDto;
 import mozi.mozispring.Domain.Schedule;
@@ -38,6 +39,7 @@ public class ScheduleController {
     /**
      * 유저 모든 일정 불러오기
      */
+    @ApiOperation(value="유저 모든 일정 불러오기", notes="유저 모든 일정 불러오기")
     @GetMapping("/schedule")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> getScheduleController(Long id){
@@ -48,6 +50,7 @@ public class ScheduleController {
     /**
      * 일정 등록하기
      */
+    @ApiOperation(value="일정 등록하기", notes="일정 등록하기")
     @PostMapping("/schedule")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> makeScheduleController(@RequestBody ScheduleDto scheduleDto){
@@ -88,6 +91,7 @@ public class ScheduleController {
     /**
      * 일정 수정하기 
      */
+    @ApiOperation(value="일정 수정하기 ", notes="일정 수정하기 ")
     @PutMapping("/schedule")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> updateScheduleController(@RequestBody ScheduleDto scheduleDto){
@@ -129,6 +133,7 @@ public class ScheduleController {
     /**
      * 일정 삭제하기
      */
+    @ApiOperation(value="일정 삭제하기", notes="일정 삭제하기")
     @DeleteMapping("/schedule")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> deleteScheduleController(@RequestBody ScheduleDelDto scheduleDelDto){

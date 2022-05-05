@@ -1,5 +1,6 @@
 package mozi.mozispring.Controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 public class TestController {
 
     @GetMapping("/hello")
+    @ApiOperation(value="테스트1 Controller", notes="테스트입니다.")
     public String Hello(){
         return "hello";
     }

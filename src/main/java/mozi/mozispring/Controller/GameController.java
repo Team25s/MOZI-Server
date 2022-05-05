@@ -1,5 +1,6 @@
 package mozi.mozispring.Controller;
 
+import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Dto.AnswerDto;
 import mozi.mozispring.Domain.Dto.QuestionDto;
 import mozi.mozispring.Domain.GameLog;
@@ -39,6 +40,7 @@ public class GameController {
     /**
      * 모든 밸런스 게임 불러오기 
      */
+    @ApiOperation(value="모든 밸런스 게임 불러오기 ", notes="모든 밸런스 게임 불러오기 ")
     @GetMapping("/game-list")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> getGameListController(){
@@ -48,6 +50,7 @@ public class GameController {
     /**
      * 새로운 밸런스 게임 등록
      */
+    @ApiOperation(value="새로운 밸런스 게임 등록", notes="새로운 밸런스 게임 등록")
     @PostMapping("/game")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> makeGameController(@RequestBody QuestionDto questionDto){
@@ -66,6 +69,7 @@ public class GameController {
     /**
      * 밸런스 게임 플레이
      */
+    @ApiOperation(value="밸런스 게임 플레이", notes="밸런스 게임 플레이")
     @PostMapping("/game-play")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> answerGameController(@RequestBody AnswerDto answerDto){
@@ -207,6 +211,7 @@ public class GameController {
     /**
      * 밸런스 게임 통계 보기
      */
+    @ApiOperation(value="밸런스 게임 통계 보기", notes="밸런스 게임 통계 보기")
     @GetMapping("/game-chart")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> getGameChartController(@RequestBody QuestionDto questionDto){

@@ -1,5 +1,6 @@
 package mozi.mozispring.Controller;
 
+import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Dto.KnockDelDto;
 import mozi.mozispring.Domain.Dto.KnockDto;
 import mozi.mozispring.Domain.Friend;
@@ -34,6 +35,7 @@ public class KnockController {
      * 상대방에게 노크
      * 주의사항: 서로 친구 추가가 되어있어야 노크 가능
      */
+    @ApiOperation(value="상대방에게 노크하기 ", notes="상대방에게 노크하기, 주의사항: 서로 친구 추가가 되어있어야 노크 가능")
     @PostMapping("/knock")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> knockController(@RequestBody KnockDto knockDto){
@@ -51,6 +53,7 @@ public class KnockController {
     /**
      * 노크 로그 반환
      */
+    @ApiOperation(value="노크 로그 반환 ", notes="노크 로그 반환")
     @GetMapping("/knock")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> getKnockController(){
@@ -66,6 +69,7 @@ public class KnockController {
     /**
      * 노크 삭제
      */
+    @ApiOperation(value="노크 삭제하기 ", notes="노크 삭제하기")
     @DeleteMapping("/knock")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> deleteKnockController(@RequestBody KnockDelDto knockDelDto){

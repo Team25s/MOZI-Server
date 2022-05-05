@@ -1,5 +1,6 @@
 package mozi.mozispring.Controller;
 
+import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Dto.MomentDto;
 import mozi.mozispring.Domain.Moment;
 import mozi.mozispring.Domain.MomentPhoto;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.UUID;
 
 @Controller
@@ -35,6 +35,7 @@ public class MomentController {
     /**
      * 유저의 모먼트 불러오기
      */
+    @ApiOperation(value="유저의 모먼트 불러오기", notes="유저의 모먼트 불러오기")
     @GetMapping("/moment")
     @ResponseBody
     public void getAllMomentController(){
@@ -44,6 +45,7 @@ public class MomentController {
     /**
      * 모먼트 기록하기
      */
+    @ApiOperation(value="모먼트 기록하기", notes="모먼트 기록하기")
     @PostMapping("/moment")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> createMomentController(@RequestBody MomentDto momentDto){
@@ -74,6 +76,7 @@ public class MomentController {
     /**
      * 모먼트 삭제하기
      */
+    @ApiOperation(value="모먼트 삭제하기", notes="모먼트 삭제하기")
     @DeleteMapping("/moment")
     @ResponseBody
     public void deleteMomentController(){
@@ -83,6 +86,7 @@ public class MomentController {
     /**
      * 해시태그로 검색하기
      */
+    @ApiOperation(value="해시태그로 검색하기", notes="해시태그로 검색하기")
     @GetMapping("/moment/tag")
     @ResponseBody
     public void getMomentByHashTag(){

@@ -1,6 +1,7 @@
 package mozi.mozispring.Controller;
 
 import com.google.cloud.storage.StorageException;
+import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Dto.LogInDto;
 import mozi.mozispring.Domain.Dto.SignInDto;
 import mozi.mozispring.Domain.Dto.WithdrawDto;
@@ -49,6 +50,7 @@ public class LoginController {
     /**
      * 회원가입 api
      */
+    @ApiOperation(value="회원가입하기", notes="회원가입하기")
     @PostMapping("/join")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> joinController(@RequestBody SignInDto signInDto) {
@@ -77,6 +79,7 @@ public class LoginController {
     /**
      * 로그인 api
      */
+    @ApiOperation(value="로그인하기 ", notes="로그인하기")
     @PostMapping("/login")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> loginController(@RequestBody LogInDto logInDto) {
@@ -95,6 +98,7 @@ public class LoginController {
     /**
      * 회원탈퇴 api
      */
+    @ApiOperation(value="회원탈퇴하기 ", notes="회원탈퇴하기")
     @PostMapping("/withdraw")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> withdrawController(@RequestBody LogInDto logInDto){
@@ -120,6 +124,7 @@ public class LoginController {
     /**
      * 탈퇴 회원 보유 콘텐츠 수량 고지 api
      */
+    @ApiOperation(value=" 탈퇴 회원 보유 콘텐츠 수량 고지하기 ", notes=" 탈퇴 회원 보유 콘텐츠 수량 고지하기")
     @GetMapping("/content-count")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> countUserContentController(){

@@ -1,5 +1,6 @@
 package mozi.mozispring.Controller;
 
+import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Dto.FriendDto;
 import mozi.mozispring.Domain.Dto.FriendRetDto;
 import mozi.mozispring.Domain.Friend;
@@ -34,6 +35,7 @@ public class FriendController {
     /**
      * 친구 추가
      */
+    @ApiOperation(value="친구 추가하기", notes="친구 추가하기")
     @PostMapping("/friend")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> addFriendController(@RequestBody FriendDto friendDto){
@@ -60,6 +62,7 @@ public class FriendController {
     /**
      * 친구 삭제
      */
+    @ApiOperation(value="친구 삭제하기", notes="친구 삭제하기")
     @DeleteMapping("/friend")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> deleteFriendController(@RequestBody FriendDto friendDto){
@@ -76,6 +79,7 @@ public class FriendController {
     /**
      *  내 친구 목록
      */
+    @ApiOperation(value="내 친구 목록 확인하기", notes="내 친구 목록 확인하기")
     @GetMapping("/friend-list")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> getFriendListController(){

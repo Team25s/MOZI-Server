@@ -1,6 +1,7 @@
 package mozi.mozispring.Controller;
 
 import com.google.cloud.storage.StorageException;
+import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Dto.ProfileDto;
 import mozi.mozispring.Domain.Dto.ProfileFixDto;
 import mozi.mozispring.Domain.SimplUser;
@@ -38,6 +39,7 @@ public class ProfileController {
     /**
      *  유저 프로필 불러오기
      */
+    @ApiOperation(value="유저 프로필 불러오기", notes="유저 프로필 불러오기")
     @GetMapping("/profile")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> getUserProfileController(Long id){
@@ -55,6 +57,7 @@ public class ProfileController {
     /**
      * 유저 프로필 수정
      */
+    @ApiOperation(value="유저 프로필 수정 ", notes="유저 프로필 수정")
     @PutMapping("/profile")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> updateProfileController(@RequestBody ProfileFixDto profileFixDto) throws IOException {
