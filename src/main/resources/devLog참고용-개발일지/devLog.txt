@@ -1,21 +1,21 @@
-2022-04-07
+2022-04-07-yuny0623
 1. 기본적인건 어느정도 만들어놓음.
 2. 시간날때 api 테스트좀 해보자.
 3. 시간날때 ec2 만들어서 올려보자.
 jpaRepository 사용법 관련 블로그 : https://jobc.tistory.com/120
 
-2022-04-08
+2022-04-08-yuny0623
 1.
 2.
 3.
 4.
 
-2022-05-03
+2022-05-03-yuny0623
 파이어베이스 연동 블로그 ->  https://popawaw.tistory.com/264
 지금 service 를 거의 안만들었음. 전부다 controller 에서 구현했는데
 이거 service 에서 구현하고 controller 는 값만 던질 수 있게 수정하기
 
-2022-05-04
+2022-05-04-yuny0623
 1. 노크 api 마저 구현하기 -> 구현했음
 2. 일정 수정 api 구현하기 ->  구현했음
 3. 모먼트 api 구현하기 -> 반정도 구현했음
@@ -32,8 +32,9 @@ jpaRepository 사용법 관련 블로그 : https://jobc.tistory.com/120
 2. 안드랑 api 들 테스트하기
 3. service 로 로직 옮기기
 
-2022-05-05
+2022-05-05-yuny0623
 1. 어린이날임. 어린이 만세
 2. swagger -> dto 랑 controller 에 설정하기 -> 설정 완료
 문제점: swagger에 response 형식이 표기가 안됨. 왜? -> ResponseEntity 를 보낼때 CommonResponse를 그 안에 래핑해서 보내주기 때문에 그런것이라고 추측됨.
 CommonReponse로 보내지 말고 그냥 결과 데이터를 ResponseEntity 에 바로 넣어서 보내도 될듯. 생각해보면 굳이 CommonResponse 를 쓸 이유가 없음.
+-> 아니면 그냥 ResponseEntity 걷어내도 될듯. 에러도 데이터로 명시하는데 이걸 굳이 쓸필요가 없음.
