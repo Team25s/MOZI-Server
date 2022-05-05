@@ -33,5 +33,7 @@ jpaRepository 사용법 관련 블로그 : https://jobc.tistory.com/120
 3. service 로 로직 옮기기
 
 2022-05-05
-1. 어린이날임. 만세
-2. swagger -> dto 랑 controller 에 설정하기
+1. 어린이날임. 어린이 만세
+2. swagger -> dto 랑 controller 에 설정하기 -> 설정 완료
+문제점: swagger에 response 형식이 표기가 안됨. 왜? -> ResponseEntity 를 보낼때 CommonResponse를 그 안에 래핑해서 보내주기 때문에 그런것이라고 추측됨.
+CommonReponse로 보내지 말고 그냥 결과 데이터를 ResponseEntity 에 바로 넣어서 보내도 될듯. 생각해보면 굳이 CommonResponse 를 쓸 이유가 없음.

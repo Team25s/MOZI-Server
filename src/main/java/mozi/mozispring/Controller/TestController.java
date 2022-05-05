@@ -16,5 +16,8 @@ public class TestController {
     /**
      * Swagger3 api 스펙 명시 링크 예시:
      * http://localhost:8080/swagger-ui/
+     *
+     * Swagger2 api 스펙 명시 링크 예시:
+     * http://localhost:8080/swagger-ui.html
      */
 }
