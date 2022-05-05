@@ -50,7 +50,7 @@ public class ScheduleController {
     /**
      * 일정 등록하기
      */
-    @ApiOperation(value="일정 등록하기", notes="일정 등록하기")
+    @ApiOperation(value="일정 등록하기", notes="NEED JWT IN HEADER: 일정 등록하기")
     @PostMapping("/schedule")
     @ResponseBody
     public Long makeScheduleController(@RequestBody ScheduleDto scheduleDto){
@@ -94,7 +94,7 @@ public class ScheduleController {
     /**
      * 일정 수정하기 
      */
-    @ApiOperation(value="일정 수정하기 ", notes="일정 수정하기 ")
+    @ApiOperation(value="일정 수정하기 ", notes="NEED JWT IN HEADER: 일정 수정하기 ")
     @PutMapping("/schedule")
     @ResponseBody
     public Long updateScheduleController(@RequestBody ScheduleDto scheduleDto){
@@ -138,7 +138,7 @@ public class ScheduleController {
     /**
      * 일정 삭제하기
      */
-    @ApiOperation(value="일정 삭제하기", notes="일정 삭제하기")
+    @ApiOperation(value="일정 삭제하기", notes="NEED JWT IN HEADER: 일정 삭제하기")
     @DeleteMapping("/schedule")
     @ResponseBody
     public boolean deleteScheduleController(@RequestBody ScheduleDelDto scheduleDelDto){

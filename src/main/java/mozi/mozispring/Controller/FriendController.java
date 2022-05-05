@@ -33,7 +33,7 @@ public class FriendController {
     /**
      * 친구 추가
      */
-    @ApiOperation(value="친구 추가하기", notes="친구 추가하기")
+    @ApiOperation(value="친구 추가하기", notes="NEED JWT IN HEADER: 친구 추가하기")
     @PostMapping("/friend")
     @ResponseBody
     public Long addFriendController(@RequestBody FriendDto friendDto){
@@ -61,7 +61,7 @@ public class FriendController {
     /**
      * 친구 삭제
      */
-    @ApiOperation(value="친구 삭제하기", notes="친구 삭제하기")
+    @ApiOperation(value="친구 삭제하기", notes="NEED JWT IN HEADER: 친구 삭제하기")
     @DeleteMapping("/friend")
     @ResponseBody
     public void deleteFriendController(@RequestBody FriendDto friendDto){
@@ -77,7 +77,7 @@ public class FriendController {
     /**
      *  내 친구 목록
      */
-    @ApiOperation(value="내 친구 목록 확인하기", notes="내 친구 목록 확인하기")
+    @ApiOperation(value="내 친구 목록 확인하기", notes="NEED JWT IN HEADER: 내 친구 목록 확인하기")
     @GetMapping("/friend-list")
     @ResponseBody
     public List<FriendRetDto> getFriendListController(){

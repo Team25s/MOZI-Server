@@ -136,7 +136,7 @@ public class LoginController {
     /**
      * 탈퇴 회원 보유 콘텐츠 수량 고지 api
      */
-    @ApiOperation(value=" 탈퇴 회원 보유 콘텐츠 수량 고지하기 ", notes=" 탈퇴 회원 보유 콘텐츠 수량 고지하기")
+    @ApiOperation(value=" 탈퇴 회원 보유 콘텐츠 수량 고지하기 ", notes="NEED JWT IN HEADER: 탈퇴 회원 보유 콘텐츠 수량 고지하기")
     @GetMapping("/content-count")
     @ResponseBody
     public WithdrawDto countUserContentController(){

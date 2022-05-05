@@ -70,7 +70,7 @@ public class GameController {
     /**
      * 밸런스 게임 플레이
      */
-    @ApiOperation(value="밸런스 게임 플레이", notes="밸런스 게임 플레이")
+    @ApiOperation(value="밸런스 게임 플레이", notes="NEED JWT IN HEADER: 밸런스 게임 플레이")
     @PostMapping("/game-play")
     @ResponseBody
     public Long answerGameController(@RequestBody AnswerDto answerDto){

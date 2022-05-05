@@ -35,7 +35,7 @@ public class KnockController {
      * 상대방에게 노크
      * 주의사항: 서로 친구 추가가 되어있어야 노크 가능
      */
-    @ApiOperation(value="상대방에게 노크하기 ", notes="상대방에게 노크하기, 주의사항: 서로 친구 추가가 되어있어야 노크 가능")
+    @ApiOperation(value="상대방에게 노크하기 ", notes="NEED JWT IN HEADER: 상대방에게 노크하기, 주의사항: 서로 친구 추가가 되어있어야 노크 가능")
     @PostMapping("/knock")
     @ResponseBody
     public Long knockController(@RequestBody KnockDto knockDto){
@@ -53,7 +53,7 @@ public class KnockController {
     /**
      * 노크 로그 반환
      */
-    @ApiOperation(value="노크 로그 반환 ", notes="노크 로그 반환")
+    @ApiOperation(value="노크 로그 반환 ", notes="NEED JWT IN HEADER: 노크 로그 반환")
     @GetMapping("/knock")
     @ResponseBody
     public List<Friend> getKnockController(){

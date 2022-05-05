@@ -58,7 +58,7 @@ public class ProfileController {
     /**
      * 유저 프로필 수정
      */
-    @ApiOperation(value="유저 프로필 수정 ", notes="유저 프로필 수정")
+    @ApiOperation(value="유저 프로필 수정 ", notes="NEED JWT IN HEADER: 유저 프로필 수정")
     @PutMapping("/profile")
     @ResponseBody
     public Long updateProfileController(@RequestBody ProfileFixDto profileFixDto){

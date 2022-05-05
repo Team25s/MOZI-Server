@@ -61,7 +61,7 @@ public class CommentController {
     /**
      * 댓글 삭제
      */
-    @ApiOperation(value="댓글 삭제하기", notes="댓글 삭제하기")
+    @ApiOperation(value="댓글 삭제하기", notes="NEED JWT IN HEADER: 댓글 삭제하기")
     @DeleteMapping("/comment")
     @ResponseBody
     public boolean deleteCommentController(@RequestBody DelComment delComment){
