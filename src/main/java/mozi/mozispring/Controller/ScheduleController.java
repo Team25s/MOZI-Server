@@ -42,9 +42,9 @@ public class ScheduleController {
     @ApiOperation(value="유저 모든 일정 불러오기", notes="유저 모든 일정 불러오기")
     @GetMapping("/schedule")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> getScheduleController(Long id){
+    public List<Schedule> getScheduleController(Long id){
         List<Schedule> schedules = scheduleRepository.findAllById(id);
-        return ResponseEntity.ok().body(new CommonResponse(schedules));
+        return schedules;
     }
 
     /**
@@ -53,7 +53,7 @@ public class ScheduleController {
     @ApiOperation(value="일정 등록하기", notes="일정 등록하기")
     @PostMapping("/schedule")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> makeScheduleController(@RequestBody ScheduleDto scheduleDto){
+    public Long makeScheduleController(@RequestBody ScheduleDto scheduleDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -77,15 +77,18 @@ public class ScheduleController {
         participants.add(findUser.getId());  // 본인 추가
 
         int memberCount = 0;
+        Schedule savedSchedule = null;
         for(Long id : participants){
             schedule.setUserId(id);
-            scheduleRepository.save(schedule);
+            savedSchedule = scheduleRepository.save(schedule);
             memberCount += 1;
         }
         if (memberCount == participants.size()){
-            return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 추가되었습니다."));
+            //return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 추가되었습니다."));
+            return savedSchedule.getId();
         }
-        return ResponseEntity.ok().body(new ErrorResponse("일정을 추가할 수 없습니다."));
+        //return ResponseEntity.ok().body(new ErrorResponse("일정을 추가할 수 없습니다."));
+        return -1L;
     }
 
     /**
@@ -94,7 +97,7 @@ public class ScheduleController {
     @ApiOperation(value="일정 수정하기 ", notes="일정 수정하기 ")
     @PutMapping("/schedule")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> updateScheduleController(@RequestBody ScheduleDto scheduleDto){
+    public Long updateScheduleController(@RequestBody ScheduleDto scheduleDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -122,10 +125,12 @@ public class ScheduleController {
                 simplUserList2.add(findSimplUser);
             }
             findSchedule.setFriendList(simplUserList2);
-            scheduleRepository.save(findSchedule);
-            return ResponseEntity.ok().body(new CommonResponse<>(findSchedule));
+            Schedule schedule = scheduleRepository.save(findSchedule);
+            //return ResponseEntity.ok().body(new CommonResponse<>(findSchedule));
+            return schedule.getId();
         }else{
-            return ResponseEntity.ok().body(new ErrorResponse("자신의 일정만 수정할 수 있습니다."));
+            //return ResponseEntity.ok().body(new ErrorResponse("자신의 일정만 수정할 수 있습니다."));
+            return -1L;
         }
     }
 
@@ -136,7 +141,7 @@ public class ScheduleController {
     @ApiOperation(value="일정 삭제하기", notes="일정 삭제하기")
     @DeleteMapping("/schedule")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> deleteScheduleController(@RequestBody ScheduleDelDto scheduleDelDto){
+    public boolean deleteScheduleController(@RequestBody ScheduleDelDto scheduleDelDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -144,9 +149,11 @@ public class ScheduleController {
 
         if(findUser.getId().equals(scheduleDelDto.getUserId())){
             scheduleRepository.deleteById(scheduleDelDto.getId());
-            return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 삭제하였습니다."));
+            //return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 삭제하였습니다."));
+            return true;
         }else{
-            return ResponseEntity.ok().body(new ErrorResponse("자신의 일정만 삭제할 수 있습니다."));
+            //return ResponseEntity.ok().body(new ErrorResponse("자신의 일정만 삭제할 수 있습니다."));
+            return false;
         }
     }
 }

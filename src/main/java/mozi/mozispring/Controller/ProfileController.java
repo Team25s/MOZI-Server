@@ -12,6 +12,7 @@ import mozi.mozispring.Service.FireBaseService;
 import mozi.mozispring.Util.BasicResponse;
 import mozi.mozispring.Util.CommonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,7 +43,7 @@ public class ProfileController {
     @ApiOperation(value="유저 프로필 불러오기", notes="유저 프로필 불러오기")
     @GetMapping("/profile")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> getUserProfileController(Long id){
+    public ProfileDto getUserProfileController(Long id){
         Optional<User> findUser = userRepository.findById(id);
         User user = findUser.get();
         ProfileDto profileDto = new ProfileDto();
@@ -51,7 +52,7 @@ public class ProfileController {
         profileDto.setMbti(user.getMbti());
         profileDto.setIntroduce(user.getIntroduce());
         profileDto.setStrTag(user.getStrTag());
-        return ResponseEntity.ok().body(new CommonResponse(profileDto));
+        return profileDto;
     }
 
     /**
@@ -60,7 +61,7 @@ public class ProfileController {
     @ApiOperation(value="유저 프로필 수정 ", notes="유저 프로필 수정")
     @PutMapping("/profile")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> updateProfileController(@RequestBody ProfileFixDto profileFixDto) throws IOException {
+    public Long updateProfileController(@RequestBody ProfileFixDto profileFixDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -83,14 +84,20 @@ public class ProfileController {
             }catch(StorageException e){
                 System.out.println(e.getMessage());
             }
-            String nameFile =  UUID.randomUUID().toString() + ".jpg";
-            String mediaLink = fireBaseService.uploadFiles(profileFixDto.getMultipartFile(), nameFile); // 이미지의 주소를 반환함.
-
+            String nameFile= null;
+            String mediaLink= null;
+            try {
+                nameFile = UUID.randomUUID().toString() + ".jpg";
+                mediaLink = fireBaseService.uploadFiles(profileFixDto.getMultipartFile(), nameFile); // 이미지의 주소를 반환함.
+            }catch(IOException e){
+                System.out.println(e.getMessage());
+            }
             user.setProfileFilename(nameFile);
             simplUser.setProfileFilename(nameFile);
         }
-        User result = userRepository.save(user);
+        User savedUser = userRepository.save(user);
                       simplUserRepository.save(simplUser);
-        return ResponseEntity.ok().body(new CommonResponse<>(result.getId()));
+
+        return savedUser.getId();
     }
 }

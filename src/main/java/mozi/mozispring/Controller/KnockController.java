@@ -38,7 +38,7 @@ public class KnockController {
     @ApiOperation(value="상대방에게 노크하기 ", notes="상대방에게 노크하기, 주의사항: 서로 친구 추가가 되어있어야 노크 가능")
     @PostMapping("/knock")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> knockController(@RequestBody KnockDto knockDto){
+    public Long knockController(@RequestBody KnockDto knockDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -47,7 +47,7 @@ public class KnockController {
         // 친구 - friendId
         Friend friend = friendRepository.findByUserIdAndFriendId(knockDto.getOpponentId(), findUser.get().getId());
         friend.setKnock(friend.getKnock() + 1);
-        return ResponseEntity.ok().body(new CommonResponse<>(friendRepository.save(friend)));
+        return friendRepository.save(friend).getId();
     }
 
     /**
@@ -56,14 +56,14 @@ public class KnockController {
     @ApiOperation(value="노크 로그 반환 ", notes="노크 로그 반환")
     @GetMapping("/knock")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> getKnockController(){
+    public List<Friend> getKnockController(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
 
         List<Friend> friendList = friendRepository.findAllByUserId(findUser.get().getId());
-        return ResponseEntity.ok().body(new CommonResponse<>(friendList));
+        return friendList;
     }
 
     /**
@@ -72,10 +72,9 @@ public class KnockController {
     @ApiOperation(value="노크 삭제하기 ", notes="노크 삭제하기")
     @DeleteMapping("/knock")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> deleteKnockController(@RequestBody KnockDelDto knockDelDto){
+    public Long deleteKnockController(@RequestBody KnockDelDto knockDelDto){
         Friend friend = friendRepository.findById(knockDelDto.getKnockId()).get();
-        friend.setKnock(0);
-        friendRepository.save(friend); // 초기화
-        return ResponseEntity.ok().body(new CommonResponse<>("노크가 초기화되었습니다."));
+        friend.setKnock(0); // 초기화
+        return friendRepository.save(friend).getId();
     }
 }

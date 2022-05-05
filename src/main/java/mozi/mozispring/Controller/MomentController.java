@@ -48,7 +48,7 @@ public class MomentController {
     @ApiOperation(value="모먼트 기록하기", notes="모먼트 기록하기")
     @PostMapping("/moment")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> createMomentController(@RequestBody MomentDto momentDto){
+    public Long createMomentController(@RequestBody MomentDto momentDto){
         Moment moment = new Moment();
         moment.setTitle(moment.getTitle());
         moment.setContent(moment.getContent());
@@ -68,9 +68,11 @@ public class MomentController {
                 momentPhotoRepository.save(momentPhoto);
             }
         }catch(Exception e){
-            return ResponseEntity.ok().body(new ErrorResponse("모먼트를 저장할 수 없습니다."));
+            //return ResponseEntity.ok().body(new ErrorResponse("모먼트를 저장할 수 없습니다."));
+            return -1L;
         }
-        return ResponseEntity.ok().body(new CommonResponse<>("모먼트를 정상적으로 기록하였습니다."));
+        //return ResponseEntity.ok().body(new CommonResponse<>("모먼트를 정상적으로 기록하였습니다."));
+        return savedMoment.getId();
     }
 
     /**
