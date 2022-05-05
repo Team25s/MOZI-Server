@@ -16,9 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class FriendController {
@@ -38,25 +36,26 @@ public class FriendController {
     @ApiOperation(value="친구 추가하기", notes="친구 추가하기")
     @PostMapping("/friend")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> addFriendController(@RequestBody FriendDto friendDto){
+    public Long addFriendController(@RequestBody FriendDto friendDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
 
-        friendRepository.save(Friend.builder()
+        Friend user = friendRepository.save(Friend.builder()
                 .userId(findUser.get().getId())
                 .friendId(friendDto.getFriendId())
                 .mbti(friendDto.getMbti())
                 .knock(0)
                 .build());
-        friendRepository.save(Friend.builder()
+        Friend friend = friendRepository.save(Friend.builder()
                 .userId(friendDto.getFriendId())
                 .friendId(findUser.get().getId())
                 .mbti(findUser.get().getMbti())
                 .knock(0)
                 .build());
-        return ResponseEntity.ok().body(new CommonResponse<>("친구 추가에 성공하였습니다."));
+
+        return friend.getId();
     }
 
     /**
@@ -65,7 +64,7 @@ public class FriendController {
     @ApiOperation(value="친구 삭제하기", notes="친구 삭제하기")
     @DeleteMapping("/friend")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> deleteFriendController(@RequestBody FriendDto friendDto){
+    public void deleteFriendController(@RequestBody FriendDto friendDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -73,7 +72,6 @@ public class FriendController {
 
         friendRepository.deleteByUserIdAndFriendId(findUser.get().getId(), friendDto.getFriendId());
         friendRepository.deleteByUserIdAndFriendId(friendDto.getFriendId(), findUser.get().getId());
-        return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 삭제하였습니다."));
     }
 
     /**
@@ -82,7 +80,7 @@ public class FriendController {
     @ApiOperation(value="내 친구 목록 확인하기", notes="내 친구 목록 확인하기")
     @GetMapping("/friend-list")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> getFriendListController(){
+    public List<FriendRetDto> getFriendListController(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -100,6 +98,6 @@ public class FriendController {
             friendRetDto.setFilename(filename);
             friendRetDtos.add(friendRetDto);
         }
-        return ResponseEntity.ok().body(new CommonResponse<>(friendRetDtos));
+        return friendRetDtos;
     }
 }

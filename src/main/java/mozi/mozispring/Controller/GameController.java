@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -43,8 +44,8 @@ public class GameController {
     @ApiOperation(value="모든 밸런스 게임 불러오기 ", notes="모든 밸런스 게임 불러오기 ")
     @GetMapping("/game-list")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> getGameListController(){
-        return ResponseEntity.ok().body(new CommonResponse<>(gameRepository.findAll()));
+    public List<GameQA> getGameListController(){
+        return gameRepository.findAll();
     }
 
     /**
@@ -53,7 +54,7 @@ public class GameController {
     @ApiOperation(value="새로운 밸런스 게임 등록", notes="새로운 밸런스 게임 등록")
     @PostMapping("/game")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> makeGameController(@RequestBody QuestionDto questionDto){
+    public GameQA makeGameController(@RequestBody QuestionDto questionDto){
         GameQA newGameQA = new GameQA();
         newGameQA.setQuestion(questionDto.getQuestion());
         newGameQA.setPositive_answer(0);
@@ -63,7 +64,7 @@ public class GameController {
         GameLog gameLog = new GameLog(); // 로그도 함께 생성
         gameLog.setQuestionId(gameQA.getId());
         gameLogRepository.save(gameLog);
-        return ResponseEntity.ok().body(new CommonResponse<>(gameQA));
+        return gameQA;
     }
 
     /**
@@ -72,7 +73,7 @@ public class GameController {
     @ApiOperation(value="밸런스 게임 플레이", notes="밸런스 게임 플레이")
     @PostMapping("/game-play")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> answerGameController(@RequestBody AnswerDto answerDto){
+    public Long answerGameController(@RequestBody AnswerDto answerDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -203,9 +204,9 @@ public class GameController {
                 }
                 break;
             default:
-                return ResponseEntity.ok().body(new CommonResponse<>(gameQA));
+                return gameLog.getQuestionId();
         }
-        return ResponseEntity.ok().body(new CommonResponse<>(gameLogRepository.save(gameLog).getQuestionId()));
+        return gameLogRepository.save(gameLog).getQuestionId();
     }
 
     /**
@@ -214,9 +215,9 @@ public class GameController {
     @ApiOperation(value="밸런스 게임 통계 보기", notes="밸런스 게임 통계 보기")
     @GetMapping("/game-chart")
     @ResponseBody
-    public ResponseEntity<? extends BasicResponse> getGameChartController(@RequestBody QuestionDto questionDto){
+    public GameLog getGameChartController(@RequestBody QuestionDto questionDto){
         GameQA gameQA = gameRepository.findByQuestion(questionDto.getQuestion());
         GameLog gameLog = gameLogRepository.findByQuestionId(gameQA.getId());
-        return ResponseEntity.ok().body(new CommonResponse<>(gameLog));
+        return gameLog;
     }
 }
