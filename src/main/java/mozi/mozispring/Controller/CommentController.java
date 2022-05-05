@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class CommentController {
 
     private final CommentRepository commentRepository;
@@ -35,16 +35,6 @@ public class CommentController {
         this.userRepository = userRepository;
     }
 
-//    /**
-//     * 유저 모든 댓글 불러오기
-//     */
-//    @ApiOperation(value="유저 모든 댓글 불러오기", notes="유저 모든 댓글 불러오기")
-//    @GetMapping("/comment")
-//    @ResponseBody
-//    public List<Comment> getCommentController(@RequestBody UserIdDto userIdDto){
-//        List<Comment> commentList = commentRepository.findAllById(userIdDto.getId());
-//        return commentList;
-//    }
     /**
      * 유저 모든 댓글 불러오기
      */
@@ -53,7 +43,6 @@ public class CommentController {
             @ApiImplicitParam(name="id", value="유저 id", required = true, dataType="Long", paramType = "path", defaultValue = "")
     )
     @GetMapping("/comment/{id}")
-    @ResponseBody
     public List<Comment> getCommentController(@PathVariable("id") Long id){
         List<Comment> commentList = commentRepository.findAllById(id);
         return commentList;
@@ -64,7 +53,6 @@ public class CommentController {
      */
     @ApiOperation(value="댓글 작성하기", notes="댓글 작성하기")
     @PostMapping("/comment")
-    @ResponseBody
     public Long commentController(@RequestBody CommentDto commentDto){
         Comment comment = commentRepository.save(Comment.builder()
                 .userId(commentDto.getOpponentId())
@@ -78,7 +66,6 @@ public class CommentController {
      */
     @ApiOperation(value="댓글 삭제하기", notes="NEED JWT IN HEADER: 댓글 삭제하기")
     @DeleteMapping("/comment")
-    @ResponseBody
     public boolean deleteCommentController(@RequestBody DelComment delComment){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;

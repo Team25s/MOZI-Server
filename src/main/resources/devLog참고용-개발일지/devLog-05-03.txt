@@ -1,0 +1,4 @@
+2022-05-03-yuny0623
+파이어베이스 연동 블로그 ->  https://popawaw.tistory.com/264
+지금 service 를 거의 안만들었음. 전부다 controller 에서 구현했는데
+이거 service 에서 구현하고 controller 는 값만 던질 수 있게 수정하기
