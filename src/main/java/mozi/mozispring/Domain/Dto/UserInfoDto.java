@@ -6,6 +6,9 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+/**
+ * Deprecated Dto
+ */
 public class UserInfoDto {
     private Long   userId;    // 유저 테이블 pk
     private String email;     // 유저 이메일

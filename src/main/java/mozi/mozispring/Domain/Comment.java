@@ -1,5 +1,6 @@
 package mozi.mozispring.Domain;
 
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 import javax.persistence.Entity;

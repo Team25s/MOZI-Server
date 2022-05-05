@@ -1,5 +1,6 @@
 package mozi.mozispring.Controller;
 
+import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Comment;
 import mozi.mozispring.Domain.Dto.CommentDto;
 import mozi.mozispring.Domain.Dto.DelComment;
@@ -35,6 +36,7 @@ public class CommentController {
     /**
      * 유저 모든 댓글 불러오기
      */
+    @ApiOperation(value="유저 모든 댓글 불러오기", notes="유저 모든 댓글 불러오기")
     @GetMapping("/comment")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> getCommentController(@RequestBody UserIdDto userIdDto){
@@ -45,6 +47,7 @@ public class CommentController {
     /**
      * 댓글 작성
      */
+    @ApiOperation(value="댓글 작성하기", notes="댓글 작성하기")
     @PostMapping("/comment")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> commentController(@RequestBody CommentDto commentDto){
@@ -58,6 +61,7 @@ public class CommentController {
     /**
      * 댓글 삭제
      */
+    @ApiOperation(value="댓글 삭제하기", notes="댓글 삭제하기")
     @DeleteMapping("/comment")
     @ResponseBody
     public ResponseEntity<? extends BasicResponse> deleteCommentController(@RequestBody DelComment delComment){

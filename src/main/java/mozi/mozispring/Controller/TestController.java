@@ -1,6 +1,7 @@
 package mozi.mozispring.Controller;
 
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/test/api")
