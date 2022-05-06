@@ -4,18 +4,24 @@ import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Dto.MomentDto;
 import mozi.mozispring.Domain.Moment;
 import mozi.mozispring.Domain.MomentPhoto;
+import mozi.mozispring.Domain.User;
 import mozi.mozispring.Repository.MomentPhotoRepository;
 import mozi.mozispring.Repository.MomentRepository;
+import mozi.mozispring.Repository.UserRepository;
 import mozi.mozispring.Service.FireBaseService;
 import mozi.mozispring.Util.BasicResponse;
 import mozi.mozispring.Util.CommonResponse;
 import mozi.mozispring.Util.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -24,12 +30,14 @@ public class MomentController {
     private FireBaseService fireBaseService;
     private MomentRepository momentRepository;
     private MomentPhotoRepository momentPhotoRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public MomentController(FireBaseService fireBaseService, MomentRepository momentRepository, MomentPhotoRepository momentPhotoRepository) {
+    public MomentController(FireBaseService fireBaseService, MomentRepository momentRepository, MomentPhotoRepository momentPhotoRepository, UserRepository userRepository) {
         this.fireBaseService = fireBaseService;
         this.momentRepository = momentRepository;
         this.momentPhotoRepository = momentPhotoRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -68,10 +76,8 @@ public class MomentController {
                 momentPhotoRepository.save(momentPhoto);
             }
         }catch(Exception e){
-            //return ResponseEntity.ok().body(new ErrorResponse("모먼트를 저장할 수 없습니다."));
             return -1L;
         }
-        //return ResponseEntity.ok().body(new CommonResponse<>("모먼트를 정상적으로 기록하였습니다."));
         return savedMoment.getId();
     }
 
@@ -79,10 +85,36 @@ public class MomentController {
      * 모먼트 삭제하기
      */
     @ApiOperation(value="모먼트 삭제하기", notes="모먼트 삭제하기")
-    @DeleteMapping("/moment")
+    @DeleteMapping("/moment/{id}")
     @ResponseBody
-    public void deleteMomentController(){
+    public boolean deleteMomentController(@PathVariable("id") Long id){ // 모먼트 id 를 파라미터로 전달
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String userEmail = ((UserDetails) principal).getUsername();
+        Optional<User> findUser = userRepository.findByEmail(userEmail);
 
+        Moment findMoment = momentRepository.findById(id).get();
+        if(!(findMoment.getUserId() == findUser.get().getId())){ // 자신의 모먼트가 아닌 것을 삭제하려고 하는 경우
+            return false;
+        }
+        List<MomentPhoto> momentPhotoList = momentPhotoRepository.findAllByMomentId(id);
+        int count = 0;
+        int len = momentPhotoList.size();
+        momentRepository.deleteById(findMoment.getId());
+        for(MomentPhoto momentPhoto: momentPhotoList){
+            try {
+                fireBaseService.deleteFiles(momentPhoto.getFileName()); // 파이어베이스에서 이미지 삭제
+                momentPhotoRepository.deleteById(momentPhoto.getId());  // 디비에서 모먼트 사진 정보 삭제
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                continue;
+            }
+            count++;
+        }
+        if(count == len){
+            return true;
+        }
+        return false;
     }
 
     /**

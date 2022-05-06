@@ -5,3 +5,5 @@ moment api 완성해보기
 1. @ApiImplicitParams 으로 PathVariable 구체적으로 명시해주기
 2. 그러고보니 Logger 를 안쓰고 있었음. Logger 쓸까. 나중에 적용해보기
 -> slf4j ?
+
+일단 moment api 부터 완성하자. 귀찮은거 먼저 끝내기

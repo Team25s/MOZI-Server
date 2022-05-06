@@ -16,8 +16,8 @@ public class MomentPhoto {
 
     @Id
     @GeneratedValue
-    private Long id;     // 디비 pk
+    private Long id;         // 디비 pk
 
-    private Long momentId;
-    private String fileName;
+    private Long momentId;   // 해당 moment id
+    private String fileName; // 모먼트에 첨부된 파일 이름
 }
