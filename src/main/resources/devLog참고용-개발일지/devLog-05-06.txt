@@ -25,3 +25,6 @@ getAllMomentController 에서 클라쪽으로 보내는게 상당히 많은 것 
 1. 나눠서 보낸다.
 2. 한꺼번에 그냥 보낸다.
 클라쪽 입장: 그냥 한꺼번에 보내도 상관없다. -> 고로 그냥 한꺼번에 보내는걸로 구현할게요.
+
+참고: spring data jpa like query
+https://recordsoflife.tistory.com/59

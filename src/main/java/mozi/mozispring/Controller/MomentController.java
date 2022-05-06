@@ -137,9 +137,14 @@ public class MomentController {
      * 해시태그로 검색하기
      */
     @ApiOperation(value="해시태그로 검색하기", notes="해시태그로 검색하기")
-    @GetMapping("/moment/tag")
+    @GetMapping("/moment/{tag}")
     @ResponseBody
-    public void getMomentByHashTag(){
-
+    public List<MomentRetDto> getMomentByHashTag(@PathVariable("tag") String tag){
+        List<Moment> momentList = momentRepository.findByHashTagContaining(tag);
+        List<MomentRetDto> momentRetDtoList = new ArrayList<>();
+        for(Moment moment: momentList){
+            momentRetDtoList.add(momentService.getMoment(moment.getId()));
+        }
+        return momentRetDtoList;
     }
 }

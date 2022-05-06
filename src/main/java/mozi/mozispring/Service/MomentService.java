@@ -26,7 +26,7 @@ public class MomentService {
     /**
      * 모먼트 반환
      */
-    public MomentRetDto getMoment(Long momentId){
+    public MomentRetDto getMoment(Long momentId){ // 모먼트 id
         Moment findMoment = momentRepository.findById(momentId).get();
         List<MomentPhoto> momentPhotoList = momentPhotoRepository.findAllByMomentId(findMoment.getId());
         MomentRetDto momentRetDto = new MomentRetDto();
