@@ -2,6 +2,7 @@ package mozi.mozispring.Controller;
 
 import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Dto.MomentDto;
+import mozi.mozispring.Domain.Dto.MomentRetDto;
 import mozi.mozispring.Domain.Moment;
 import mozi.mozispring.Domain.MomentPhoto;
 import mozi.mozispring.Domain.User;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,13 +43,36 @@ public class MomentController {
     }
 
     /**
-     * 유저의 모먼트 불러오기
+     * 특정 유저의 모든 모먼트 모두 불러오기
      */
-    @ApiOperation(value="유저의 모먼트 불러오기", notes="유저의 모먼트 불러오기")
-    @GetMapping("/moment")
+    @GetMapping("/moment-list")
     @ResponseBody
     public void getAllMomentController(){
 
+    }
+
+    /**
+     * 유저의 모먼트 한 건 불러오기
+     */
+    @ApiOperation(value="유저의 모먼트 한 건 불러오기", notes="유저의 모먼트 한 건 불러오기")
+    @GetMapping("/moment/{id}")
+    @ResponseBody
+    public MomentRetDto getSingleMomentController(@PathVariable("id") Long id){
+        Moment findMoment = momentRepository.findById(id).get();
+        List<MomentPhoto> momentPhotoList = momentPhotoRepository.findAllByMomentId(findMoment.getId());
+        MomentRetDto momentRetDto = new MomentRetDto();
+        momentRetDto.setTitle(findMoment.getTitle());
+        momentRetDto.setContent(findMoment.getContent());
+        momentRetDto.setDate(findMoment.getDate());
+        momentRetDto.setUserId(findMoment.getUserId());
+        momentRetDto.setHashTag(findMoment.getHashTag());
+        // String list ? 어떻게 처리할까?
+        List<String> fileNameList = new ArrayList<>();
+        for(MomentPhoto momentPhoto : momentPhotoList){
+            fileNameList.add(momentPhoto.getFileName());
+        }
+        momentRetDto.setFileNameList(fileNameList);
+        return momentRetDto;
     }
 
     /**
@@ -84,7 +109,7 @@ public class MomentController {
     /**
      * 모먼트 삭제하기
      */
-    @ApiOperation(value="모먼트 삭제하기", notes="모먼트 삭제하기")
+    @ApiOperation(value="모먼트 삭제하기", notes="NEED JWT IN HEADER: 모먼트 삭제하기")
     @DeleteMapping("/moment/{id}")
     @ResponseBody
     public boolean deleteMomentController(@PathVariable("id") Long id){ // 모먼트 id 를 파라미터로 전달

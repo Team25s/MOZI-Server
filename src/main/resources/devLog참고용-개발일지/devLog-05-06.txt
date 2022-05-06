@@ -1,9 +1,17 @@
 2022-05-06-yuny0623
 오늘해볼거:
-moment api 완성해보기
 
+moment api 완성해보기
+<오늘 생각해볼거>
 1. @ApiImplicitParams 으로 PathVariable 구체적으로 명시해주기
 2. 그러고보니 Logger 를 안쓰고 있었음. Logger 쓸까. 나중에 적용해보기
 -> slf4j ?
 
-일단 moment api 부터 완성하자. 귀찮은거 먼저 끝내기
+일단 moment api 부터 완성하자. 귀찮은거 먼저 끝내기.
+
+<이후 할일>
+1. ResponseEntity 깔끔하게 작성할 수 있는지 테스트해보고
+2. swagger 좀더 보정해주고
+3. logger 추가하는거 생각해보고
+4. 클라한테 사진파일정보 줄떄 파일 이름이 아니라 파이어베이스 스토리지 url 로 전달해주기
+(이건 어떻게 할지 클라랑 같이 고민중인데 이편이 더 편하다고 함. )
