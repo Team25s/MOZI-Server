@@ -1,14 +1,19 @@
 2022-05-05-yuny0623
 1. 어린이날임. 어린이 만세
-2. swagger -> dto 랑 controller 에 설정하기 -> 설정 완료
+2. swagger -> dto 랑 controller 에 어노테이션 설정하기 -> 설정 완료
 문제점1: swagger에 response 형식이 표기가 안됨. 왜? -> ResponseEntity 를 보낼때 CommonResponse를 그 안에 래핑해서 보내주기 때문에 그런것이라고 추측됨.
 CommonReponse로 보내지 말고 그냥 결과 데이터를 ResponseEntity 에 바로 넣어서 보내도 될듯. 생각해보면 굳이 CommonResponse 를 쓸 이유가 없음.
 -> 아니면 그냥 ResponseEntity 걷어내도 될듯. 에러도 데이터로 명시하는데 이걸 굳이 쓸필요가 없음.
+
 스프링 필터에 대한 내용: https://yhmane.tistory.com/144
 
-문제점2: Dto 가 너무 많음. 왜 많을까? 필드 하나짜리Dto가 너무 많음. 왜 굳이 필드 하나짜리 Dto를 유지해야할까?
+문제점2: Dto 가 너무 많음. 왜 많을까? 필드 하나짜리 Dto가 너무 많음. 왜 굳이 필드 하나짜리 Dto를 유지해야할까?
+PathVariable을 안쓰려고 만들었는데 굳이 안쓸 필요가 있나?
 그냥 PathVariable로 주면 그 Dto는 굳이 안써도 되지 않을까? -> Dto 개수 줄이기
 -> 특별한 경우 제외하고 필드 하나짜리 Dto 전부 PathVariable로 다 바꾸기
 
 문제점3: 지금 개발일지 devLog-xx-xx.txt 로 관리하고 있는데 이거 굳이 .txt로 관리하지 말고
 .md 파일로 관리하면 안되나? -> 시간날때 바꾸기
+
+ResponseEntity 깔끔하게 쓰기 -> 아래 링크 참고
+https://hyeonic.tistory.com/197

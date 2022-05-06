@@ -3,6 +3,7 @@ package mozi.mozispring.Controller;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import mozi.mozispring.Domain.Comment;
 import mozi.mozispring.Domain.Dto.CommentDto;
 import mozi.mozispring.Domain.Dto.DelComment;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 public class CommentController {
 
@@ -44,6 +46,7 @@ public class CommentController {
     )
     @GetMapping("/comment/{id}")
     public List<Comment> getCommentController(@PathVariable("id") Long id){
+        log.info("find All Comment of user");
         List<Comment> commentList = commentRepository.findAllById(id);
         return commentList;
     }
