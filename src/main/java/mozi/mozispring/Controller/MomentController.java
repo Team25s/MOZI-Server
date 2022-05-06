@@ -10,9 +10,7 @@ import mozi.mozispring.Repository.MomentPhotoRepository;
 import mozi.mozispring.Repository.MomentRepository;
 import mozi.mozispring.Repository.UserRepository;
 import mozi.mozispring.Service.FireBaseService;
-import mozi.mozispring.Util.BasicResponse;
-import mozi.mozispring.Util.CommonResponse;
-import mozi.mozispring.Util.ErrorResponse;
+import mozi.mozispring.Service.MomentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,22 +31,29 @@ public class MomentController {
     private MomentRepository momentRepository;
     private MomentPhotoRepository momentPhotoRepository;
     private UserRepository userRepository;
+    private MomentService momentService;
 
     @Autowired
-    public MomentController(FireBaseService fireBaseService, MomentRepository momentRepository, MomentPhotoRepository momentPhotoRepository, UserRepository userRepository) {
+    public MomentController(FireBaseService fireBaseService, MomentRepository momentRepository, MomentPhotoRepository momentPhotoRepository, UserRepository userRepository, MomentService momentService) {
         this.fireBaseService = fireBaseService;
         this.momentRepository = momentRepository;
         this.momentPhotoRepository = momentPhotoRepository;
         this.userRepository = userRepository;
+        this.momentService = momentService;
     }
 
     /**
      * 특정 유저의 모든 모먼트 모두 불러오기
      */
-    @GetMapping("/moment-list")
+    @GetMapping("/moment-list/{id}")
     @ResponseBody
-    public void getAllMomentController(){
-
+    public List<MomentRetDto> getAllMomentController(@PathVariable("id") Long id){ // PathVariable로 유저 id 전달
+        List<Moment> momentList = momentRepository.findAllByUserId(id);
+        List<MomentRetDto> momentRetDtoList = new ArrayList<>();
+        for(Moment moment : momentList){
+            momentRetDtoList.add(momentService.getMoment(moment.getId()));
+        }
+        return momentRetDtoList;
     }
 
     /**
@@ -57,22 +62,8 @@ public class MomentController {
     @ApiOperation(value="유저의 모먼트 한 건 불러오기", notes="유저의 모먼트 한 건 불러오기")
     @GetMapping("/moment/{id}")
     @ResponseBody
-    public MomentRetDto getSingleMomentController(@PathVariable("id") Long id){
-        Moment findMoment = momentRepository.findById(id).get();
-        List<MomentPhoto> momentPhotoList = momentPhotoRepository.findAllByMomentId(findMoment.getId());
-        MomentRetDto momentRetDto = new MomentRetDto();
-        momentRetDto.setTitle(findMoment.getTitle());
-        momentRetDto.setContent(findMoment.getContent());
-        momentRetDto.setDate(findMoment.getDate());
-        momentRetDto.setUserId(findMoment.getUserId());
-        momentRetDto.setHashTag(findMoment.getHashTag());
-        // String list ? 어떻게 처리할까?
-        List<String> fileNameList = new ArrayList<>();
-        for(MomentPhoto momentPhoto : momentPhotoList){
-            fileNameList.add(momentPhoto.getFileName());
-        }
-        momentRetDto.setFileNameList(fileNameList);
-        return momentRetDto;
+    public MomentRetDto getSingleMomentController(@PathVariable("id") Long momentId){ // PathVariable로 모먼트 id 전달
+        return momentService.getMoment(momentId);
     }
 
     /**
