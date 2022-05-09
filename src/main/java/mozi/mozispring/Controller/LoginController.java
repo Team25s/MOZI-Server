@@ -3,9 +3,7 @@ package mozi.mozispring.Controller;
 import com.google.cloud.storage.StorageException;
 import io.swagger.annotations.ApiOperation;
 import lombok.With;
-import mozi.mozispring.Domain.Dto.LogInDto;
-import mozi.mozispring.Domain.Dto.SignInDto;
-import mozi.mozispring.Domain.Dto.WithdrawDto;
+import mozi.mozispring.Domain.Dto.*;
 import mozi.mozispring.Domain.SimplUser;
 import mozi.mozispring.Domain.User;
 import mozi.mozispring.Jwt.JwtTokenProvider;
@@ -14,6 +12,7 @@ import mozi.mozispring.Service.FireBaseService;
 import mozi.mozispring.Util.BasicResponse;
 import mozi.mozispring.Util.CommonResponse;
 import mozi.mozispring.Util.ErrorResponse;
+import org.hibernate.mapping.Join;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -62,11 +61,14 @@ public class LoginController {
     @ApiOperation(value="회원가입하기", notes="회원가입하기")
     @PostMapping("/join")
     @ResponseBody
-    public Long joinController(@RequestBody SignInDto signInDto) {
+    public JoinDto joinController(@RequestBody SignInDto signInDto) {
         System.out.println("회원가입 요청입니다.");
         Optional<User> result = userRepository.findByEmail(signInDto.getEmail());
         if(result.isPresent()){
-            return -1L;
+            JoinDto joinDto = new JoinDto();
+            joinDto.setMessage("이미 존재하는 회원입니다.");
+            joinDto.setUserId(-1L);
+            return joinDto;
         }else {
             User user = User.builder()
                     .email(signInDto.getEmail())
@@ -80,8 +82,10 @@ public class LoginController {
                     .mbti(user.getMbti())
                     .profileFilename(null)
                     .build();
-            simplUserRepository.save(simplUser);
-            return user.getId();
+            JoinDto joinDto = new JoinDto();
+            joinDto.setUserId(simplUserRepository.save(simplUser).getId());
+            joinDto.setMessage("회원가입에 성공하였습니다.");
+            return joinDto;
         }
     }
 
@@ -91,17 +95,26 @@ public class LoginController {
     @ApiOperation(value="로그인하기 ", notes="로그인하기")
     @PostMapping("/login")
     @ResponseBody
-    public String loginController(@RequestBody LogInDto logInDto) {
+    public JwtRetDto loginController(@RequestBody LogInDto logInDto) {
         System.out.println("로그인 요청입니다.");
         Optional<User> findUser = userRepository.findByEmail(logInDto.getEmail());
         if(!findUser.isPresent()){
-            return "가입되지 않은 아이디입니다.";
+            JwtRetDto jwtRetDto = new JwtRetDto();
+            jwtRetDto.setMessage("가입되지 않은 아이디입니다.");
+            jwtRetDto.setJwt(null);
+            return jwtRetDto;
         }
         User member = findUser.get();
         if (!passwordEncoder.matches(logInDto.getPassword(), member.getPassword())) {
-            return "잘못된 비밀번호입니다.";
+            JwtRetDto jwtRetDto = new JwtRetDto();
+            jwtRetDto.setMessage("잘못된 비밀번호입니다.");
+            jwtRetDto.setJwt(null);
+            return jwtRetDto;
         }
-        return jwtTokenProvider.createToken(member.getEmail());
+        JwtRetDto jwtRetDto = new JwtRetDto();
+        jwtRetDto.setMessage("유효한 jwt를 발급하였습니다.");
+        jwtRetDto.setJwt(jwtTokenProvider.createToken(member.getEmail()));
+        return jwtRetDto;
     }
 
     /**
