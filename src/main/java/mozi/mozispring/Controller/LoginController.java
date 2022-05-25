@@ -124,23 +124,39 @@ public class LoginController {
     @PostMapping("/withdraw")
     @ResponseBody
     public boolean withdrawController(@RequestBody LogInDto logInDto){
-        System.out.println("회원탈퇴 요청입니다. ");
+        System.out.println("1. 회원탈퇴 요청입니다. ");
+//        System.out.println("----");
+//        System.out.println(logInDto.getEmail());
+//        System.out.println(logInDto.getPassword());
+//        System.out.println("----");
+
         Optional<User> findUser = userRepository.findByEmail(logInDto.getEmail());
         if(!findUser.isPresent()){
+            System.out.println("2. 탈퇴하려는 계정이 존재하지 않습니다.");
             // return ResponseEntity.ok().body(new ErrorResponse("탈퇴하려는 계정이 존재하지 않습니다."));
             return false;
         }
-        if(findUser.get().getPassword().equals(logInDto.getPassword())) {
-            try {
-                fireBaseService.deleteFiles(findUser.get().getProfileFilename()); // 파이어베이스에서 프로필 이미지 삭제
-            }catch(StorageException e){
-                System.out.println(e.getMessage());
+//        System.out.println("---비밀번호 확인하기");
+//        System.out.println(findUser.get().getPassword());
+//        System.out.println(logInDto.getPassword());
+//        System.out.println("---비밀번호 확인하기");
+        if(passwordEncoder.matches(logInDto.getPassword(), findUser.get().getPassword())) {
+            if (findUser.get().getProfileFilename() != null){
+                try {
+                    fireBaseService.deleteFiles(findUser.get().getProfileFilename()); // 파이어베이스에서 프로필 이미지 삭제
+                    System.out.println("3. 파이어베이스에서 이미지를 삭제하고 있습니다.");
+                }catch(StorageException e){
+                    System.out.println("4. 이미지 삭제 도중 예외가 발생했습니다. ");
+                    System.out.println(e.getMessage());
+                }
             }
             userRepository.deleteById(findUser.get().getId());                // 회원 정보 디비에서 삭제
             simplUserRepository.deleteById(findUser.get().getId());           // 회원 요약 정보 디비에서 삭제
             //return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 탈퇴되었습니다"));
+            System.out.println("5. 디비에서 회원을 삭제하였습니다.");
             return true;
         }else{
+            System.out.println("6. 비밀번호가 맞지 않습니다.");
             return false;
             //return ResponseEntity.ok().body(new ErrorResponse("비밀번호가 맞지 않습니다."));
         }
