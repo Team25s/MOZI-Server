@@ -151,7 +151,11 @@ public class LoginController {
                 }
             }
             userRepository.deleteById(findUser.get().getId());                // 회원 정보 디비에서 삭제
-            simplUserRepository.deleteById(findUser.get().getId());           // 회원 요약 정보 디비에서 삭제
+            /*
+                simplUserRepository에서는 Email 기준으로 삭제 진행하기
+             */
+            simplUserRepository.deleteByEmail(findUser.get().getEmail());           // 회원 요약 정보 디비에서 삭제
+//            simplUserRepository.deleteById(findUser.get().getId());           // 회원 요약 정보 디비에서 삭제
             //return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 탈퇴되었습니다"));
             System.out.println("5. 디비에서 회원을 삭제하였습니다.");
             return true;
