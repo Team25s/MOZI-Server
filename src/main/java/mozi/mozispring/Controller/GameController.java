@@ -61,7 +61,7 @@ public class GameController {
         newGameQA.setNegative_answer(0);
         GameQA gameQA = gameRepository.save(newGameQA);
 
-        GameLog gameLog = new GameLog(); // 로그도 함께 생성
+        GameLog gameLog = new GameLog();      // 로그도 함께 생성
         gameLog.setQuestionId(gameQA.getId());
         gameLogRepository.save(gameLog);
         return gameQA;

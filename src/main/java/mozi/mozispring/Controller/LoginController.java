@@ -125,10 +125,6 @@ public class LoginController {
     @ResponseBody
     public boolean withdrawController(@RequestBody LogInDto logInDto){
         System.out.println("1. 회원탈퇴 요청입니다. ");
-//        System.out.println("----");
-//        System.out.println(logInDto.getEmail());
-//        System.out.println(logInDto.getPassword());
-//        System.out.println("----");
 
         Optional<User> findUser = userRepository.findByEmail(logInDto.getEmail());
         if(!findUser.isPresent()){
@@ -136,10 +132,7 @@ public class LoginController {
             // return ResponseEntity.ok().body(new ErrorResponse("탈퇴하려는 계정이 존재하지 않습니다."));
             return false;
         }
-//        System.out.println("---비밀번호 확인하기");
-//        System.out.println(findUser.get().getPassword());
-//        System.out.println(logInDto.getPassword());
-//        System.out.println("---비밀번호 확인하기");
+
         if(passwordEncoder.matches(logInDto.getPassword(), findUser.get().getPassword())) {
             if (findUser.get().getProfileFilename() != null){
                 try {

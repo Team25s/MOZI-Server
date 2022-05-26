@@ -70,7 +70,7 @@ public class ProfileController {
         User user = findUser.get();
         user.setName(profileFixDto.getName());
         user.setIntroduce(profileFixDto.getIntroduce());
-        user.setStrTag(profileFixDto.getStrTag()); // 이부분 제대로 들어가는지 테스트 필요함.
+        user.setStrTag(profileFixDto.getStrTag());                   // 이부분 제대로 들어가는지 테스트 필요함. -> 잘되네요.
         user.setMbti(profileFixDto.getMbti());
 
         // 회원 요약 정보도 함께 수정
@@ -88,7 +88,7 @@ public class ProfileController {
             String mediaLink= null;
             try {
                 nameFile = UUID.randomUUID().toString() + ".jpg";
-                mediaLink = fireBaseService.uploadFiles(profileFixDto.getMultipartFile(), nameFile); // 이미지의 주소를 반환함.
+                mediaLink = fireBaseService.uploadFiles(profileFixDto.getMultipartFile(), nameFile);   // 이미지의 주소를 반환함.
             }catch(IOException e){
                 System.out.println(e.getMessage());
             }
