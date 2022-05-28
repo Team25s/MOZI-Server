@@ -20,10 +20,12 @@ import javax.persistence.Table;
 public class ScheduleFriend {   // 일정에 함께하는 친구 도메인 객체
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "부정 응답", notes = "부정 응답", required = true, example="false")
+    @ApiModelProperty(value = "일정 참여 id", notes = "일정 참여 id", required = true, example="2")
     private Long id;         // 디비 pk
-    @ApiModelProperty(value = "부정 응답", notes = "부정 응답", required = true, example="false")
+
+    @ApiModelProperty(value = "스케쥴 id", notes = "스케쥴 id", required = true, example="78")
     private Long scheduleId; // 스케쥴 id
-    @ApiModelProperty(value = "부정 응답", notes = "부정 응답", required = true, example="false")
+
+    @ApiModelProperty(value = "일정 참여 친구 id", notes = "일정 참여 친구 id", required = true, example="87")
     private Long userId;     // 친구 id
 }
