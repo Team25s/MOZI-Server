@@ -1,4 +1,4 @@
-package mozi.mozispring.Service;
+package mozi.mozispring.Schedule;
 
 import org.springframework.stereotype.Service;
 

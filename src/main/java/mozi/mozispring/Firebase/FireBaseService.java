@@ -1,4 +1,4 @@
-package mozi.mozispring.Service;
+package mozi.mozispring.Firebase;
 
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;

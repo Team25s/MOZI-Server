@@ -1,4 +1,4 @@
-package mozi.mozispring.Controller;
+package mozi.mozispring.Game;
 
 import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Dto.AnswerDto;
@@ -6,13 +6,8 @@ import mozi.mozispring.Domain.Dto.QuestionDto;
 import mozi.mozispring.Domain.GameLog;
 import mozi.mozispring.Domain.GameQA;
 import mozi.mozispring.Domain.User;
-import mozi.mozispring.Repository.GameLogRepository;
-import mozi.mozispring.Repository.GameRepository;
-import mozi.mozispring.Repository.UserRepository;
-import mozi.mozispring.Util.BasicResponse;
-import mozi.mozispring.Util.CommonResponse;
+import mozi.mozispring.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;

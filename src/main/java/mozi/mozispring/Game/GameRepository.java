@@ -1,4 +1,4 @@
-package mozi.mozispring.Repository;
+package mozi.mozispring.Game;
 
 import mozi.mozispring.Domain.GameQA;
 import mozi.mozispring.Domain.Moment;

@@ -1,4 +1,4 @@
-package mozi.mozispring.Repository;
+package mozi.mozispring.Schedule;
 
 import mozi.mozispring.Domain.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;

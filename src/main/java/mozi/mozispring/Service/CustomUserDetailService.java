@@ -1,7 +1,6 @@
 package mozi.mozispring.Service;
 
-import lombok.RequiredArgsConstructor;
-import mozi.mozispring.Repository.UserRepository;
+import mozi.mozispring.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

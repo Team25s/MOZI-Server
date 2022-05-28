@@ -1,4 +1,4 @@
-package mozi.mozispring.Controller;
+package mozi.mozispring.Comment;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -7,18 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import mozi.mozispring.Domain.Comment;
 import mozi.mozispring.Domain.Dto.CommentDto;
 import mozi.mozispring.Domain.Dto.DelComment;
-import mozi.mozispring.Domain.Dto.UserIdDto;
 import mozi.mozispring.Domain.User;
-import mozi.mozispring.Repository.CommentRepository;
-import mozi.mozispring.Repository.UserRepository;
-import mozi.mozispring.Util.BasicResponse;
-import mozi.mozispring.Util.CommonResponse;
-import mozi.mozispring.Util.ErrorResponse;
+import mozi.mozispring.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

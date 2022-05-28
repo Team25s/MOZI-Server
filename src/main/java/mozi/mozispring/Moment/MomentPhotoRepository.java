@@ -1,4 +1,4 @@
-package mozi.mozispring.Repository;
+package mozi.mozispring.Moment;
 
 import mozi.mozispring.Domain.MomentPhoto;
 import org.springframework.data.jpa.repository.JpaRepository;

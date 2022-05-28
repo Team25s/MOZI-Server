@@ -1,10 +1,8 @@
-package mozi.mozispring.Service;
+package mozi.mozispring.Moment;
 
 import mozi.mozispring.Domain.Dto.MomentRetDto;
 import mozi.mozispring.Domain.Moment;
 import mozi.mozispring.Domain.MomentPhoto;
-import mozi.mozispring.Repository.MomentPhotoRepository;
-import mozi.mozispring.Repository.MomentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

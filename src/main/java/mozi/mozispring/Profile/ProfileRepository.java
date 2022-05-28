@@ -1,4 +1,4 @@
-package mozi.mozispring.Repository;
+package mozi.mozispring.Profile;
 
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package mozi.mozispring.Repository;
+package mozi.mozispring.Comment;
 
 import mozi.mozispring.Domain.Comment;
 import org.springframework.data.domain.Example;

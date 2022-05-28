@@ -1,4 +1,4 @@
-package mozi.mozispring.Repository;
+package mozi.mozispring.User;
 
 import mozi.mozispring.Domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

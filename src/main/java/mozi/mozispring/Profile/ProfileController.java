@@ -1,4 +1,4 @@
-package mozi.mozispring.Controller;
+package mozi.mozispring.Profile;
 
 import com.google.cloud.storage.StorageException;
 import io.swagger.annotations.ApiOperation;
@@ -6,14 +6,10 @@ import mozi.mozispring.Domain.Dto.ProfileDto;
 import mozi.mozispring.Domain.Dto.ProfileFixDto;
 import mozi.mozispring.Domain.SimplUser;
 import mozi.mozispring.Domain.User;
-import mozi.mozispring.Repository.SimplUserRepository;
-import mozi.mozispring.Repository.UserRepository;
-import mozi.mozispring.Service.FireBaseService;
-import mozi.mozispring.Util.BasicResponse;
-import mozi.mozispring.Util.CommonResponse;
+import mozi.mozispring.User.SimplUserRepository;
+import mozi.mozispring.User.UserRepository;
+import mozi.mozispring.Firebase.FireBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
