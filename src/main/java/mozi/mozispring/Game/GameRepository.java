@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface GameRepository  extends JpaRepository<GameQA, Long> {
-
     GameQA save(GameQA gameQA);
     Optional<GameQA> findById(Long id);
     List<GameQA> findAll();

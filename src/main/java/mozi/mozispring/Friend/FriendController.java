@@ -1,6 +1,7 @@
 package mozi.mozispring.Friend;
 
 import io.swagger.annotations.ApiOperation;
+import mozi.mozispring.Domain.Dto.DeleteDto;
 import mozi.mozispring.Domain.Dto.FriendDto;
 import mozi.mozispring.Domain.Dto.FriendRetDto;
 import mozi.mozispring.Domain.Friend;
@@ -60,14 +61,24 @@ public class FriendController {
     @ApiOperation(value="친구 삭제하기", notes="NEED JWT IN HEADER: 친구 삭제하기")
     @DeleteMapping("/friend")
     @ResponseBody
-    public void deleteFriendController(@RequestBody FriendDto friendDto){
+    public DeleteDto deleteFriendController(@RequestBody FriendDto friendDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
 
-        friendRepository.deleteByUserIdAndFriendId(findUser.get().getId(), friendDto.getFriendId());
-        friendRepository.deleteByUserIdAndFriendId(friendDto.getFriendId(), findUser.get().getId());
+        DeleteDto deleteDto = new DeleteDto();
+        try {
+            friendRepository.deleteByUserIdAndFriendId(findUser.get().getId(), friendDto.getFriendId());
+            friendRepository.deleteByUserIdAndFriendId(friendDto.getFriendId(), findUser.get().getId());
+        }catch(Exception e){
+            deleteDto.setDeleted(false);
+            deleteDto.setMessage("친구 삭제를 할 수 없습니다.");
+            return deleteDto;
+        }
+        deleteDto.setDeleted(true);
+        deleteDto.setMessage("친구 삭제를 완료했습니다.");
+        return deleteDto;
     }
 
     /**
