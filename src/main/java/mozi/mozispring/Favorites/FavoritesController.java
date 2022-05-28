@@ -51,7 +51,7 @@ public class FavoritesController {
     }
 
     /**
-     즐겨찾기 삭제
+         즐겨찾기 삭제
      */
     @DeleteMapping("/favorites/{opponent-id}")
     @ResponseBody
