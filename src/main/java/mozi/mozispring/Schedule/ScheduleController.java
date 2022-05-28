@@ -36,9 +36,9 @@ public class ScheduleController {
      * 유저 모든 일정 불러오기
      */
     @ApiOperation(value="유저 모든 일정 불러오기", notes="유저 모든 일정 불러오기")
-    @GetMapping("/schedule")
+    @GetMapping("/schedule/{id}")
     @ResponseBody
-    public List<Schedule> getScheduleController(Long id){
+    public List<Schedule> getScheduleController(@PathVariable("id") Long id){
         List<Schedule> schedules = scheduleRepository.findAllById(id);
         return schedules;
     }
