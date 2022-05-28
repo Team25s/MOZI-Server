@@ -80,6 +80,7 @@ public class FriendController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
+
         Optional<User> findUser = userRepository.findByEmail(userEmail);
 
         List<Friend> friends = friendRepository.findAllById(findUser.get().getId());

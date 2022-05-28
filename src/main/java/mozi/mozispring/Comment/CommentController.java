@@ -7,8 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import mozi.mozispring.Domain.Comment;
 import mozi.mozispring.Domain.Dto.CommentDto;
 import mozi.mozispring.Domain.Dto.DelComment;
+import mozi.mozispring.Domain.Dto.DeleteDto;
 import mozi.mozispring.Domain.User;
 import mozi.mozispring.User.UserRepository;
+import org.hibernate.sql.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -62,7 +64,7 @@ public class CommentController {
      */
     @ApiOperation(value="댓글 삭제하기", notes="NEED JWT IN HEADER: 댓글 삭제하기")
     @DeleteMapping("/comment")
-    public boolean deleteCommentController(@RequestBody DelComment delComment){
+    public DeleteDto deleteCommentController(@RequestBody DelComment delComment){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -70,11 +72,16 @@ public class CommentController {
 
         Optional<Comment> findComment = commentRepository.findById(delComment.getCommentId());
 
+        DeleteDto deleteDto = new DeleteDto();
         if(findUser.get().getId().equals(findComment.get().getUserId())){
             commentRepository.deleteById(delComment.getCommentId());
-            return true;
+            deleteDto.setDeleted(true);
+            deleteDto.setMessage("정상적으로 삭제되었습니다.");
+            return deleteDto;
         }else{
-            return false;
+            deleteDto.setDeleted(false);
+            deleteDto.setMessage("자신의 댓글만 삭제할 수 있습니다.");
+            return deleteDto;
         }
     }
 }
