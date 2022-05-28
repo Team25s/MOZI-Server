@@ -1,6 +1,7 @@
 package mozi.mozispring.Moment;
 
 import io.swagger.annotations.ApiOperation;
+import mozi.mozispring.Domain.Dto.DeleteDto;
 import mozi.mozispring.Domain.Dto.MomentDto;
 import mozi.mozispring.Domain.Dto.MomentRetDto;
 import mozi.mozispring.Domain.Moment;
@@ -99,15 +100,19 @@ public class MomentController {
     @ApiOperation(value="모먼트 삭제하기", notes="NEED JWT IN HEADER: 모먼트 삭제하기")
     @DeleteMapping("/moment/{id}")
     @ResponseBody
-    public boolean deleteMomentController(@PathVariable("id") Long id){ // 모먼트 id 를 파라미터로 전달
+    public DeleteDto deleteMomentController(@PathVariable("id") Long id){ // 모먼트 id 를 파라미터로 전달
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
 
         Moment findMoment = momentRepository.findById(id).get();
+
+        DeleteDto deleteDto = new DeleteDto();
         if(!(findMoment.getUserId() == findUser.get().getId())){ // 자신의 모먼트가 아닌 것을 삭제하려고 하는 경우
-            return false;
+            deleteDto.setDeleted(false);
+            deleteDto.setMessage("자신의 모먼트만 삭제할 수 있습니다. ");
+            return deleteDto;
         }
         List<MomentPhoto> momentPhotoList = momentPhotoRepository.findAllByMomentId(id);
         int count = 0;
@@ -124,9 +129,13 @@ public class MomentController {
             count++;
         }
         if(count == len){
-            return true;
+            deleteDto.setDeleted(true);
+            deleteDto.setMessage("성공적으로 삭제되었습니다.");
+            return deleteDto;
         }
-        return false;
+        deleteDto.setDeleted(false);
+        deleteDto.setMessage("모먼트를 삭제할 수 없습니다.");
+        return deleteDto;
     }
 
     /**

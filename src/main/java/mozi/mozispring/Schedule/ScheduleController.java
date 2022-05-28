@@ -1,6 +1,7 @@
 package mozi.mozispring.Schedule;
 
 import io.swagger.annotations.ApiOperation;
+import mozi.mozispring.Domain.Dto.DeleteDto;
 import mozi.mozispring.Domain.Dto.ScheduleDelDto;
 import mozi.mozispring.Domain.Dto.ScheduleDto;
 import mozi.mozispring.Domain.Schedule;
@@ -136,19 +137,22 @@ public class ScheduleController {
     @ApiOperation(value="일정 삭제하기", notes="NEED JWT IN HEADER: 일정 삭제하기")
     @DeleteMapping("/schedule")
     @ResponseBody
-    public boolean deleteScheduleController(@RequestBody ScheduleDelDto scheduleDelDto){
+    public DeleteDto deleteScheduleController(@RequestBody ScheduleDelDto scheduleDelDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         User findUser = userRepository.findByEmail(userEmail).get();
 
+        DeleteDto deleteDto = new DeleteDto();
         if(findUser.getId().equals(scheduleDelDto.getUserId())){
             scheduleRepository.deleteById(scheduleDelDto.getId());
-            //return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 삭제하였습니다."));
-            return true;
+            deleteDto.setDeleted(true);
+            deleteDto.setMessage("성공적으로 삭제하였습니다.");
+            return deleteDto;
         }else{
-            //return ResponseEntity.ok().body(new ErrorResponse("자신의 일정만 삭제할 수 있습니다."));
-            return false;
+            deleteDto.setDeleted(false);
+            deleteDto.setMessage("자신의 일정만 삭제할 수 있습니다.");
+            return deleteDto;
         }
     }
 }
