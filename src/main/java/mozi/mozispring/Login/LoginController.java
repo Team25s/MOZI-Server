@@ -12,6 +12,7 @@ import mozi.mozispring.Firebase.FireBaseService;
 import mozi.mozispring.Schedule.ScheduleRepository;
 import mozi.mozispring.User.SimplUserRepository;
 import mozi.mozispring.User.UserRepository;
+import org.hibernate.sql.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -121,14 +122,18 @@ public class LoginController {
     @ApiOperation(value="회원탈퇴하기 ", notes="회원탈퇴하기")
     @PostMapping("/withdraw")
     @ResponseBody
-    public boolean withdrawController(@RequestBody LogInDto logInDto){
+    public DeleteDto withdrawController(@RequestBody LogInDto logInDto){
         System.out.println("1. 회원탈퇴 요청입니다. ");
 
         Optional<User> findUser = userRepository.findByEmail(logInDto.getEmail());
+
+        DeleteDto deleteDto = new DeleteDto();
         if(!findUser.isPresent()){
             System.out.println("2. 탈퇴하려는 계정이 존재하지 않습니다.");
             // return ResponseEntity.ok().body(new ErrorResponse("탈퇴하려는 계정이 존재하지 않습니다."));
-            return false;
+            deleteDto.setDeleted(false);
+            deleteDto.setMessage("탈퇴하려는 계정이 존재하지 않습니다. ");
+            return deleteDto;
         }
 
         if(passwordEncoder.matches(logInDto.getPassword(), findUser.get().getPassword())) {
@@ -142,18 +147,17 @@ public class LoginController {
                 }
             }
             userRepository.deleteById(findUser.get().getId());                // 회원 정보 디비에서 삭제
-            /*
-                simplUserRepository에서는 Email 기준으로 삭제 진행하기
-             */
-            simplUserRepository.deleteByEmail(findUser.get().getEmail());           // 회원 요약 정보 디비에서 삭제
-//            simplUserRepository.deleteById(findUser.get().getId());           // 회원 요약 정보 디비에서 삭제
-            //return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 탈퇴되었습니다"));
+            simplUserRepository.deleteByEmail(findUser.get().getEmail());     // 회원 요약 정보 디비에서 삭제
+
             System.out.println("5. 디비에서 회원을 삭제하였습니다.");
-            return true;
+            deleteDto.setDeleted(true);
+            deleteDto.setMessage("성공적으로 탈퇴되었습니다.");
+            return deleteDto;
         }else{
             System.out.println("6. 비밀번호가 맞지 않습니다.");
-            return false;
-            //return ResponseEntity.ok().body(new ErrorResponse("비밀번호가 맞지 않습니다."));
+            deleteDto.setDeleted(false);
+            deleteDto.setMessage("비밀번호가 맞지 않습니다.");
+            return deleteDto;
         }
     }
 
