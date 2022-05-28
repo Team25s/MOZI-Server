@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class Comment {       // 댓글 도메인 객체
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "댓글 id", notes = "Comment의 데이터베이스 private key입니다.", required = true, example="5")
+    @ApiModelProperty(value = "댓글 id", notes = "댓글 id", required = true, example="5")
     private Long id;         // 디비 pk
 
     @ApiModelProperty(value = "댓글이 달린 유저의 id", notes = "댓글이 달린 유저의 id", required = true, example="8")

@@ -11,7 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class WithdrawDto {
-
     @ApiModelProperty(value = " 남아있는 게시글 수", notes = " 남아있는 게시글 수", required = true, example="4")
     private Long moment;   // 남아있는 게시글 수
 

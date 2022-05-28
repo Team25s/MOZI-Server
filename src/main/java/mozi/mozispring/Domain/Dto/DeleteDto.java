@@ -15,6 +15,7 @@ import lombok.Setter;
 public class DeleteDto {
     @ApiModelProperty(value = "삭제 여부", notes = "삭제 여부", required = true, example="true")
     private boolean deleted;
+
     @ApiModelProperty(value = "삭제 메시지", notes = "삭제 메시지", required = true, example="정상적으로 삭제되었습니다.")
     private String message;
 }

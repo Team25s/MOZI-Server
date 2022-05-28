@@ -1,5 +1,6 @@
 package mozi.mozispring.Domain;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -17,8 +18,12 @@ import javax.persistence.Table;
 public class Favorites {      // 즐겨찾기 도메인 객체
     @Id
     @GeneratedValue
+    @ApiModelProperty(value = "즐겨찾기 id", notes = "즐겨찾기 id", required = true, example="5")
     private Long id;          // 디비 pk
 
+    @ApiModelProperty(value = "유저 id", notes = "유저 id", required = true, example="9")
     private Long userId;      // 유저 id
-    private Long opponentId;  // 상대 id
+
+    @ApiModelProperty(value = "즐겨찾기에 추가한 상대 id", notes = "즐겨찾기에 추가한 상대 id", required = true, example="43")
+    private Long opponentId;  // 즐겨찾기에 추가한 상대 id
 }
