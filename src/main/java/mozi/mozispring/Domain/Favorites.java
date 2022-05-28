@@ -1,5 +1,6 @@
 package mozi.mozispring.Domain;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
+@ApiModel(value = "즐겨찾기")
 @Entity
 @Setter
 @Getter

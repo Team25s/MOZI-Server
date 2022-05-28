@@ -1,5 +1,6 @@
 package mozi.mozispring.Domain;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@ApiModel(value = "게임 로그")
 @Entity
 @Setter
 @Getter
@@ -18,6 +20,7 @@ public class GameLog {
     @GeneratedValue
     @ApiModelProperty(value = "게임 로그 id", notes = "게임 로그 id", required = true, example="3")
     private Long id; // 디비 pk
+
     @ApiModelProperty(value = "밸런스 게임 id", notes = "밸런스 게임 id", required = true, example="8")
     private Long questionId; // 밸런스 게임 id
 
