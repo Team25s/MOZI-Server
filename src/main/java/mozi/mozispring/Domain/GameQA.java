@@ -18,7 +18,7 @@ import javax.persistence.Id;
 public class GameQA {
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "GameQA id", notes = "GameQA id", required = true, example="8")
+    @ApiModelProperty(value = "PRIVATE KEY: GameQA id", notes = "GameQA id", required = true, example="8")
     private Long id;
 
     @ApiModelProperty(value = "밸런스 게임 질문", notes = "밸런스 게임 질문", required = true, example="나는 샤워를 할때 머리부터 감는다.")

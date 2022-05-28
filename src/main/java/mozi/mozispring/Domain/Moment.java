@@ -20,7 +20,7 @@ import java.util.List;
 public class Moment {           // 모먼트 도메인 객체
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "모먼트 id", notes = "모먼트 id", required = true, example="5")
+    @ApiModelProperty(value = "PRIVATE KEY: 모먼트 id", notes = "모먼트 id", required = true, example="5")
     private Long id;            // 디비 pk
 
     @ApiModelProperty(value = "모먼트 제목", notes = "모먼트 제목", required = true, example="종강하고 정모")

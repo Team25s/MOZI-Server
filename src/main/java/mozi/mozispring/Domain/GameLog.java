@@ -18,7 +18,7 @@ import javax.persistence.Id;
 public class GameLog {
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "게임 로그 id", notes = "게임 로그 id", required = true, example="3")
+    @ApiModelProperty(value = "PRIVATE KEY: 게임 로그 id", notes = "게임 로그 id", required = true, example="3")
     private Long id; // 디비 pk
 
     @ApiModelProperty(value = "밸런스 게임 id", notes = "밸런스 게임 id", required = true, example="8")

@@ -19,7 +19,7 @@ import java.util.List;
 public class Schedule {    // 일정 도메인 객체
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "일정 id", notes = "일정 id", required = true, example="4")
+    @ApiModelProperty(value = "PRIVATE KEY: 일정 id", notes = "일정 id", required = true, example="4")
     private Long id;       // 디비 pk
 
     @ApiModelProperty(value = "유저 id", notes = "유저 id", required = true, example="9")

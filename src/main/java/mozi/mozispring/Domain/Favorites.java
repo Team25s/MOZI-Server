@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class Favorites {      // 즐겨찾기 도메인 객체
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "즐겨찾기 id", notes = "즐겨찾기 id", required = true, example="5")
+    @ApiModelProperty(value = "PRIVATE KEY: 즐겨찾기 id", notes = "즐겨찾기 id", required = true, example="5")
     private Long id;          // 디비 pk
 
     @ApiModelProperty(value = "유저 id", notes = "유저 id", required = true, example="9")

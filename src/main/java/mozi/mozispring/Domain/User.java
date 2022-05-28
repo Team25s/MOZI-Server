@@ -21,7 +21,7 @@ public class User implements UserDetails {           // 유저 도메인 객체
     @Id
     @GeneratedValue
     @Column(name = "user_id")
-    @ApiModelProperty(value = "유저 id", notes = "유저 id", required = true, example="66")
+    @ApiModelProperty(value = "PRIVATE KEY: 유저 id", notes = "유저 id", required = true, example="66")
     private Long id;          // 디비 pk
 
     @ApiModelProperty(value = "유저 이메일", notes = "유저 이메일", required = true, example="mozi25@gmail.com")

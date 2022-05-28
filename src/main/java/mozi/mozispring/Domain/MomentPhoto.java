@@ -19,7 +19,7 @@ public class MomentPhoto {
 
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "모먼트 첨부 사진 id", notes = "모먼트 첨부 사진 id", required = true, example="8")
+    @ApiModelProperty(value = "PRIVATE KEY: 모먼트 첨부 사진 id", notes = "모먼트 첨부 사진 id", required = true, example="8")
     private Long id;         // 디비 pk
 
     @ApiModelProperty(value = "해당 moment id", notes = "해당 moment id", required = true, example="98")

@@ -18,7 +18,7 @@ import javax.persistence.Id;
 public class SimplUser {
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "사용자 요약 정보 id", notes = "사용자 요약 정보 id", required = true, example="77")
+    @ApiModelProperty(value = "PRIVATE KEY: 사용자 요약 정보 id", notes = "사용자 요약 정보 id", required = true, example="77")
     private Long id;          // 디비 pk
 
     @ApiModelProperty(value = "유저 이메일", notes = "유저 이메일", required = true, example="mozi25@gmail.com")

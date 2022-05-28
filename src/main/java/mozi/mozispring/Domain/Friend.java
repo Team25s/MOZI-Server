@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class Friend {
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "친구 id", notes = "친구 id", required = true, example="9")
+    @ApiModelProperty(value = "PRIVATE KEY: 친구 id", notes = "친구 id", required = true, example="9")
     private Long id; // 디비 pk
 
     @ApiModelProperty(value = "사용자 id", notes = "사용자 id", required = true, example="43")

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class ScheduleFriend {   // 일정에 함께하는 친구 도메인 객체
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "일정 참여 id", notes = "일정 참여 id", required = true, example="2")
+    @ApiModelProperty(value = "PRIVATE KEY: 일정 참여 id", notes = "일정 참여 id", required = true, example="2")
     private Long id;         // 디비 pk
 
     @ApiModelProperty(value = "스케쥴 id", notes = "스케쥴 id", required = true, example="78")
