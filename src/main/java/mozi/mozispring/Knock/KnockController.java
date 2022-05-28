@@ -1,6 +1,7 @@
 package mozi.mozispring.Knock;
 
 import io.swagger.annotations.ApiOperation;
+import mozi.mozispring.Domain.Dto.DeleteDto;
 import mozi.mozispring.Domain.Dto.KnockDelDto;
 import mozi.mozispring.Domain.Dto.KnockDto;
 import mozi.mozispring.Domain.Friend;
@@ -69,9 +70,20 @@ public class KnockController {
     @ApiOperation(value="노크 삭제하기 ", notes="노크 삭제하기")
     @DeleteMapping("/knock")
     @ResponseBody
-    public Long deleteKnockController(@RequestBody KnockDelDto knockDelDto){
+    public DeleteDto deleteKnockController(@RequestBody KnockDelDto knockDelDto){
         Friend friend = friendRepository.findById(knockDelDto.getKnockId()).get();
         friend.setKnock(0); // 초기화
-        return friendRepository.save(friend).getId();
+        try {
+            friendRepository.save(friend).getId();
+        }catch(Exception e){
+            DeleteDto deleteDto = new DeleteDto();
+            deleteDto.setDeleted(false);
+            deleteDto.setMessage("노크를 초기화할 수 없습니다.");
+            return deleteDto;
+        }
+        DeleteDto deleteDto = new DeleteDto();
+        deleteDto.setDeleted(true);
+        deleteDto.setMessage("노크가 0으로 초기화되었습니다.");
+        return deleteDto;
     }
 }
