@@ -1,4 +1,4 @@
-package mozi.mozispring.Domain.VO;
+package mozi.mozispring.TestController.VO;
 
 public class TestVO {
     private final String data;

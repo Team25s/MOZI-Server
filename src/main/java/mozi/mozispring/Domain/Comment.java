@@ -8,9 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlIDREF;
 
-@ApiModel(value = "밸런스 게임 응답")
+@ApiModel(value = "댓글")
 @Entity
 @Setter
 @Getter
@@ -21,9 +20,10 @@ import javax.xml.bind.annotation.XmlIDREF;
 public class Comment {       // 댓글 도메인 객체
     @Id
     @GeneratedValue
-    @ApiModelProperty(value = "게임 id", notes = "응답한 문항의 id 를 입력해주세요", required = true, example="3")
+    @ApiModelProperty(value = "댓글 id", notes = "Comment의 데이터베이스 private key입니다.", required = true, example="5")
     private Long id;         // 디비 pk
-
+    @ApiModelProperty(value = "댓글이 달린 유저의 id", notes = "댓글이 달린 유저의 id", required = true, example="8")
     private Long userId;     // 댓글이 달린 유저의 id
+    @ApiModelProperty(value = "댓글 내용", notes = "댓글 내용", required = true, example="잘 구경하다 갑니다.")
     private String content;  // 댓글 내용
 }
