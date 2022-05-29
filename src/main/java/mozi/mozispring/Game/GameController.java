@@ -25,12 +25,13 @@ public class GameController {
     private GameRepository gameRepository;
     private UserRepository userRepository;
     private GameLogRepository gameLogRepository;
+    private GameService gameService;
 
-    @Autowired
-    public GameController(GameRepository gameRepository, UserRepository userRepository, GameLogRepository gameLogRepository) {
+    public GameController(GameRepository gameRepository, UserRepository userRepository, GameLogRepository gameLogRepository, GameService gameService) {
         this.gameRepository = gameRepository;
         this.userRepository = userRepository;
         this.gameLogRepository = gameLogRepository;
+        this.gameService = gameService;
     }
 
     /**
@@ -50,16 +51,7 @@ public class GameController {
     @PostMapping("/game")
     @ResponseBody
     public GameQA makeGameController(@RequestBody QuestionDto questionDto){
-        GameQA newGameQA = new GameQA();
-        newGameQA.setQuestion(questionDto.getQuestion());
-        newGameQA.setPositive_answer(0);
-        newGameQA.setNegative_answer(0);
-        GameQA gameQA = gameRepository.save(newGameQA);
-
-        GameLog gameLog = new GameLog();      // 로그도 함께 생성
-        gameLog.setQuestionId(gameQA.getId());
-        gameLogRepository.save(gameLog);
-        return gameQA;
+        return gameService.makeGame(questionDto); // 새로운 밸런스 게임 등록
     }
 
     /**

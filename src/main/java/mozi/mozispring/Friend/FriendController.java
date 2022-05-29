@@ -71,21 +71,7 @@ public class FriendController {
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
+        return friendService.getFriendList(findUser); // 내 친구 목록 불러오기
 
-        List<Friend> friends = friendRepository.findAllById(findUser.get().getId());
-        List<FriendRetDto> friendRetDtos = new ArrayList<>();
-
-        for(Friend friend : friends){
-            User findFriend = userRepository.findById(friend.getFriendId()).get();
-            FriendRetDto friendRetDto = new FriendRetDto();
-
-            friendRetDto.setFriendId(friend.getFriendId());
-            friendRetDto.setMbti(friend.getMbti());
-            friendRetDto.setName(findFriend.getName());
-            friendRetDto.setFilename(findFriend.getProfileFilename()); // 프로필 이미지 이름
-            friendRetDto.setFileURL(findFriend.getProfileFileURL());  // 프로필 이미지 링크
-            friendRetDtos.add(friendRetDto);
-        }
-        return friendRetDtos;
     }
 }

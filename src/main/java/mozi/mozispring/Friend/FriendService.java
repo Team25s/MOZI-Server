@@ -2,21 +2,27 @@ package mozi.mozispring.Friend;
 
 import mozi.mozispring.Domain.Dto.DeleteDto;
 import mozi.mozispring.Domain.Dto.FriendDto;
+import mozi.mozispring.Domain.Dto.FriendRetDto;
 import mozi.mozispring.Domain.Friend;
 import mozi.mozispring.Domain.User;
 import mozi.mozispring.Favorites.FavoritesRepository;
+import mozi.mozispring.User.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class FriendService {
     private final FriendRepository friendRepository;
     private final FavoritesRepository favoritesRepository;
+    private final UserRepository userRepository;
 
-    public FriendService(FriendRepository friendRepository, FavoritesRepository favoritesRepository) {
+    public FriendService(FriendRepository friendRepository, FavoritesRepository favoritesRepository, UserRepository userRepository) {
         this.friendRepository = friendRepository;
         this.favoritesRepository = favoritesRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -59,5 +65,26 @@ public class FriendService {
         deleteDto.setDeleted(true);
         deleteDto.setMessage("친구 삭제를 완료했습니다.");
         return deleteDto;
+    }
+
+    /**
+     * 내 친구 목록 불러오기
+     */
+    public List<FriendRetDto> getFriendList(Optional<User> findUser) {
+        List<Friend> friends = friendRepository.findAllById(findUser.get().getId());
+        List<FriendRetDto> friendRetDtos = new ArrayList<>();
+
+        for(Friend friend : friends){
+            User findFriend = userRepository.findById(friend.getFriendId()).get();
+            FriendRetDto friendRetDto = new FriendRetDto();
+
+            friendRetDto.setFriendId(friend.getFriendId());
+            friendRetDto.setMbti(friend.getMbti());
+            friendRetDto.setName(findFriend.getName());
+            friendRetDto.setFilename(findFriend.getProfileFilename()); // 프로필 이미지 이름
+            friendRetDto.setFileURL(findFriend.getProfileFileURL());  // 프로필 이미지 링크
+            friendRetDtos.add(friendRetDto);
+        }
+        return friendRetDtos;
     }
 }
