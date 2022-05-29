@@ -57,7 +57,7 @@ public class ScheduleController {
         String userEmail = ((UserDetails) principal).getUsername();
         User findUser = userRepository.findByEmail(userEmail).get();
         SimplUser simplUser = simplUserRepository.findById(findUser.getId()).get();
-        return scheduleService.makeSchedule(scheduleDto, findUser, simplUser);
+        return scheduleService.makeSchedule(scheduleDto, findUser, simplUser); // 일정 등록
     }
 
     /**
@@ -71,34 +71,7 @@ public class ScheduleController {
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         User findUser = userRepository.findByEmail(userEmail).get();
-
-        Schedule findSchedule = scheduleRepository.findByTitle(scheduleDto.getTitle()).get();
-        List<SimplUser> simplUserList = findSchedule.getFriendList();
-        boolean flag = false;
-        for(SimplUser simplUser: simplUserList){
-            if(findUser.getId() == simplUser.getId()){
-                flag = true;
-                break;
-            }
-        }
-        if (flag){
-            findSchedule.setTitle(scheduleDto.getTitle());
-            findSchedule.setLocation(scheduleDto.getLocation());
-            findSchedule.setStartDate(scheduleDto.getStartDate());
-            findSchedule.setEndDate(scheduleDto.getEndDate());
-
-            List<Long> participants = scheduleDto.getFriends();
-            List<SimplUser> simplUserList2 = new ArrayList<>();
-            for(Long id: participants){
-                SimplUser findSimplUser = simplUserRepository.findById(id).get();
-                simplUserList2.add(findSimplUser);
-            }
-            findSchedule.setFriendList(simplUserList2);
-            Schedule schedule = scheduleRepository.save(findSchedule);
-            return schedule;
-        }else{
-            return new Schedule();
-        }
+        return scheduleService.updateSchedule(scheduleDto, findUser); // 일정 수정
     }
 
 
@@ -113,17 +86,6 @@ public class ScheduleController {
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         User findUser = userRepository.findByEmail(userEmail).get();
-
-        DeleteDto deleteDto = new DeleteDto();
-        if(findUser.getId().equals(scheduleDelDto.getUserId())){
-            scheduleRepository.deleteById(scheduleDelDto.getId());
-            deleteDto.setDeleted(true);
-            deleteDto.setMessage("성공적으로 삭제하였습니다.");
-            return deleteDto;
-        }else{
-            deleteDto.setDeleted(false);
-            deleteDto.setMessage("자신의 일정만 삭제할 수 있습니다.");
-            return deleteDto;
-        }
+        return scheduleService.deleteSchedule(scheduleDelDto, findUser); // 일정 삭제
     }
 }
