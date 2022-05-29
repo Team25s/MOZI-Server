@@ -95,7 +95,7 @@ public class ScheduleService {
      */
     public DeleteDto deleteSchedule(ScheduleDelDto scheduleDelDto, User findUser) {
         DeleteDto deleteDto = new DeleteDto();
-        if(findUser.getId().equals(scheduleDelDto.getUserId())){
+        if(findUser.getId()==scheduleDelDto.getUserId()){
             scheduleRepository.deleteById(scheduleDelDto.getId());
             deleteDto.setDeleted(true);
             deleteDto.setMessage("성공적으로 삭제하였습니다.");

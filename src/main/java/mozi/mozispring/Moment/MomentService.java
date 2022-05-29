@@ -102,7 +102,7 @@ public class MomentService {
         Moment findMoment = momentRepository.findById(id).get();
 
         DeleteDto deleteDto = new DeleteDto();
-        if(!(findMoment.getUserId() == findUser.get().getId())){ // 자신의 모먼트가 아닌 것을 삭제하려고 하는 경우
+        if(!(findMoment.getUserId()==findUser.get().getId())){ // 자신의 모먼트가 아닌 것을 삭제하려고 하는 경우
             deleteDto.setDeleted(false);
             deleteDto.setMessage("자신의 모먼트만 삭제할 수 있습니다. ");
             return deleteDto;

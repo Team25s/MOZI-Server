@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -53,5 +54,36 @@ public class ProfileController {
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
         return profileService.updateProfile(profileFixDto, findUser); // 프로필 수정하기
+    }
+
+    /**
+     * 유저 프로필 수정
+     */
+    @ApiOperation(value="유저 프로필 수정 ", notes="NEED JWT IN HEADER: 유저 프로필 수정")
+    @PostMapping("/profile2")
+    @ResponseBody
+    public SimplUser updateProfileController2(@RequestParam String name,
+                                              @RequestParam String mbti,
+                                              @RequestParam String introduce,
+                                              @RequestParam String strTag,
+                                              @RequestPart(value="file", required = false) MultipartFile multipartFile){
+        ProfileFixDto profileFixDto = new ProfileFixDto();
+        profileFixDto.setName(name);
+        profileFixDto.setIntroduce(introduce);
+        profileFixDto.setMbti(mbti);
+        profileFixDto.setStrTag(strTag);
+        profileFixDto.setMultipartFile(multipartFile);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String userEmail = ((UserDetails) principal).getUsername();
+        Optional<User> findUser = userRepository.findByEmail(userEmail);
+        return profileService.updateProfile(profileFixDto, findUser); // 프로필 수정하기
+    }
+
+    @PostMapping("/profile3")
+    @ResponseBody
+    public void getImageFileController(@RequestPart(value="file", required = false) MultipartFile multipartFile){
+        System.out.println(multipartFile.getOriginalFilename());
     }
 }
