@@ -145,8 +145,13 @@ public class MomentController {
     @GetMapping("/moment/{tag}")
     @ResponseBody
     public List<MomentRetDto> getMomentByHashTagController(@PathVariable("tag") String tag){
-        List<Moment> momentList = momentRepository.findByHashTagContaining(tag);
         List<MomentRetDto> momentRetDtoList = new ArrayList<>();
+        List<Moment> momentList;
+        try {
+            momentList = momentRepository.findByHashTagContaining(tag);
+        }catch(Exception e){
+            return momentRetDtoList;
+        }
         for(Moment moment: momentList){
             momentRetDtoList.add(momentService.getMoment(moment.getId()));
         }
