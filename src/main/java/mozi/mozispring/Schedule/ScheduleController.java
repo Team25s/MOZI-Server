@@ -49,7 +49,7 @@ public class ScheduleController {
     @ApiOperation(value="일정 등록하기", notes="NEED JWT IN HEADER: 일정 등록하기")
     @PostMapping("/schedule")
     @ResponseBody
-    public Long makeScheduleController(@RequestBody ScheduleDto scheduleDto){
+    public Schedule makeScheduleController(@RequestBody ScheduleDto scheduleDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -80,11 +80,9 @@ public class ScheduleController {
             memberCount += 1;
         }
         if (memberCount == participants.size()){
-            //return ResponseEntity.ok().body(new CommonResponse<>("성공적으로 추가되었습니다."));
-            return savedSchedule.getId();
+            return savedSchedule;
         }
-        //return ResponseEntity.ok().body(new ErrorResponse("일정을 추가할 수 없습니다."));
-        return -1L;
+        return new Schedule();
     }
 
     /**
@@ -93,7 +91,7 @@ public class ScheduleController {
     @ApiOperation(value="일정 수정하기 ", notes="NEED JWT IN HEADER: 일정 수정하기 ")
     @PutMapping("/schedule")
     @ResponseBody
-    public Long updateScheduleController(@RequestBody ScheduleDto scheduleDto){
+    public Schedule updateScheduleController(@RequestBody ScheduleDto scheduleDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -122,11 +120,9 @@ public class ScheduleController {
             }
             findSchedule.setFriendList(simplUserList2);
             Schedule schedule = scheduleRepository.save(findSchedule);
-            //return ResponseEntity.ok().body(new CommonResponse<>(findSchedule));
-            return schedule.getId();
+            return schedule;
         }else{
-            //return ResponseEntity.ok().body(new ErrorResponse("자신의 일정만 수정할 수 있습니다."));
-            return -1L;
+            return new Schedule();
         }
     }
 

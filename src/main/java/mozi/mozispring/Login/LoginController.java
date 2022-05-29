@@ -80,6 +80,7 @@ public class LoginController {
                     .name(user.getName())
                     .mbti(user.getMbti())
                     .profileFilename(null)
+                    .profileFileURL(null)
                     .build();
             JoinDto joinDto = new JoinDto();
             joinDto.setUserId(simplUserRepository.save(simplUser).getId());

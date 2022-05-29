@@ -27,4 +27,7 @@ public class MomentPhoto {
 
     @ApiModelProperty(value = "모먼트에 첨부된 사진 이름", notes = "모먼트에 첨부된 사진 이름", required = true, example="19g1pf981g2gfv3yg11f.jpg")
     private String fileName; // 모먼트에 첨부된 사진 이름
+
+    @ApiModelProperty(value = "파일 url ", notes = "파일 url ", required = true, example="http://firebase-storage/19g1pf981g2gfv3yg11f.jpg")
+    private String fileURL;  // 파일 url
 }

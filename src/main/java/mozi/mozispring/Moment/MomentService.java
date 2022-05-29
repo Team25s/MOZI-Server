@@ -28,17 +28,18 @@ public class MomentService {
         Moment findMoment = momentRepository.findById(momentId).get();
         List<MomentPhoto> momentPhotoList = momentPhotoRepository.findAllByMomentId(findMoment.getId());
         MomentRetDto momentRetDto = new MomentRetDto();
+
         momentRetDto.setTitle(findMoment.getTitle());
         momentRetDto.setContent(findMoment.getContent());
         momentRetDto.setDate(findMoment.getDate());
         momentRetDto.setUserId(findMoment.getUserId());
         momentRetDto.setHashTag(findMoment.getHashTag());
 
-        List<String> fileNameList = new ArrayList<>();
+        List<String> fileURLList = new ArrayList<>();
         for(MomentPhoto momentPhoto : momentPhotoList){
-            fileNameList.add(momentPhoto.getFileName());
+            fileURLList.add(momentPhoto.getFileURL());
         }
-        momentRetDto.setFileNameList(fileNameList);
+        momentRetDto.setFileURLList(fileURLList);
         return momentRetDto;
     }
 }

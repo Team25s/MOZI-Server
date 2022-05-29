@@ -20,6 +20,9 @@ public class ProfileDto {
     @ApiModelProperty(value = "프로필 이미지 파일 이름", notes = "프로필 이미지 파일 이름", required = true, example="1323saf20hannqp27ry8.jpg")
     private String profileFileName;
 
+    @ApiModelProperty(value = "프로필 이미지 링크", notes = "프로필 이미지 링크", required = true, example="http://firebase-storage/19g1pf981g2gfv3yg11f.jpg")
+    private String profileFileURL; // 프로필 이미지 링크
+
     @ApiModelProperty(value = "유저 이름", notes = "유저 이름", required = true, example="홍길동")
     private String name;
 

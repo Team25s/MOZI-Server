@@ -51,12 +51,12 @@ public class CommentController {
      */
     @ApiOperation(value="댓글 작성하기", notes="댓글 작성하기")
     @PostMapping("/comment")
-    public Long commentController(@RequestBody CommentDto commentDto){
+    public Comment commentController(@RequestBody CommentDto commentDto){
         Comment comment = commentRepository.save(Comment.builder()
                 .userId(commentDto.getOpponentId())
                 .content(commentDto.getContent())
                 .build());
-        return comment.getId();
+        return comment;
     }
 
     /**

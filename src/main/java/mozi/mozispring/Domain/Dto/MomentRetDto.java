@@ -31,6 +31,6 @@ public class MomentRetDto {
     @ApiModelProperty(value = "해시태그", notes = "해시태그", required = true, example="#한강#여름#친구랑#방학#저녁#카페")
     private String hashTag;
 
-    @ApiModelProperty(value = "첨부 파일 이름 리스트", notes = "첨부 파일 이름 리스트", required = true, example="")
-    private List<String> fileNameList = new ArrayList<>();
+    @ApiModelProperty(value = "첨부 파일 url 리스트", notes = "첨부 파일 url 리스트", required = true, example="")
+    private List<String> fileURLList = new ArrayList<>();
 }

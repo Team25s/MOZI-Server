@@ -32,4 +32,7 @@ public class SimplUser {
 
     @ApiModelProperty(value = "프로필 파일명", notes = "프로필 파일명", required = true, example="1hy2509go192ghr0e98ygo3v4fadsf.jpg")
     private String profileFilename;  // 프로필 파일명
+
+    @ApiModelProperty(value = "프로필 파일 링크", notes = "프로필 파일 링크", required = true, example="http://fire-base/1hy2509go192ghr0e98ygo3v4fadsf.jpg")
+    private String profileFileURL;  // 프로필 파일 링크
 }

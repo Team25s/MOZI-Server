@@ -69,7 +69,7 @@ public class MomentController {
     @ApiOperation(value="모먼트 기록하기", notes="모먼트 기록하기")
     @PostMapping("/moment")
     @ResponseBody
-    public Long createMomentController(@RequestBody MomentDto momentDto){
+    public MomentPhoto createMomentController(@RequestBody MomentDto momentDto){
         Moment moment = new Moment();
         moment.setTitle(moment.getTitle());
         moment.setContent(moment.getContent());
@@ -78,20 +78,24 @@ public class MomentController {
         moment.setHashTag(moment.getHashTag());
         Moment savedMoment = momentRepository.save(moment);
 
+        MomentPhoto momentPhoto = new MomentPhoto();
         try {
             for (MultipartFile multipartFile : momentDto.getMultipartFiles()) {
                 String filename = UUID.randomUUID().toString() + ".jpg";
                 String mediaLink = fireBaseService.uploadFiles(multipartFile, filename);
 
-                MomentPhoto momentPhoto = new MomentPhoto();
                 momentPhoto.setMomentId(savedMoment.getId());
+                // *********
                 momentPhoto.setFileName(filename);
+                momentPhoto.setFileName(mediaLink);
+                // *********
                 momentPhotoRepository.save(momentPhoto);
             }
         }catch(Exception e){
-            return -1L;
+            System.out.println(e.getStackTrace());
+            return momentPhoto;
         }
-        return savedMoment.getId();
+        return momentPhoto;
     }
 
     /**
@@ -100,7 +104,7 @@ public class MomentController {
     @ApiOperation(value="모먼트 삭제하기", notes="NEED JWT IN HEADER: 모먼트 삭제하기")
     @DeleteMapping("/moment/{id}")
     @ResponseBody
-    public DeleteDto deleteMomentController(@PathVariable("id") Long id){ // 모먼트 id 를 파라미터로 전달
+    public DeleteDto deleteMomentController(@PathVariable("id") Long id){ // 삭제할 모먼트 id 를 파라미터로 전달
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -150,6 +154,7 @@ public class MomentController {
         try {
             momentList = momentRepository.findByHashTagContaining(tag);
         }catch(Exception e){
+            System.out.println(e.getStackTrace());
             return momentRetDtoList;
         }
         for(Moment moment: momentList){

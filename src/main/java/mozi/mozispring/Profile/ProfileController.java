@@ -44,6 +44,7 @@ public class ProfileController {
         User user = findUser.get();
         ProfileDto profileDto = new ProfileDto();
         profileDto.setProfileFileName(user.getProfileFilename());
+        profileDto.setProfileFileURL(user.getProfileFileURL());
         profileDto.setName(user.getName());
         profileDto.setMbti(user.getMbti());
         profileDto.setIntroduce(user.getIntroduce());
@@ -57,7 +58,7 @@ public class ProfileController {
     @ApiOperation(value="유저 프로필 수정 ", notes="NEED JWT IN HEADER: 유저 프로필 수정")
     @PutMapping("/profile")
     @ResponseBody
-    public Long updateProfileController(@RequestBody ProfileFixDto profileFixDto){
+    public SimplUser updateProfileController(@RequestBody ProfileFixDto profileFixDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -66,7 +67,7 @@ public class ProfileController {
         User user = findUser.get();
         user.setName(profileFixDto.getName());
         user.setIntroduce(profileFixDto.getIntroduce());
-        user.setStrTag(profileFixDto.getStrTag());                   // 이부분 제대로 들어가는지 테스트 필요함. -> 잘되네요.
+        user.setStrTag(profileFixDto.getStrTag());
         user.setMbti(profileFixDto.getMbti());
 
         // 회원 요약 정보도 함께 수정
@@ -76,7 +77,7 @@ public class ProfileController {
 
         if(!profileFixDto.getMultipartFile().isEmpty()){
             try {
-                fireBaseService.deleteFiles(user.getProfileFilename());
+                fireBaseService.deleteFiles(user.getProfileFilename()); // 기존에 존재하던 이미지는 삭제함.
             }catch(StorageException e){
                 System.out.println(e.getMessage());
             }
@@ -88,12 +89,13 @@ public class ProfileController {
             }catch(IOException e){
                 System.out.println(e.getMessage());
             }
-            user.setProfileFilename(nameFile);
+            user.setProfileFilename(nameFile); // 새로운 이미지 파일명 설정
+            user.setProfileFileURL(mediaLink); // 새로운 이미지 링크 설정
             simplUser.setProfileFilename(nameFile);
+            simplUser.setProfileFileURL(mediaLink);
         }
-        User savedUser = userRepository.save(user);
-                      simplUserRepository.save(simplUser);
-
-        return savedUser.getId();
+        User savedUser = userRepository.save(user);                   // 유저 정보 저장
+        SimplUser savedSimplUser = simplUserRepository.save(simplUser);  // 유저 요약 정보 저장
+        return savedSimplUser; // 사용자 요약정보를 반환
     }
 }

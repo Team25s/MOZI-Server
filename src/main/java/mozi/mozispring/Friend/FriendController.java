@@ -91,7 +91,6 @@ public class FriendController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
-
         Optional<User> findUser = userRepository.findByEmail(userEmail);
 
         List<Friend> friends = friendRepository.findAllById(findUser.get().getId());
@@ -104,7 +103,8 @@ public class FriendController {
             friendRetDto.setFriendId(friend.getFriendId());
             friendRetDto.setMbti(friend.getMbti());
             friendRetDto.setName(findFriend.getName());
-            friendRetDto.setFilename(findFriend.getProfileFilename());
+            friendRetDto.setFilename(findFriend.getProfileFilename()); // 프로필 이미지 이름
+            friendRetDto.setFileURL(findFriend.getProfileFileURL());  // 프로필 이미지 링크
             friendRetDtos.add(friendRetDto);
         }
         return friendRetDtos;

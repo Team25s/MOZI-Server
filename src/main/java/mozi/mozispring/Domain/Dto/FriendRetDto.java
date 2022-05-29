@@ -24,4 +24,7 @@ public class FriendRetDto {
 
     @ApiModelProperty(value = "친구 프로필 이미지 파일 이름", notes = "친구 프로필 이미지 파일 이름", required = true, example="1anwqna25eqwerqqpb1gtvjq5692rhgb1.jpg")
     private String filename; // 친구 프로필 이미지 파일 이름
+
+    @ApiModelProperty(value = "친구 프로필 이미지 링크 ", notes = "친구 프로필 이미지 링크 ", required = true, example="http://firebase-storage/1anwqna25eqwerqqpb1gtvjq5692rhgb1.jpg")
+    private String fileURL; // 친구 프로필 이미지 링크
 }

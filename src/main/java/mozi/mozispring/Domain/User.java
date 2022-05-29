@@ -45,6 +45,9 @@ public class User implements UserDetails {           // 유저 도메인 객체
     @ApiModelProperty(value = "프로필 파일명", notes = "프로필 파일명", required = true, example="28tgj9dj374tf1yv123512fftyr694jhg.jpg")
     private String profileFilename;  // 프로필 파일명
 
+    @ApiModelProperty(value = "프로필 파일 url", notes = "프로필 파일 url", required = true, example="http://firebase-storage/28tgj9dj374tf1yv123512fftyr694jhg.jpg")
+    private String profileFileURL; // 프로필 파일 url
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
