@@ -22,12 +22,14 @@ public class FriendController {
     private final UserRepository userRepository;
     private final FriendRepository friendRepository;
     private final FavoritesRepository favoritesRepository;
+    private final FriendService friendService;
 
-    @Autowired
-    public FriendController(UserRepository userRepository, FriendRepository friendRepository, FavoritesRepository favoritesRepository) {
+
+    public FriendController(UserRepository userRepository, FriendRepository friendRepository, FavoritesRepository favoritesRepository, FriendService friendService) {
         this.userRepository = userRepository;
         this.friendRepository = friendRepository;
         this.favoritesRepository = favoritesRepository;
+        this.friendService = friendService;
     }
 
     /**
@@ -41,21 +43,7 @@ public class FriendController {
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
-
-        Friend user = friendRepository.save(Friend.builder()
-                .userId(findUser.get().getId())
-                .friendId(friendDto.getFriendId())
-                .mbti(friendDto.getMbti())
-                .knock(0)
-                .build());
-        Friend friend = friendRepository.save(Friend.builder()
-                .userId(friendDto.getFriendId())
-                .friendId(findUser.get().getId())
-                .mbti(findUser.get().getMbti())
-                .knock(0)
-                .build());
-
-        return friend;
+        return friendService.addFriend(friendDto, findUser); // 친구 추가
     }
 
     /**
