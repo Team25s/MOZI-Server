@@ -33,7 +33,7 @@ public class FriendController {
     @ApiOperation(value="친구 추가하기", notes="NEED JWT IN HEADER: 친구 추가하기")
     @PostMapping("/friend")
     @ResponseBody
-    public Long addFriendController(@RequestBody FriendDto friendDto){
+    public Friend addFriendController(@RequestBody FriendDto friendDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -52,7 +52,7 @@ public class FriendController {
                 .knock(0)
                 .build());
 
-        return friend.getId();
+        return friend;
     }
 
     /**
