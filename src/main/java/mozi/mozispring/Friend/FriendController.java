@@ -57,23 +57,7 @@ public class FriendController {
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
-
-        DeleteDto deleteDto = new DeleteDto();
-        try {
-            // 서로를 친구 목록에서 삭제해준다.
-            friendRepository.deleteByUserIdAndFriendId(findUser.get().getId(), friendDto.getFriendId());
-            friendRepository.deleteByUserIdAndFriendId(friendDto.getFriendId(), findUser.get().getId());
-            // 즐겨찾기 목록에서도 서로를 삭제해준다.
-            favoritesRepository.deleteByUserIdAndOpponentId(findUser.get().getId(), friendDto.getFriendId());
-            favoritesRepository.deleteByUserIdAndOpponentId(friendDto.getFriendId(), findUser.get().getId());
-        }catch(Exception e){
-            deleteDto.setDeleted(false);
-            deleteDto.setMessage("친구 삭제를 할 수 없습니다.");
-            return deleteDto;
-        }
-        deleteDto.setDeleted(true);
-        deleteDto.setMessage("친구 삭제를 완료했습니다.");
-        return deleteDto;
+        return friendService.deleteFriend(friendDto, findUser); // 친구 삭제
     }
 
     /**
