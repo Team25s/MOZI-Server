@@ -6,6 +6,7 @@ import mozi.mozispring.Domain.Dto.FriendDto;
 import mozi.mozispring.Domain.Dto.FriendRetDto;
 import mozi.mozispring.Domain.Friend;
 import mozi.mozispring.Domain.User;
+import mozi.mozispring.Favorites.FavoritesRepository;
 import mozi.mozispring.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,11 +21,13 @@ public class FriendController {
 
     private final UserRepository userRepository;
     private final FriendRepository friendRepository;
+    private final FavoritesRepository favoritesRepository;
 
     @Autowired
-    public FriendController(UserRepository userRepository, FriendRepository friendRepository) {
+    public FriendController(UserRepository userRepository, FriendRepository friendRepository, FavoritesRepository favoritesRepository) {
         this.userRepository = userRepository;
         this.friendRepository = friendRepository;
+        this.favoritesRepository = favoritesRepository;
     }
 
     /**
@@ -69,8 +72,12 @@ public class FriendController {
 
         DeleteDto deleteDto = new DeleteDto();
         try {
+            // 서로를 친구 목록에서 삭제해준다.
             friendRepository.deleteByUserIdAndFriendId(findUser.get().getId(), friendDto.getFriendId());
             friendRepository.deleteByUserIdAndFriendId(friendDto.getFriendId(), findUser.get().getId());
+            // 즐겨찾기 목록에서도 서로를 삭제해준다.
+            favoritesRepository.deleteByUserIdAndOpponentId(findUser.get().getId(), friendDto.getFriendId());
+            favoritesRepository.deleteByUserIdAndOpponentId(friendDto.getFriendId(), findUser.get().getId());
         }catch(Exception e){
             deleteDto.setDeleted(false);
             deleteDto.setMessage("친구 삭제를 할 수 없습니다.");
