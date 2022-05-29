@@ -24,4 +24,6 @@ public interface MomentRepository extends JpaRepository<Moment, Long> {
 
     // Like 구문은 와일드 카드 적용해야함. '%tag%'
     List<Moment> findByHashTagLike(String tag);
+
+    void deleteAllByUserId(Long userId);
 }

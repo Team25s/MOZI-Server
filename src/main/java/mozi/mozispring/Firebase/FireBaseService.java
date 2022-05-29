@@ -22,6 +22,9 @@ public class FireBaseService {
      *  파이어베이스에 이미지 업로드하기
      */
     public String uploadFiles(MultipartFile file, String nameFile) throws IOException {
+        if(nameFile == null  || file == null){
+            return "";
+        }
         Bucket bucket = StorageClient.getInstance().bucket(firebaseBucket);
         InputStream content = new ByteArrayInputStream(file.getBytes());
         Blob blob = bucket.create(nameFile.toString(), content, file.getContentType());
@@ -32,6 +35,9 @@ public class FireBaseService {
      * 파이어베이스에서 이미지 삭제하기
      */
     public boolean deleteFiles(String filename) throws StorageException {
+        if(filename == null){
+            return false;
+        }
         Bucket bucket = StorageClient.getInstance().bucket(firebaseBucket);
         return  bucket.get(filename).delete();
     }

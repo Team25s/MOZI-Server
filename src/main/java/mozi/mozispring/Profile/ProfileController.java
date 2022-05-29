@@ -43,8 +43,8 @@ public class ProfileController {
         Optional<User> findUser = userRepository.findById(id);
         User user = findUser.get();
         ProfileDto profileDto = new ProfileDto();
-        profileDto.setProfileFileName(user.getProfileFilename());
-        profileDto.setProfileFileURL(user.getProfileFileURL());
+        profileDto.setProfileFileName(user.getProfileFilename()); // 프로필 이미지 이름
+        profileDto.setProfileFileURL(user.getProfileFileURL());   // 프로필 이미지 링크
         profileDto.setName(user.getName());
         profileDto.setMbti(user.getMbti());
         profileDto.setIntroduce(user.getIntroduce());
@@ -96,6 +96,7 @@ public class ProfileController {
         }
         User savedUser = userRepository.save(user);                   // 유저 정보 저장
         SimplUser savedSimplUser = simplUserRepository.save(simplUser);  // 유저 요약 정보 저장
+
         return savedSimplUser; // 사용자 요약정보를 반환
     }
 }

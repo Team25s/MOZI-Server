@@ -22,4 +22,7 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
     List<Friend> findAllByUserId(Long userId);
     Optional<Friend> findById(Long id);
     Friend findByUserId(Long opponentId);
+
+    void deleteByUserId(Long userId);
+    void deleteByFriendId(Long friendId);
 }
