@@ -25,11 +25,13 @@ public class CommentController {
 
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
+    private final CommentService commentService;
 
     @Autowired
-    public CommentController(CommentRepository commentRepository, UserRepository userRepository) {
+    public CommentController(CommentRepository commentRepository, UserRepository userRepository, CommentService commentService) {
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
+        this.commentService = commentService;
     }
 
     /**
@@ -69,19 +71,6 @@ public class CommentController {
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
-
-        Optional<Comment> findComment = commentRepository.findById(delComment.getCommentId());
-
-        DeleteDto deleteDto = new DeleteDto();
-        if(findUser.get().getId().equals(findComment.get().getUserId())){
-            commentRepository.deleteById(delComment.getCommentId());
-            deleteDto.setDeleted(true);
-            deleteDto.setMessage("정상적으로 삭제되었습니다.");
-            return deleteDto;
-        }else{
-            deleteDto.setDeleted(false);
-            deleteDto.setMessage("자신의 댓글만 삭제할 수 있습니다.");
-            return deleteDto;
-        }
+        return commentService.deleteComment(delComment, findUser.get().getId());
     }
 }
