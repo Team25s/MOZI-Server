@@ -24,12 +24,14 @@ public class ScheduleController {
     private ScheduleRepository scheduleRepository;
     private UserRepository userRepository;
     private SimplUserRepository simplUserRepository;
+    private ScheduleService scheduleService;
 
     @Autowired
-    public ScheduleController(ScheduleRepository scheduleRepository, UserRepository userRepository, SimplUserRepository simplUserRepository) {
+    public ScheduleController(ScheduleRepository scheduleRepository, UserRepository userRepository, SimplUserRepository simplUserRepository, ScheduleService scheduleService) {
         this.scheduleRepository = scheduleRepository;
         this.userRepository = userRepository;
         this.simplUserRepository = simplUserRepository;
+        this.scheduleService = scheduleService;
     }
 
     /**
@@ -55,34 +57,7 @@ public class ScheduleController {
         String userEmail = ((UserDetails) principal).getUsername();
         User findUser = userRepository.findByEmail(userEmail).get();
         SimplUser simplUser = simplUserRepository.findById(findUser.getId()).get();
-
-        Schedule schedule = new Schedule();
-        schedule.setTitle(schedule.getTitle());
-        schedule.setLocation(scheduleDto.getLocation());
-        schedule.setStartDate(scheduleDto.getStartDate());
-        schedule.setEndDate(scheduleDto.getEndDate());
-
-        List<Long> participants = scheduleDto.getFriends();
-        List<SimplUser> simplUserList = new ArrayList<>();
-        for(Long id: participants){
-            SimplUser findSimplUser = simplUserRepository.findById(id).get();
-            simplUserList.add(findSimplUser);
-        }
-        simplUserList.add(simplUser);
-        schedule.setFriendList(simplUserList);
-        participants.add(findUser.getId());  // 본인 추가
-
-        int memberCount = 0;
-        Schedule savedSchedule = null;
-        for(Long id : participants){
-            schedule.setUserId(id);
-            savedSchedule = scheduleRepository.save(schedule);
-            memberCount += 1;
-        }
-        if (memberCount == participants.size()){
-            return savedSchedule;
-        }
-        return new Schedule();
+        return scheduleService.makeSchedule(scheduleDto, findUser, simplUser);
     }
 
     /**
