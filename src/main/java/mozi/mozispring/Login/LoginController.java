@@ -97,6 +97,6 @@ public class LoginController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
-        return loginService.countUserContent(userEmail); 
+        return loginService.countUserContent(userEmail);
     }
 }

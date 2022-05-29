@@ -59,7 +59,6 @@ public class KnockController {
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
-
         List<Friend> friendList = friendRepository.findAllByUserId(findUser.get().getId());
         return friendList;
     }
