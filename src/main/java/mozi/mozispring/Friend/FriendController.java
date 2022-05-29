@@ -98,12 +98,13 @@ public class FriendController {
         List<FriendRetDto> friendRetDtos = new ArrayList<>();
 
         for(Friend friend : friends){
-            String filename = userRepository.findById(friend.getFriendId()).get().getProfileFilename();
+            User findFriend = userRepository.findById(friend.getFriendId()).get();
             FriendRetDto friendRetDto = new FriendRetDto();
 
             friendRetDto.setFriendId(friend.getFriendId());
             friendRetDto.setMbti(friend.getMbti());
-            friendRetDto.setFilename(filename);
+            friendRetDto.setName(findFriend.getName());
+            friendRetDto.setFilename(findFriend.getProfileFilename());
             friendRetDtos.add(friendRetDto);
         }
         return friendRetDtos;

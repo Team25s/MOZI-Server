@@ -19,6 +19,9 @@ public class FriendRetDto {
     @ApiModelProperty(value = "친구 mbti", notes = "친구 mbti", required = true, example="istp")
     private String mbti;   // 친구 mbti
 
+    @ApiModelProperty(value = "친구 이름", notes = "친구 이름", required = true, example="김모지")
+    private String name; // 친구 이름
+
     @ApiModelProperty(value = "친구 프로필 이미지 파일 이름", notes = "친구 프로필 이미지 파일 이름", required = true, example="1anwqna25eqwerqqpb1gtvjq5692rhgb1.jpg")
     private String filename; // 친구 프로필 이미지 파일 이름
 }
