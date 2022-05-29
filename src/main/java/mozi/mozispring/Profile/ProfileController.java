@@ -23,16 +23,11 @@ import java.util.UUID;
 public class ProfileController {
 
     private final UserRepository userRepository;
-    private final FireBaseService fireBaseService;
-    private final SimplUserRepository simplUserRepository;
     private final ProfileService profileService;
 
 
-    @Autowired
-    public ProfileController(UserRepository userRepository, FireBaseService fireBaseService, SimplUserRepository simplUserRepository, ProfileService profileService) {
+    public ProfileController(UserRepository userRepository, ProfileService profileService) {
         this.userRepository = userRepository;
-        this.fireBaseService = fireBaseService;
-        this.simplUserRepository = simplUserRepository;
         this.profileService = profileService;
     }
 

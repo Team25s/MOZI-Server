@@ -20,15 +20,11 @@ import java.util.*;
 public class FriendController {
 
     private final UserRepository userRepository;
-    private final FriendRepository friendRepository;
-    private final FavoritesRepository favoritesRepository;
     private final FriendService friendService;
 
 
-    public FriendController(UserRepository userRepository, FriendRepository friendRepository, FavoritesRepository favoritesRepository, FriendService friendService) {
+    public FriendController(UserRepository userRepository, FriendService friendService) {
         this.userRepository = userRepository;
-        this.friendRepository = friendRepository;
-        this.favoritesRepository = favoritesRepository;
         this.friendService = friendService;
     }
 

@@ -28,32 +28,9 @@ import java.util.Optional;
 @Controller
 public class LoginController {
 
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final UserRepository userRepository;
-    private final MomentRepository momentRepository;
-    private final CommentRepository commentRepository;
-    private final ScheduleRepository scheduleRepository;
-    private final FireBaseService fireBaseService;
-    private final SimplUserRepository simplUserRepository;
-    private final ProfileRepository profileRepository;
-    private final FriendRepository friendRepository;
-    private final FavoritesRepository favoritesRepository;
     private final LoginService loginService;
 
-    @Autowired
-    public LoginController(PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserRepository userRepository, MomentRepository momentRepository, CommentRepository commentRepository, ScheduleRepository scheduleRepository, FireBaseService fireBaseService, SimplUserRepository simplUserRepository, ProfileRepository profileRepository, FriendRepository friendRepository, FavoritesRepository favoritesRepository, LoginService loginService) {
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userRepository = userRepository;
-        this.momentRepository = momentRepository;
-        this.commentRepository = commentRepository;
-        this.scheduleRepository = scheduleRepository;
-        this.fireBaseService = fireBaseService;
-        this.simplUserRepository = simplUserRepository;
-        this.profileRepository = profileRepository;
-        this.friendRepository = friendRepository;
-        this.favoritesRepository = favoritesRepository;
+    public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
 

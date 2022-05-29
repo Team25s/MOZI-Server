@@ -30,12 +30,10 @@ public class LoginService {
     private ScheduleRepository scheduleRepository;
     private FireBaseService fireBaseService;
     private SimplUserRepository simplUserRepository;
-    private ProfileRepository profileRepository;
     private FriendRepository friendRepository;
     private FavoritesRepository favoritesRepository;
-    private LoginService loginService;
 
-    public LoginService(PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserRepository userRepository, MomentRepository momentRepository, CommentRepository commentRepository, ScheduleRepository scheduleRepository, FireBaseService fireBaseService, SimplUserRepository simplUserRepository, ProfileRepository profileRepository, FriendRepository friendRepository, FavoritesRepository favoritesRepository, LoginService loginService) {
+    public LoginService(PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserRepository userRepository, MomentRepository momentRepository, CommentRepository commentRepository, ScheduleRepository scheduleRepository, FireBaseService fireBaseService, SimplUserRepository simplUserRepository, FriendRepository friendRepository, FavoritesRepository favoritesRepository) {
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userRepository = userRepository;
@@ -44,12 +42,9 @@ public class LoginService {
         this.scheduleRepository = scheduleRepository;
         this.fireBaseService = fireBaseService;
         this.simplUserRepository = simplUserRepository;
-        this.profileRepository = profileRepository;
         this.friendRepository = friendRepository;
         this.favoritesRepository = favoritesRepository;
-        this.loginService = loginService;
     }
-
 
     /**
      * 회원가입

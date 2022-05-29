@@ -23,18 +23,10 @@ import java.util.UUID;
 
 @Controller
 public class MomentController {
-
-    private FireBaseService fireBaseService;
-    private MomentRepository momentRepository;
-    private MomentPhotoRepository momentPhotoRepository;
     private UserRepository userRepository;
     private MomentService momentService;
 
-    @Autowired
-    public MomentController(FireBaseService fireBaseService, MomentRepository momentRepository, MomentPhotoRepository momentPhotoRepository, UserRepository userRepository, MomentService momentService) {
-        this.fireBaseService = fireBaseService;
-        this.momentRepository = momentRepository;
-        this.momentPhotoRepository = momentPhotoRepository;
+    public MomentController(UserRepository userRepository, MomentService momentService) {
         this.userRepository = userRepository;
         this.momentService = momentService;
     }

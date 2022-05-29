@@ -13,15 +13,11 @@ import java.util.Optional;
 @Service
 public class GameService {
     private GameRepository gameRepository;
-    private UserRepository userRepository;
     private GameLogRepository gameLogRepository;
-    private GameService gameService;
 
-    public GameService(GameRepository gameRepository, UserRepository userRepository, GameLogRepository gameLogRepository, GameService gameService) {
+    public GameService(GameRepository gameRepository, GameLogRepository gameLogRepository) {
         this.gameRepository = gameRepository;
-        this.userRepository = userRepository;
         this.gameLogRepository = gameLogRepository;
-        this.gameService = gameService;
     }
 
     /**
