@@ -43,7 +43,7 @@ public class ProfileController {
     @GetMapping("/profile/{id}")
     @ResponseBody
     public ProfileDto getUserProfileController(@PathVariable("id") Long id){
-        return profileService.getUserProfile(id); // 유저 프로필 부러오기
+        return profileService.getUserProfile(id); // 유저 프로필 불러오기
     }
 
     /**
