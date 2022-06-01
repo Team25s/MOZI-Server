@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@ApiModel(value = "게임 로그")
+@ApiModel(value = "게임 로그 도메인 객체")
 @Entity
 @Setter
 @Getter

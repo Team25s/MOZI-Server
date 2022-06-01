@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@ApiModel(value = "모먼트 첨부 사진")
+@ApiModel(value = "모먼트 첨부 사진 도메인 객체")
 @Entity
 @Setter
 @Getter

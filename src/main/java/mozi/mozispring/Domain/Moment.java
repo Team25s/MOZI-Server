@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@ApiModel(value = "모먼트")
+@ApiModel(value = "모먼트 도메인 객체")
 @Entity
 @Setter
 @Getter

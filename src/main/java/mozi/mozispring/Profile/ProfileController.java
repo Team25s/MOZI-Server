@@ -43,7 +43,7 @@ public class ProfileController {
     }
 
     /**
-     * 유저 프로필 수정
+     * 유저 프로필 수정 1
      */
     @ApiOperation(value="유저 프로필 수정 ", notes="NEED JWT IN HEADER: 유저 프로필 수정")
     @PutMapping("/profile")
@@ -57,7 +57,7 @@ public class ProfileController {
     }
 
     /**
-     * 유저 프로필 수정
+     * 테스트 api - 유저 프로필 수정 2
      */
     @ApiOperation(value="유저 프로필 수정 ", notes="NEED JWT IN HEADER: 유저 프로필 수정")
     @PostMapping("/profile2")
@@ -81,6 +81,10 @@ public class ProfileController {
         return profileService.updateProfile(profileFixDto, findUser); // 프로필 수정하기
     }
 
+    /**
+     * 테스트 api - 유저 프로필 수정 3
+     * @param multipartFile
+     */
     @PostMapping("/profile3")
     @ResponseBody
     public void getImageFileController(@RequestPart(value="file", required = false) MultipartFile multipartFile){

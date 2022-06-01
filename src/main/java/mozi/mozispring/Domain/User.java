@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 
-@ApiModel(value = "유저")
+@ApiModel(value = "유저 도메인 객체")
 @Entity
 @Setter
 @Getter

@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@ApiModel(value = "댓글")
+@ApiModel(value = "댓글 도메인 객체")
 @Entity
 @Setter
 @Getter

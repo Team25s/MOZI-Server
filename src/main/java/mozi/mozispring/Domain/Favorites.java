@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-@ApiModel(value = "즐겨찾기")
+@ApiModel(value = "즐겨찾기 도메인 객체")
 @Entity
 @Setter
 @Getter
