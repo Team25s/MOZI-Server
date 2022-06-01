@@ -7,6 +7,7 @@ import mozi.mozispring.Domain.Friend;
 import mozi.mozispring.Domain.User;
 import mozi.mozispring.Favorites.FavoritesRepository;
 import mozi.mozispring.User.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class FriendService {
     private final FavoritesRepository favoritesRepository;
     private final UserRepository userRepository;
 
+    @Autowired
     public FriendService(FriendRepository friendRepository, FavoritesRepository favoritesRepository, UserRepository userRepository) {
         this.friendRepository = friendRepository;
         this.favoritesRepository = favoritesRepository;
@@ -52,11 +54,19 @@ public class FriendService {
         DeleteDto deleteDto = new DeleteDto();
         try {
             // 서로를 친구 목록에서 삭제해준다.
-            friendRepository.deleteByUserIdAndFriendId(findUser.get().getId(), friendDto.getFriendId());
-            friendRepository.deleteByUserIdAndFriendId(friendDto.getFriendId(), findUser.get().getId());
+            try {
+                friendRepository.deleteByUserIdAndFriendId(findUser.get().getId(), friendDto.getFriendId());
+                friendRepository.deleteByUserIdAndFriendId(friendDto.getFriendId(), findUser.get().getId());
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
             // 즐겨찾기 목록에서도 서로를 삭제해준다.
-            favoritesRepository.deleteByUserIdAndOpponentId(findUser.get().getId(), friendDto.getFriendId());
-            favoritesRepository.deleteByUserIdAndOpponentId(friendDto.getFriendId(), findUser.get().getId());
+            try {
+                favoritesRepository.deleteByUserIdAndOpponentId(findUser.get().getId(), friendDto.getFriendId());
+                favoritesRepository.deleteByUserIdAndOpponentId(friendDto.getFriendId(), findUser.get().getId());
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
         }catch(Exception e){
             deleteDto.setDeleted(false);
             deleteDto.setMessage("친구 삭제를 할 수 없습니다.");

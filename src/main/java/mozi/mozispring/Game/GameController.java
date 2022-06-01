@@ -27,6 +27,7 @@ public class GameController {
     private GameLogRepository gameLogRepository;
     private GameService gameService;
 
+    @Autowired
     public GameController(GameRepository gameRepository, UserRepository userRepository, GameLogRepository gameLogRepository, GameService gameService) {
         this.gameRepository = gameRepository;
         this.userRepository = userRepository;

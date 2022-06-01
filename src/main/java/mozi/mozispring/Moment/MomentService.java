@@ -23,6 +23,7 @@ public class MomentService {
     private MomentPhotoRepository momentPhotoRepository;
     private FireBaseService fireBaseService;
 
+    @Autowired
     public MomentService(MomentRepository momentRepository, MomentPhotoRepository momentPhotoRepository, FireBaseService fireBaseService) {
         this.momentRepository = momentRepository;
         this.momentPhotoRepository = momentPhotoRepository;

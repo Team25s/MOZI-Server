@@ -26,7 +26,7 @@ public class ProfileController {
     private final UserRepository userRepository;
     private final ProfileService profileService;
 
-
+    @Autowired
     public ProfileController(UserRepository userRepository, ProfileService profileService) {
         this.userRepository = userRepository;
         this.profileService = profileService;

@@ -21,6 +21,7 @@ public class ProfileService {
     private final SimplUserRepository simplUserRepository;
     private final FireBaseService fireBaseService;
 
+    @Autowired
     public ProfileService(UserRepository userRepository, SimplUserRepository simplUserRepository, FireBaseService fireBaseService) {
         this.userRepository = userRepository;
         this.simplUserRepository = simplUserRepository;

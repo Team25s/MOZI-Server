@@ -7,6 +7,7 @@ import mozi.mozispring.Domain.Schedule;
 import mozi.mozispring.Domain.SimplUser;
 import mozi.mozispring.Domain.User;
 import mozi.mozispring.User.SimplUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class ScheduleService {
     private SimplUserRepository simplUserRepository;
     private ScheduleRepository scheduleRepository;
 
-
+    @Autowired
     public ScheduleService(SimplUserRepository simplUserRepository, ScheduleRepository scheduleRepository) {
         this.simplUserRepository = simplUserRepository;
         this.scheduleRepository = scheduleRepository;

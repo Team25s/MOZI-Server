@@ -14,6 +14,7 @@ import mozi.mozispring.Profile.ProfileRepository;
 import mozi.mozispring.Schedule.ScheduleRepository;
 import mozi.mozispring.User.SimplUserRepository;
 import mozi.mozispring.User.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class LoginService {
     private FriendRepository friendRepository;
     private FavoritesRepository favoritesRepository;
 
+    @Autowired
     public LoginService(PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserRepository userRepository, MomentRepository momentRepository, CommentRepository commentRepository, ScheduleRepository scheduleRepository, FireBaseService fireBaseService, SimplUserRepository simplUserRepository, FriendRepository friendRepository, FavoritesRepository favoritesRepository) {
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;

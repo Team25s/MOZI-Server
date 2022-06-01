@@ -30,6 +30,7 @@ public class LoginController {
 
     private final LoginService loginService;
 
+    @Autowired
     public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }

@@ -3,6 +3,7 @@ package mozi.mozispring.Comment;
 import mozi.mozispring.Domain.Comment;
 import mozi.mozispring.Domain.Dto.DelComment;
 import mozi.mozispring.Domain.Dto.DeleteDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,6 +13,7 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
+    @Autowired
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }

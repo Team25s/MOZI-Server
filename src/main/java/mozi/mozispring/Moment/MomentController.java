@@ -26,6 +26,7 @@ public class MomentController {
     private UserRepository userRepository;
     private MomentService momentService;
 
+    @Autowired
     public MomentController(UserRepository userRepository, MomentService momentService) {
         this.userRepository = userRepository;
         this.momentService = momentService;

@@ -6,6 +6,7 @@ import mozi.mozispring.Domain.GameLog;
 import mozi.mozispring.Domain.GameQA;
 import mozi.mozispring.Domain.User;
 import mozi.mozispring.User.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,6 +16,7 @@ public class GameService {
     private GameRepository gameRepository;
     private GameLogRepository gameLogRepository;
 
+    @Autowired
     public GameService(GameRepository gameRepository, GameLogRepository gameLogRepository) {
         this.gameRepository = gameRepository;
         this.gameLogRepository = gameLogRepository;
