@@ -31,6 +31,8 @@ public class FriendService {
      * 친구 추가
      */
     public Friend addFriend(FriendDto friendDto, Optional<User> findUser){
+
+
         Friend user = friendRepository.save(Friend.builder()
                 .userId(findUser.get().getId())
                 .friendId(friendDto.getFriendId())
@@ -81,7 +83,7 @@ public class FriendService {
      * 내 친구 목록 불러오기
      */
     public List<FriendRetDto> getFriendList(Optional<User> findUser) {
-        List<Friend> friends = friendRepository.findAllById(findUser.get().getId());
+        List<Friend> friends = friendRepository.findAllByUserId(findUser.get().getId());
         List<FriendRetDto> friendRetDtos = new ArrayList<>();
 
         for(Friend friend : friends){
