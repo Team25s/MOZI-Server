@@ -10,6 +10,7 @@ import mozi.mozispring.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,22 +32,29 @@ public class FriendService {
      * 친구 추가
      */
     public Friend addFriend(FriendDto friendDto, Optional<User> findUser){
+        // 클라이언트 요구사항: 중복체크
+        Friend friend1 = friendRepository.findByUserIdAndFriendId(friendDto.getFriendId(), findUser.get().getId());
+        Friend friend2 = friendRepository.findByUserIdAndFriendId(findUser.get().getId(), friendDto.getFriendId());
+        if(friend1 == null || friend2 == null){
+            Friend user = friendRepository.save(Friend.builder()
+                    .userId(findUser.get().getId())
+                    .friendId(friendDto.getFriendId())
+                    .mbti(friendDto.getMbti())
+                    .knock(0)
+                    .build());
+            Friend friend = friendRepository.save(Friend.builder()
+                    .userId(friendDto.getFriendId())
+                    .friendId(findUser.get().getId())
+                    .mbti(findUser.get().getMbti())
+                    .knock(0)
+                    .build());
 
-
-        Friend user = friendRepository.save(Friend.builder()
-                .userId(findUser.get().getId())
-                .friendId(friendDto.getFriendId())
-                .mbti(friendDto.getMbti())
-                .knock(0)
-                .build());
-        Friend friend = friendRepository.save(Friend.builder()
-                .userId(friendDto.getFriendId())
-                .friendId(findUser.get().getId())
-                .mbti(findUser.get().getMbti())
-                .knock(0)
-                .build());
-
-        return friend;
+            return friend;
+        }else{
+            Friend friend = new Friend();
+            friend.setId(-1L);
+            return friend;
+        }
     }
 
     /**
