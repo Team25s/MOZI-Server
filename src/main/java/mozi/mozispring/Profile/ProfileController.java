@@ -4,6 +4,7 @@ import com.google.cloud.storage.StorageException;
 import io.swagger.annotations.ApiOperation;
 import mozi.mozispring.Domain.Dto.ProfileDto;
 import mozi.mozispring.Domain.Dto.ProfileFixDto;
+import mozi.mozispring.Domain.Dto.TestProfileFixDto;
 import mozi.mozispring.Domain.SimplUser;
 import mozi.mozispring.Domain.User;
 import mozi.mozispring.User.SimplUserRepository;
@@ -54,11 +55,12 @@ public class ProfileController {
     @ApiOperation(value="유저 프로필 수정 ", notes="NEED JWT IN HEADER: 유저 프로필 수정")
     @PutMapping("/profile1")
     @ResponseBody
-    public SimplUser updateProfileController(@RequestBody ProfileFixDto profileFixDto){
+    public SimplUser updateProfileController1(@RequestBody ProfileFixDto profileFixDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
+
         return profileService.updateProfile(profileFixDto, findUser); // 프로필 수정하기
     }
 
@@ -73,14 +75,31 @@ public class ProfileController {
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         Optional<User> findUser = userRepository.findByEmail(userEmail);
+
         return profileService.updateProfile(profileFixDto, findUser); // 프로필 수정하기
+    }
+
+    /**
+     * 유저 프로필 수정 3
+     */
+    @ApiOperation(value="유저 프로필 수정 ", notes="NEED JWT IN HEADER: 유저 프로필 수정")
+    @PutMapping("/profile3")
+    @ResponseBody
+    public SimplUser updateProfileController3(@RequestPart(value="key", required = false) TestProfileFixDto testProfileFixDto,
+                                              @RequestPart(value="file", required = true) MultipartFile multipartFile){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String userEmail = ((UserDetails) principal).getUsername();
+        Optional<User> findUser = userRepository.findByEmail(userEmail);
+
+        return profileService.testUpdateProfile(testProfileFixDto, multipartFile, findUser); // 프로필 수정하기
     }
 
     /**
      * 테스트 api - 유저 프로필 수정 2
      */
     @ApiOperation(value="유저 프로필 수정 ", notes="NEED JWT IN HEADER: 유저 프로필 수정")
-    @PostMapping("/profile3")
+    @PostMapping("/profile4")
     @ResponseBody
     public SimplUser updateProfileController2(@RequestParam String name,
                                               @RequestParam String mbti,
