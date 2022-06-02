@@ -45,6 +45,7 @@ public class CommentController {
     public List<Comment> getCommentController(@PathVariable("id") Long id){
         log.info("find All Comment of user");
         List<Comment> commentList = commentRepository.findAllByUserId(id);
+        //List<Comment> commentList = commentRepository.findAllById(id);
         return commentList;
     }
 
