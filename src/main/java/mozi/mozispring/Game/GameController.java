@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -73,11 +70,10 @@ public class GameController {
      * 밸런스 게임 통계 보기
      */
     @ApiOperation(value="밸런스 게임 통계 보기", notes="밸런스 게임 통계 보기")
-    @GetMapping("/game-chart")
+    @GetMapping("/game-chart/{id}")
     @ResponseBody
-    public GameLog getGameChartController(@RequestBody QuestionDto questionDto){
-        GameQA gameQA = gameRepository.findByQuestion(questionDto.getQuestion());
-        GameLog gameLog = gameLogRepository.findByQuestionId(gameQA.getId());
+    public GameLog getGameChartController(@PathVariable("id") Long id){
+        GameLog gameLog = gameLogRepository.findByQuestionId(id);
         return gameLog;
     }
 }

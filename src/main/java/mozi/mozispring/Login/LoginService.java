@@ -94,6 +94,7 @@ public class LoginService {
             JwtRetDto jwtRetDto = new JwtRetDto();
             jwtRetDto.setMessage("가입되지 않은 아이디입니다.");
             jwtRetDto.setJwt(null);
+            jwtRetDto.setMyId(-1L);
             return jwtRetDto;
         }
         User member = findUser.get();
@@ -101,11 +102,13 @@ public class LoginService {
             JwtRetDto jwtRetDto = new JwtRetDto();
             jwtRetDto.setMessage("잘못된 비밀번호입니다.");
             jwtRetDto.setJwt(null);
+            jwtRetDto.setMyId(-1L);
             return jwtRetDto;
         }
         JwtRetDto jwtRetDto = new JwtRetDto();
         jwtRetDto.setMessage("유효한 jwt를 발급하였습니다.");
         jwtRetDto.setJwt(jwtTokenProvider.createToken(member.getEmail()));
+        jwtRetDto.setMyId(member.getId()); // 자기 자신의 userId
         return jwtRetDto;
     }
 

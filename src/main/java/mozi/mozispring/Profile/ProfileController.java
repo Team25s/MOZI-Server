@@ -33,6 +33,11 @@ public class ProfileController {
     }
 
     /**
+     * JWT를 사용해서 내 id알아내기
+     */
+
+
+    /**
      *  유저 프로필 불러오기
      */
     @ApiOperation(value="유저 프로필 불러오기", notes="유저 프로필 불러오기")

@@ -18,4 +18,7 @@ public class JwtRetDto {
 
     @ApiModelProperty(value = "jwt", notes = "jwt ", required = true, example="bga392ygdhn8o7otty7834fgty9k2049o87n243i8td7yoeigwoi87ert4510248jtidwejygisuyrg")
     private String jwt;  // jwt
+
+    @ApiModelProperty(value = "나의 userId", notes = "나의 userId ", required = true, example="3")
+    private Long myId; // 나의 userId
 }
