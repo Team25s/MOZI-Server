@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -51,9 +52,23 @@ public class ProfileController {
      * 유저 프로필 수정 1
      */
     @ApiOperation(value="유저 프로필 수정 ", notes="NEED JWT IN HEADER: 유저 프로필 수정")
-    @PutMapping("/profile")
+    @PutMapping("/profile1")
     @ResponseBody
     public SimplUser updateProfileController(@RequestBody ProfileFixDto profileFixDto){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String userEmail = ((UserDetails) principal).getUsername();
+        Optional<User> findUser = userRepository.findByEmail(userEmail);
+        return profileService.updateProfile(profileFixDto, findUser); // 프로필 수정하기
+    }
+
+    /**
+     * 유저 프로필 수정 2
+     */
+    @ApiOperation(value="유저 프로필 수정 ", notes="NEED JWT IN HEADER: 유저 프로필 수정")
+    @PutMapping("/profile2")
+    @ResponseBody
+    public SimplUser updateProfileController2(@ModelAttribute ProfileFixDto profileFixDto){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -65,7 +80,7 @@ public class ProfileController {
      * 테스트 api - 유저 프로필 수정 2
      */
     @ApiOperation(value="유저 프로필 수정 ", notes="NEED JWT IN HEADER: 유저 프로필 수정")
-    @PostMapping("/profile2")
+    @PostMapping("/profile3")
     @ResponseBody
     public SimplUser updateProfileController2(@RequestParam String name,
                                               @RequestParam String mbti,
@@ -87,12 +102,20 @@ public class ProfileController {
     }
 
     /**
-     * 테스트 api - 유저 프로필 수정 3
-     * @param multipartFile
+     * 내 프로필 이미지 저장
      */
-    @PostMapping("/profile3")
+    @PostMapping("/profile-image")
     @ResponseBody
-    public void getImageFileController(@RequestPart(value="file", required = false) MultipartFile multipartFile){
-        System.out.println(multipartFile.getOriginalFilename());
+    public void saveProfileImageFileController(@RequestPart(value="file", required = false) MultipartFile multipartFile){
+
+    }
+
+    /**
+     * 모먼트 이미지 저장
+     */
+    @PostMapping("/moment-image")
+    @ResponseBody
+    public void saveMomentImageFileController(@RequestPart(value="file", required = false) List<MultipartFile> multipartFiles){
+
     }
 }
