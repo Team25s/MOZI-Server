@@ -41,6 +41,8 @@ public class ScheduleController {
     @GetMapping("/schedule/{id}")
     @ResponseBody
     public List<Schedule> getScheduleController(@PathVariable("id") Long id){
+        System.out.println("유저 프로필 수정 3 : updateProfileController3");
+
         List<Schedule> schedules = scheduleRepository.findAllById(id);
         return schedules;
     }
@@ -52,6 +54,8 @@ public class ScheduleController {
     @PostMapping("/schedule")
     @ResponseBody
     public Schedule makeScheduleController(@RequestBody ScheduleDto scheduleDto){
+        System.out.println("일정 등록하기 : makeScheduleController");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -67,6 +71,8 @@ public class ScheduleController {
     @PutMapping("/schedule")
     @ResponseBody
     public Schedule updateScheduleController(@RequestBody ScheduleDto scheduleDto){
+        System.out.println("일정 수정하기  : updateScheduleController");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -82,6 +88,8 @@ public class ScheduleController {
     @DeleteMapping("/schedule")
     @ResponseBody
     public DeleteDto deleteScheduleController(@RequestBody ScheduleDelDto scheduleDelDto){
+        System.out.println("일정 삭제하기 : deleteScheduleController");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();

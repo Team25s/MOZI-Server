@@ -29,7 +29,7 @@ public class ScheduleService {
      */
     public Schedule makeSchedule(ScheduleDto scheduleDto, User findUser, SimplUser simplUser) {
         Schedule schedule = new Schedule();
-        schedule.setTitle(schedule.getTitle());
+        schedule.setTitle(scheduleDto.getTitle());
         schedule.setLocation(scheduleDto.getLocation());
         schedule.setStartDate(scheduleDto.getStartDate());
         schedule.setEndDate(scheduleDto.getEndDate());
@@ -40,10 +40,10 @@ public class ScheduleService {
             SimplUser findSimplUser = simplUserRepository.findById(id).get();
             simplUserList.add(findSimplUser);
         }
-        simplUserList.add(simplUser);
+        simplUserList.add(simplUser); // 본인 추가
         schedule.setFriendList(simplUserList);
-        participants.add(findUser.getId());  // 본인 추가
 
+        participants.add(findUser.getId());  // 본인 추가
         int memberCount = 0;
         Schedule savedSchedule = null;
         for(Long id : participants){

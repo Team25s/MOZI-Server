@@ -36,42 +36,50 @@ public class LoginController {
     }
 
     /**
-     * 회원가입 api
+     * 회원가입
      */
     @ApiOperation(value="회원가입하기", notes="회원가입하기")
     @PostMapping("/join")
     @ResponseBody
     public JoinDto joinController(@RequestBody SignInDto signInDto) {
+        System.out.println("회원가입 : joinController");
+
         return loginService.join(signInDto); // 회원 가입
     }
 
     /**
-     * 로그인 api
+     * 로그인
      */
     @ApiOperation(value="로그인하기 ", notes="로그인하기")
     @PostMapping("/login")
     @ResponseBody
     public JwtRetDto loginController(@RequestBody LogInDto logInDto) {
+        System.out.println("로그인 : loginController");
+
         return loginService.login(logInDto);
     }
 
     /**
-     * 회원탈퇴 api
+     * 회원탈퇴
      */
     @ApiOperation(value="회원탈퇴하기 ", notes="회원탈퇴하기")
     @PostMapping("/withdraw")
     @ResponseBody
     public DeleteDto withdrawController(@RequestBody LogInDto logInDto){
+        System.out.println("회원탈퇴 : withdrawController");
+
         return loginService.withdraw(logInDto);
     }
 
     /**
-     * 탈퇴 회원 보유 콘텐츠 수량 고지 api
+     * 탈퇴 회원 보유 콘텐츠 수량 고지
      */
     @ApiOperation(value=" 탈퇴 회원 보유 콘텐츠 수량 고지하기 ", notes="NEED JWT IN HEADER: 탈퇴 회원 보유 콘텐츠 수량 고지하기")
     @GetMapping("/content-count")
     @ResponseBody
     public WithdrawDto countUserContentController(){
+        System.out.println("탈퇴 회원 보유 콘텐츠 수량 고지 : countUserContentController");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();

@@ -31,6 +31,8 @@ public class FavoritesController {
     @GetMapping("/favorites")
     @ResponseBody
     public List<Favorites> getFavoritesController(){
+        System.out.println("내 츨겨찾기 목록 반환: getFavoritesController");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -44,6 +46,8 @@ public class FavoritesController {
     @PostMapping("/favorites")
     @ResponseBody
     public Favorites registerFavoritesController(@RequestBody FavoritesDto favoritesDto){
+        System.out.println("즐겨찾기 등록: registerFavoritesController");
+
         Favorites favorites = new Favorites();
         favorites.setOpponentId(favoritesDto.getOpponentId());
         favorites.setUserId(favoritesDto.getUserId());
@@ -56,6 +60,8 @@ public class FavoritesController {
     @DeleteMapping("/favorites/{opponent-id}")
     @ResponseBody
     public DeleteDto deleteFavoritesController(@PathVariable("opponent-id") Long opponentId){
+        System.out.println("즐겨찾기 삭제: deleteFavoritesController");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();

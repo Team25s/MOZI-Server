@@ -37,6 +37,8 @@ public class KnockController {
     @PostMapping("/knock")
     @ResponseBody
     public Long knockController(@RequestBody KnockDto knockDto){
+        System.out.println("상대방에게 노크 : knockController");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -55,6 +57,8 @@ public class KnockController {
     @GetMapping("/knock")
     @ResponseBody
     public List<Friend> getKnockController(){
+        System.out.println("노크 로그 반환 : getKnockController");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -66,10 +70,12 @@ public class KnockController {
     /**
      * 노크 삭제
      */
-    @ApiOperation(value="노크 삭제하기 ", notes="노크 삭제하기")
+    @ApiOperation(value="노크 삭제하기 ", notes="노크 삭제하기, 실제 기능은 노크를 0으로 초기화함. ")
     @DeleteMapping("/knock")
     @ResponseBody
     public DeleteDto deleteKnockController(@RequestBody KnockDelDto knockDelDto){
+        System.out.println("노크 삭제 : deleteKnockController");
+
         Friend friend = friendRepository.findById(knockDelDto.getKnockId()).get();
         friend.setKnock(0); // 초기화
         try {

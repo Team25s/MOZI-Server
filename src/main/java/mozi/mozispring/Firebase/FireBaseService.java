@@ -22,6 +22,8 @@ public class FireBaseService {
      *  파이어베이스에 이미지 업로드하기
      */
     public String uploadFiles(MultipartFile file, String nameFile) throws IOException {
+        System.out.println("파이어베이스에 이미지 업로드하기: uploadFiles");
+
         if(nameFile == null  || file == null){
             return "";
         }
@@ -35,6 +37,8 @@ public class FireBaseService {
      * 파이어베이스에서 이미지 삭제하기
      */
     public boolean deleteFiles(String filename) throws StorageException {
+        System.out.println("파이어베이스에서 이미지 삭제하기: deleteFiles");
+
         if(filename == null){
             return false;
         }

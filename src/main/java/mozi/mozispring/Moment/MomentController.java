@@ -38,6 +38,8 @@ public class MomentController {
     @GetMapping("/moment-list/{id}")
     @ResponseBody
     public List<MomentRetDto> getAllMomentController(@PathVariable("id") Long id){ // PathVariable로 유저 id 전달
+        System.out.println("특정 유저의 모든 모먼트 모두 불러오기 : getAllMomentController");
+
         return momentService.getAllMoment(id); // 특정 유저의 모든 모먼트 모두 불러오기
     }
 
@@ -48,6 +50,8 @@ public class MomentController {
     @GetMapping("/moment/{id}")
     @ResponseBody
     public MomentRetDto getSingleMomentController(@PathVariable("id") Long momentId){ // PathVariable로 모먼트 id 전달
+        System.out.println("유저의 모먼트 한 건 불러오기 : getSingleMomentController");
+
         return momentService.getMoment(momentId);
     }
 
@@ -58,6 +62,8 @@ public class MomentController {
     @PostMapping("/moment")
     @ResponseBody
     public MomentPhoto createMomentController(@RequestBody MomentDto momentDto){
+        System.out.println("모먼트 기록하기 : createMomentController");
+
         return momentService.createMoment(momentDto); // 모먼트 기록하기
     }
 
@@ -68,6 +74,8 @@ public class MomentController {
     @DeleteMapping("/moment/{id}")
     @ResponseBody
     public DeleteDto deleteMomentController(@PathVariable("id") Long id){ // 삭제할 모먼트 id 를 파라미터로 전달
+        System.out.println("모먼트 삭제하기 : deleteMomentController");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -82,6 +90,8 @@ public class MomentController {
     @GetMapping("/moment/{tag}")
     @ResponseBody
     public List<MomentRetDto> getMomentByHashTagController(@PathVariable("tag") String tag){
+        System.out.println("해시태그로 모먼트 검색하기 : getMomentByHashTagController");
+
         return momentService.getMomentByHashTag(tag);
     }
 }

@@ -46,6 +46,8 @@ public class ProfileController {
     @GetMapping("/profile/{id}")
     @ResponseBody
     public ProfileDto getUserProfileController(@PathVariable("id") Long id){
+        System.out.println("유저 프로필 불러오기 : getUserProfileController");
+
         return profileService.getUserProfile(id); // 유저 프로필 불러오기
     }
 
@@ -56,6 +58,8 @@ public class ProfileController {
     @PutMapping("/profile1")
     @ResponseBody
     public SimplUser updateProfileController1(@RequestBody ProfileFixDto profileFixDto){
+        System.out.println("유저 프로필 수정 1 : updateProfileController1");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -71,6 +75,8 @@ public class ProfileController {
     @PutMapping("/profile2")
     @ResponseBody
     public SimplUser updateProfileController2(@ModelAttribute ProfileFixDto profileFixDto){
+        System.out.println("유저 프로필 수정 2 : updateProfileController2");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -87,6 +93,8 @@ public class ProfileController {
     @ResponseBody
     public SimplUser updateProfileController3(@RequestPart(value="key", required = false) TestProfileFixDto testProfileFixDto,
                                               @RequestPart(value="file", required = true) MultipartFile multipartFile){
+        System.out.println("유저 프로필 수정 3 : updateProfileController3");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -106,6 +114,8 @@ public class ProfileController {
                                               @RequestParam String introduce,
                                               @RequestParam String strTag,
                                               @RequestPart(value="file", required = false) MultipartFile multipartFile){
+        System.out.println("테스트 api - 유저 프로필 수정 2: updateProfileController2");
+
         ProfileFixDto profileFixDto = new ProfileFixDto();
         profileFixDto.setName(name);
         profileFixDto.setIntroduce(introduce);

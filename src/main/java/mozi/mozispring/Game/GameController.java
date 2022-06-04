@@ -39,6 +39,8 @@ public class GameController {
     @GetMapping("/game-list")
     @ResponseBody
     public List<GameQA> getGameListController(){
+        System.out.println("모든 밸런스 게임 불러오기 : getGameListController");
+
         return gameRepository.findAll();
     }
 
@@ -49,6 +51,8 @@ public class GameController {
     @PostMapping("/game")
     @ResponseBody
     public GameQA makeGameController(@RequestBody QuestionDto questionDto){
+        System.out.println("새로운 밸런스 게임 등록 : makeGameController");
+
         return gameService.makeGame(questionDto); // 새로운 밸런스 게임 등록
     }
 
@@ -59,6 +63,8 @@ public class GameController {
     @PostMapping("/game-play")
     @ResponseBody
     public GameLog answerGameController(@RequestBody AnswerDto answerDto){
+        System.out.println("밸런스 게임 플레이 : answerGameController");
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userEmail = ((UserDetails) principal).getUsername();
@@ -73,6 +79,8 @@ public class GameController {
     @GetMapping("/game-chart/{id}")
     @ResponseBody
     public GameLog getGameChartController(@PathVariable("id") Long id){
+        System.out.println("밸런스 게임 통계 보기 : getGameChartController");
+
         GameLog gameLog = gameLogRepository.findByQuestionId(id);
         return gameLog;
     }
