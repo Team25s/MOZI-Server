@@ -57,7 +57,7 @@ public class ProfileService {
         user.setMbti(profileFixDto.getMbti());
 
         // 회원 요약 정보도 함께 수정
-        SimplUser simplUser = simplUserRepository.findById(user.getId()).get();
+        SimplUser simplUser = simplUserRepository.findByEmail(user.getEmail()).get();
         simplUser.setName(profileFixDto.getName());
         simplUser.setMbti(profileFixDto.getMbti());
 
@@ -97,7 +97,7 @@ public class ProfileService {
         user.setMbti(testProfileFixDto.getMbti());
 
         // 회원 요약 정보도 함께 수정
-        SimplUser simplUser = simplUserRepository.findById(user.getId()).get();
+        SimplUser simplUser = simplUserRepository.findByEmail(user.getEmail()).get();
         simplUser.setName(testProfileFixDto.getName());
         simplUser.setMbti(testProfileFixDto.getMbti());
 
