@@ -61,6 +61,7 @@ public class ScheduleController {
         String userEmail = ((UserDetails) principal).getUsername();
         User findUser = userRepository.findByEmail(userEmail).get();
         SimplUser simplUser = simplUserRepository.findById(findUser.getId()).get();
+
         return scheduleService.makeSchedule(scheduleDto, findUser, simplUser); // 일정 등록
     }
 

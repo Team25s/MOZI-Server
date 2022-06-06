@@ -14,6 +14,7 @@ public interface SimplUserRepository  extends JpaRepository<SimplUser, Long> {
 
     SimplUser save(SimplUser simplUser);
     Optional<SimplUser> findById(Long id);
+    Optional<SimplUser> findByEmail(String email);
     void deleteById(Long id);
 
     void deleteByEmail(String email);

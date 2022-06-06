@@ -7,6 +7,7 @@ import mozi.mozispring.Domain.Schedule;
 import mozi.mozispring.Domain.SimplUser;
 import mozi.mozispring.Domain.User;
 import mozi.mozispring.User.SimplUserRepository;
+import mozi.mozispring.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,27 +18,32 @@ import java.util.List;
 public class ScheduleService {
     private SimplUserRepository simplUserRepository;
     private ScheduleRepository scheduleRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public ScheduleService(SimplUserRepository simplUserRepository, ScheduleRepository scheduleRepository) {
+    public ScheduleService(SimplUserRepository simplUserRepository, ScheduleRepository scheduleRepository, UserRepository userRepository) {
         this.simplUserRepository = simplUserRepository;
         this.scheduleRepository = scheduleRepository;
+        this.userRepository = userRepository;
     }
 
     /**
      *  새로운 일정 등록
      */
     public Schedule makeSchedule(ScheduleDto scheduleDto, User findUser, SimplUser simplUser) {
+        System.out.println("1. makweSchedule:");
         Schedule schedule = new Schedule();
         schedule.setTitle(scheduleDto.getTitle());
         schedule.setLocation(scheduleDto.getLocation());
         schedule.setStartDate(scheduleDto.getStartDate());
         schedule.setEndDate(scheduleDto.getEndDate());
 
-        List<Long> participants = scheduleDto.getFriends();
+        List<Long> participants = scheduleDto.getFriends(); // 함께하는 친구 리스트
         List<SimplUser> simplUserList = new ArrayList<>();
         for(Long id: participants){
-            SimplUser findSimplUser = simplUserRepository.findById(id).get();
+            System.out.println("2. makeSchedule: for 반목문 진행중");
+            User user = userRepository.findById(id).get(); // 2022-06-06: 클라 수정사항- NosuchElementException 이 발생하는 곳이 이부분 -> 6월 둘째주에 수정
+            SimplUser findSimplUser = simplUserRepository.findByEmail(user.getEmail()).get();
             simplUserList.add(findSimplUser);
         }
         simplUserList.add(simplUser); // 본인 추가
@@ -80,7 +86,8 @@ public class ScheduleService {
             List<Long> participants = scheduleDto.getFriends();
             List<SimplUser> simplUserList2 = new ArrayList<>();
             for(Long id: participants){
-                SimplUser findSimplUser = simplUserRepository.findById(id).get();
+                User user = userRepository.findById(id).get(); // 2022-06-06: 클라 수정사항- NosuchElementException 이 발생하는 곳이 이부분 / 성능이 너무 안좋음 -> 6월 둘째주에 수정
+                SimplUser findSimplUser = simplUserRepository.findByEmail(user.getEmail()).get();
                 simplUserList2.add(findSimplUser);
             }
             findSchedule.setFriendList(simplUserList2);

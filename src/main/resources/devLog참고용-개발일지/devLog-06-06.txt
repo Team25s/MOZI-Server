@@ -1,0 +1,11 @@
+2022-06-02-yuny0623
+
+오늘 한일!
+스케쥴 컨트롤러에서 일정 등록하는 과정에서 오류가 발생한 듯
+아마 simplUserRepository 에서 findById 로 계속 친구들을 검색해주는데
+생각해보니 SimplUser의 pk는 user의 pk 와는 전혀 상관이 없음.
+즉 따로 SimplUser 에서 userID 필드를 갖고 있게 만들었어야 하지만 이부분까지 염두에 두지 못했던것 같음.
+그래서 조금 꼼수를 썼음. UserReporitory 에서 검색하면서 해당 user의 Email을 알아와서
+SimplUser에 대해서 findByEmail을 수행했음 .-> 물론 성능면에서는 꽝임. 다만 내일이 마감이니까 어쩔 수 없었음.
+
+
