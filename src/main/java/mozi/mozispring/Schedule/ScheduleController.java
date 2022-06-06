@@ -60,7 +60,7 @@ public class ScheduleController {
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         User findUser = userRepository.findByEmail(userEmail).get();
-        SimplUser simplUser = simplUserRepository.findById(findUser.getId()).get();
+        SimplUser simplUser = simplUserRepository.findByEmail(findUser.getEmail()).get();
 
         return scheduleService.makeSchedule(scheduleDto, findUser, simplUser); // 일정 등록
     }
@@ -78,6 +78,7 @@ public class ScheduleController {
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         User findUser = userRepository.findByEmail(userEmail).get();
+
         return scheduleService.updateSchedule(scheduleDto, findUser); // 일정 수정
     }
 
@@ -95,6 +96,7 @@ public class ScheduleController {
         UserDetails userDetails = (UserDetails)principal;
         String userEmail = ((UserDetails) principal).getUsername();
         User findUser = userRepository.findByEmail(userEmail).get();
+
         return scheduleService.deleteSchedule(scheduleDelDto, findUser); // 일정 삭제
     }
 }
